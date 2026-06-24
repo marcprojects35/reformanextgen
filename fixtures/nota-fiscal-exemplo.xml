@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe">
+  <NFe>
+    <infNFe Id="NFe35260100000000000000000000000000000001" versao="4.00">
+      <ide>
+        <cUF>35</cUF>
+        <natOp>Venda de mercadoria</natOp>
+        <mod>55</mod>
+        <serie>1</serie>
+        <nNF>1001</nNF>
+        <tpNF>1</tpNF>
+      </ide>
+      <emit>
+        <CNPJ>12345678000199</CNPJ>
+        <xNome>Empresa Exemplo LTDA</xNome>
+      </emit>
+      <dest>
+        <CNPJ>98765432000111</CNPJ>
+        <xNome>Cliente Exemplo Comercio LTDA</xNome>
+      </dest>
+      <det nItem="1">
+        <prod>
+          <cProd>001</cProd>
+          <xProd>Notebook 14 polegadas</xProd>
+          <NCM>84713012</NCM>
+          <CFOP>5102</CFOP>
+          <vProd>2500.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS>
+            <ICMS00>
+              <CST>00</CST>
+            </ICMS00>
+          </ICMS>
+        </imposto>
+      </det>
+      <det nItem="2">
+        <prod>
+          <cProd>002</cProd>
+          <xProd>Arroz branco tipo 1 - fardo 30kg</xProd>
+          <NCM>10063021</NCM>
+          <CFOP>5102</CFOP>
+          <vProd>800.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS>
+            <ICMS40>
+              <CST>40</CST>
+            </ICMS40>
+          </ICMS>
+        </imposto>
+      </det>
+      <det nItem="3">
+        <prod>
+          <cProd>003</cProd>
+          <xProd>Cigarro maço com 20 unidades</xProd>
+          <NCM>24022090</NCM>
+          <CFOP>5102</CFOP>
+          <vProd>450.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS>
+            <ICMS00>
+              <CST>00</CST>
+            </ICMS00>
+          </ICMS>
+        </imposto>
+      </det>
+      <det nItem="4">
+        <prod>
+          <cProd>004</cProd>
+          <xProd>Mouse sem fio</xProd>
+          <NCM>84716052</NCM>
+          <CFOP>5102</CFOP>
+          <vProd>180.00</vProd>
+        </prod>
+        <imposto>
+          <ICMS>
+            <ICMS00>
+              <CST>00</CST>
+            </ICMS00>
+          </ICMS>
+        </imposto>
+      </det>
+    </infNFe>
+  </NFe>
+</nfeProc>

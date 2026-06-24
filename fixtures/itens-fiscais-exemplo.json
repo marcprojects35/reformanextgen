@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "ncm": "84713012",
+      "cfop": "5102",
+      "cst": "00",
+      "descricao": "Notebook 14 polegadas",
+      "operacao": "saida",
+      "valor": 3200.00,
+      "clienteFornecedor": "Cliente Alpha Comercio LTDA"
+    },
+    {
+      "ncm": "84716052",
+      "cfop": "5102",
+      "cst": "00",
+      "descricao": "Mouse sem fio",
+      "operacao": "saida",
+      "valor": 240.00,
+      "clienteFornecedor": "Cliente Alpha Comercio LTDA"
+    },
+    {
+      "ncm": "10063021",
+      "cfop": "5102",
+      "cst": "40",
+      "descricao": "Arroz branco tipo 1",
+      "operacao": "saida",
+      "valor": 950.00,
+      "clienteFornecedor": "Cliente Beta Mercado LTDA"
+    },
+    {
+      "ncm": "84713012",
+      "cfop": "1102",
+      "cst": "00",
+      "descricao": "Notebook 14 polegadas (compra para revenda)",
+      "operacao": "entrada",
+      "valor": 1800.00,
+      "clienteFornecedor": "Fornecedor Distribuidora Tech LTDA"
+    },
+    {
+      "ncm": "84716052",
+      "cfop": "1102",
+      "cst": "00",
+      "descricao": "Mouse sem fio (compra para revenda)",
+      "operacao": "entrada",
+      "valor": 120.00,
+      "clienteFornecedor": "Fornecedor Distribuidora Tech LTDA"
+    }
+  ]
+}
