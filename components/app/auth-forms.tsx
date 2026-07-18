@@ -188,7 +188,7 @@ export function SignupForm() {
         businessArea: form.businessArea || null,
         password: form.password,
       })
-      router.push('/simulacao/novo')
+      router.push('/cadastro/empresa')
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Algo deu errado.')
@@ -337,7 +337,7 @@ export function SignupForm() {
           className="btn-shine glow-gold h-11 w-full justify-center gap-2 rounded-xl text-sm font-semibold"
         >
           {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-          Criar conta e simular agora
+          Criar conta
         </Button>
         <p className="mt-3 text-center text-xs text-muted-foreground">
           Ao criar a conta, você concorda com os{' '}

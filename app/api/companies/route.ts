@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 
 import { getCurrentUser } from '@/lib/auth'
-import { createCompany, listCompaniesByUser, type RegimeAtual, type Setor } from '@/lib/db'
+import { createCompany, getCompanyById, listCompaniesByUser, type RegimeAtual, type Setor } from '@/lib/db'
+import { linkClienteCompanyToEmpresa } from '@/lib/empresa-link'
+import { setActiveCompanyCookie } from '@/lib/active-company'
 import { ufOptions } from '@/lib/labels'
 
 const SETORES: Setor[] = ['comercio', 'industria', 'servicos', 'servicos_fator_r', 'agropecuaria']
@@ -74,5 +76,8 @@ export async function POST(request: Request) {
     margemLucro,
   })
 
-  return NextResponse.json({ company })
+  linkClienteCompanyToEmpresa(company, user.id)
+  await setActiveCompanyCookie(company.id)
+
+  return NextResponse.json({ company: getCompanyById(company.id) })
 }

@@ -30,6 +30,15 @@ export default async function LoginPage() {
               Criar conta gratuita
             </Link>
           </span>
+          <Link
+            href="/admin"
+            className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground/50 transition hover:text-muted-foreground"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Acesso Administrativo
+          </Link>
         </div>
       }
     >

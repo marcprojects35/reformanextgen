@@ -36,6 +36,17 @@
   --color-gold-4: #e7a300;
   --color-gold-5: #ffb400;
 
+  /* Terminal financeiro: ganho/perda vívidos + paleta categórica de gráficos */
+  --color-gain: var(--gain);
+  --color-loss: var(--loss);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+  --color-chart-7: var(--chart-7);
+
   --ease-apple: cubic-bezier(0.22, 1, 0.36, 1);
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -63,9 +74,9 @@
   --muted-foreground: #b5b5b5;
   --accent: #1f1a0a;
   --accent-foreground: #ffb400;
-  --destructive: #ff4d4d;
+  --destructive: #f6465d;
   --destructive-foreground: #ffffff;
-  --success: #00d084;
+  --success: #0ecb81;
   --warning: #ffb400;
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.12);
@@ -74,6 +85,18 @@
   --grid-line: rgba(255, 255, 255, 0.035);
   --glass-bg: rgba(64, 44, 10, 0.88);
   --gold-shimmer-peak: #fff3cf;
+
+  /* Terminal financeiro — verde/vermelho vívidos (validados: 9.4:1 / 5.6:1 contra #09090b) */
+  --gain: #00e28c;
+  --loss: #f6465d;
+  /* Paleta categórica (multi-série), validada com dataviz/validate_palette.js — nunca reusa verde/vermelho puros */
+  --chart-1: #3987e5; /* azul */
+  --chart-2: #199e70; /* verde-azulado */
+  --chart-3: #9085e9; /* violeta */
+  --chart-4: #d55181; /* magenta */
+  --chart-5: #d95926; /* laranja */
+  --chart-6: #6366f1; /* índigo */
+  --chart-7: #0ea5b5; /* ciano */
 }
 
 :root.light {
@@ -93,9 +116,9 @@
   --muted-foreground: #6f6557;
   --accent: #fbe8c2;
   --accent-foreground: #8a5c00;
-  --destructive: #d23d3d;
+  --destructive: #e0243f;
   --destructive-foreground: #ffffff;
-  --success: #128a57;
+  --success: #049c5b;
   --warning: #b8860b;
   --border: rgba(24, 20, 13, 0.1);
   --input: rgba(24, 20, 13, 0.14);
@@ -103,6 +126,16 @@
   --grid-line: rgba(24, 20, 13, 0.06);
   --glass-bg: rgba(253, 240, 206, 0.75);
   --gold-shimmer-peak: #8a5c00;
+
+  --gain: #00a862;
+  --loss: #e0243f;
+  --chart-1: #2a6fd6;
+  --chart-2: #0f8a63;
+  --chart-3: #6c5ce7;
+  --chart-4: #b8366b;
+  --chart-5: #b8481f;
+  --chart-6: #4f46e5;
+  --chart-7: #0a8a9a;
 }
 
 @layer base {
@@ -203,6 +236,83 @@
   }
   .btn-shine:hover::after {
     left: 150%;
+  }
+  /* Igual ao .btn-shine, mas o brilho vive num filho absoluto em vez do próprio
+     botão — assim não sobrescreve position:fixed (ex.: botões flutuantes de
+     navegação entre slides, que não podem levar position:relative). */
+  .shine-sweep-host {
+    isolation: isolate;
+  }
+  .shine-sweep {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .shine-sweep::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.65s var(--ease-apple);
+  }
+  .shine-sweep-host:hover .shine-sweep::after {
+    left: 150%;
+  }
+  .font-tabular {
+    font-variant-numeric: tabular-nums slashed-zero;
+    font-feature-settings: 'tnum' 1, 'zero' 1;
+    letter-spacing: -0.01em;
+  }
+  .terminal-grid {
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  /* Evita a seleção de texto nativa do navegador ao clicar ou arrastar sobre
+     gráficos (recharts) — sem isso, um clique numa barra/rótulo podia iniciar
+     uma seleção de texto do card inteiro em vez de disparar o onClick que abre
+     o detalhe. Aplica a todos os gráficos do app, já que todos usam recharts. */
+  .recharts-wrapper,
+  .recharts-wrapper * {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  /* Recharts dá foco nativo (contorno preto do navegador) às barras/fatias
+     clicáveis — não é uma seleção, é o outline padrão de foco em elementos SVG.
+     Como o clique já abre a janelinha de detalhe, esse contorno é só ruído. */
+  .recharts-wrapper *:focus,
+  .recharts-wrapper *:focus-visible {
+    outline: none;
   }
 }
 

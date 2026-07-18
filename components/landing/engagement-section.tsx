@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRight, Check, MessageCircle, Sparkles, UserCheck } from 'lucide-react'
+import { ArrowRight, Check, Gauge, MessageCircle, Sparkles, UserCheck } from 'lucide-react'
 import { Reveal } from './reveal'
 import { cn } from '@/lib/utils'
 
@@ -10,6 +10,24 @@ const WHATSAPP_MESSAGE =
   'Olá! Gostaria de falar com um consultor sobre o modelo analítico da Reforma NextGen.'
 
 const tracks = [
+  {
+    key: 'diagnostico',
+    icon: Gauge,
+    badge: 'Sem cadastro',
+    name: 'Diagnóstico Gratuito',
+    description:
+      'Responda 4 perguntas rápidas e receba na hora um resultado simulado sobre o impacto da Reforma Tributária no seu negócio — sem precisar se cadastrar.',
+    features: [
+      'Sem cadastro para começar, sem enviar arquivos fiscais',
+      'Resultado simulado em poucos minutos',
+      'Primeira visão do impacto da reforma na sua empresa',
+      'Cadastre o CNPJ só no final, se quiser acompanhar na plataforma',
+    ],
+    cta: 'Fazer diagnóstico gratuito',
+    highlight: false,
+    href: '/diagnostico',
+    external: false,
+  },
   {
     key: 'sintetico',
     icon: Sparkles,
@@ -64,12 +82,13 @@ export function EngagementSection() {
             Escolha a forma de avançar com a sua empresa.
           </h2>
           <p className="mt-4 text-pretty text-muted-foreground md:text-lg">
-            Um resultado simulado e rápido, ou uma análise completa com
-            acompanhamento de um consultor especialista.
+            Um diagnóstico gratuito e imediato, um resultado simulado após o
+            cadastro, ou uma análise completa com acompanhamento de um
+            consultor especialista.
           </p>
         </Reveal>
 
-        <div className="mt-14 grid items-stretch gap-4 md:grid-cols-2">
+        <div className="mt-14 grid items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3">
           {tracks.map((track, i) => (
             <Reveal key={track.key} delay={i * 0.1}>
               <div

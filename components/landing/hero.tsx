@@ -104,6 +104,21 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-4 flex items-center justify-center"
+        >
+          <a
+            href="/diagnostico"
+            className="group inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+          >
+            Prefere algo rápido? Faça o diagnóstico gratuito em 1 minuto
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+          </a>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground"
         >

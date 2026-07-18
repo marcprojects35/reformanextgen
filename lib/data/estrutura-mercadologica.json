@@ -1,0 +1,4718 @@
+[
+  {
+    "codigo": "1",
+    "descricao": "Alimentos",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "1.01",
+    "descricao": "Mercearia Seca",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.01.001",
+    "descricao": "Cereais (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.01"
+  },
+  {
+    "codigo": "1.01.001.001",
+    "descricao": "Arroz Integral",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.002",
+    "descricao": "Arroz Polido ou Brunido",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.003",
+    "descricao": "Arroz Semibranqueado ou Branqueado",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.004",
+    "descricao": "Arroz Especiais",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.005",
+    "descricao": "Feijão",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.006",
+    "descricao": "Milho Grãos",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.007",
+    "descricao": "Pipoca Geral",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.001.008",
+    "descricao": "Outros tipos de Grãos",
+    "nivel": "familia",
+    "parentCodigo": "1.01.001"
+  },
+  {
+    "codigo": "1.01.002",
+    "descricao": "Açúcar (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.01"
+  },
+  {
+    "codigo": "1.01.002.001",
+    "descricao": "Açucar Cristal",
+    "nivel": "familia",
+    "parentCodigo": "1.01.002"
+  },
+  {
+    "codigo": "1.01.002.002",
+    "descricao": "Açucar Refinado",
+    "nivel": "familia",
+    "parentCodigo": "1.01.002"
+  },
+  {
+    "codigo": "1.01.002.003",
+    "descricao": "Açucar Mascavo",
+    "nivel": "familia",
+    "parentCodigo": "1.01.002"
+  },
+  {
+    "codigo": "1.01.002.004",
+    "descricao": "Açucar - Outros",
+    "nivel": "familia",
+    "parentCodigo": "1.01.002"
+  },
+  {
+    "codigo": "1.01.003",
+    "descricao": "Farináceos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.01"
+  },
+  {
+    "codigo": "1.01.003.001",
+    "descricao": "Derivados de Milho",
+    "nivel": "familia",
+    "parentCodigo": "1.01.003"
+  },
+  {
+    "codigo": "1.01.003.002",
+    "descricao": "Farinha de Mandioca",
+    "nivel": "familia",
+    "parentCodigo": "1.01.003"
+  },
+  {
+    "codigo": "1.01.003.003",
+    "descricao": "Farofas Prontas",
+    "nivel": "familia",
+    "parentCodigo": "1.01.003"
+  },
+  {
+    "codigo": "1.01.003.004",
+    "descricao": "Farinha de Trigo",
+    "nivel": "familia",
+    "parentCodigo": "1.01.003"
+  },
+  {
+    "codigo": "1.01.003.005",
+    "descricao": "Polvilho",
+    "nivel": "familia",
+    "parentCodigo": "1.01.003"
+  },
+  {
+    "codigo": "1.01.003.006",
+    "descricao": "Outras Farinhas",
+    "nivel": "familia",
+    "parentCodigo": "1.01.003"
+  },
+  {
+    "codigo": "1.01.004",
+    "descricao": "Sal (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.01"
+  },
+  {
+    "codigo": "1.01.004.001",
+    "descricao": "Refinado",
+    "nivel": "familia",
+    "parentCodigo": "1.01.004"
+  },
+  {
+    "codigo": "1.01.004.002",
+    "descricao": "Grosso",
+    "nivel": "familia",
+    "parentCodigo": "1.01.004"
+  },
+  {
+    "codigo": "1.01.005",
+    "descricao": "Cesta (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.01"
+  },
+  {
+    "codigo": "1.01.005.001",
+    "descricao": "Cesta básica",
+    "nivel": "familia",
+    "parentCodigo": "1.01.005"
+  },
+  {
+    "codigo": "1.01.005.002",
+    "descricao": "Cesta natal",
+    "nivel": "familia",
+    "parentCodigo": "1.01.005"
+  },
+  {
+    "codigo": "1.02",
+    "descricao": "Mercearia Salgada",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.02.001",
+    "descricao": "Massas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.02"
+  },
+  {
+    "codigo": "1.02.001.001",
+    "descricao": "Macarrão Semola",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.001.002",
+    "descricao": "Macarrão com Ovos",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.001.003",
+    "descricao": "Macarrão Grano Duro",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.001.004",
+    "descricao": "Massas Esp. e Pré-cozidas",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.001.005",
+    "descricao": "Macarrão Instantâneo",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.001.006",
+    "descricao": "Sopas",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.001.007",
+    "descricao": "Macarrão outros",
+    "nivel": "familia",
+    "parentCodigo": "1.02.001"
+  },
+  {
+    "codigo": "1.02.002",
+    "descricao": "Enlatados (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.02"
+  },
+  {
+    "codigo": "1.02.002.001",
+    "descricao": "Azeites",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.002",
+    "descricao": "Óleos Especiais",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.003",
+    "descricao": "Óleo Composto",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.004",
+    "descricao": "Óleos de Soja",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.005",
+    "descricao": "Milho verde",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.006",
+    "descricao": "Ervilhas",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.007",
+    "descricao": "Seletas",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.008",
+    "descricao": "Conservas sardinhas/atum",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.009",
+    "descricao": "Feijoadas",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.010",
+    "descricao": "Embutidos (salsichas)",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.002.011",
+    "descricao": "Carnes/patês",
+    "nivel": "familia",
+    "parentCodigo": "1.02.002"
+  },
+  {
+    "codigo": "1.02.003",
+    "descricao": "Conservas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.02"
+  },
+  {
+    "codigo": "1.02.003.001",
+    "descricao": "Azeitonas",
+    "nivel": "familia",
+    "parentCodigo": "1.02.003"
+  },
+  {
+    "codigo": "1.02.003.002",
+    "descricao": "Palmito",
+    "nivel": "familia",
+    "parentCodigo": "1.02.003"
+  },
+  {
+    "codigo": "1.02.003.003",
+    "descricao": "Conservas em geral",
+    "nivel": "familia",
+    "parentCodigo": "1.02.003"
+  },
+  {
+    "codigo": "1.02.003.004",
+    "descricao": "Maionese até 650 gr",
+    "nivel": "familia",
+    "parentCodigo": "1.02.003"
+  },
+  {
+    "codigo": "1.02.003.005",
+    "descricao": "Maionese acima de 650 gr até 1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.02.003"
+  },
+  {
+    "codigo": "1.02.003.006",
+    "descricao": "Maionese (1KG acima)",
+    "nivel": "familia",
+    "parentCodigo": "1.02.003"
+  },
+  {
+    "codigo": "1.02.004",
+    "descricao": "Temperos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.02"
+  },
+  {
+    "codigo": "1.02.004.001",
+    "descricao": "Extrato de tomate até 1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.002",
+    "descricao": "Extrato de tomate acima 1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.003",
+    "descricao": "Molhos e polpas tomate",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.004",
+    "descricao": "Catchup",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.005",
+    "descricao": "Mostarda",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.006",
+    "descricao": "Molhos especiais",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.007",
+    "descricao": "Molho pimenta e outros",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.008",
+    "descricao": "Vinagres",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.009",
+    "descricao": "Temperos em pó",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.010",
+    "descricao": "Temperos Prontos",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.004.011",
+    "descricao": "Caldos",
+    "nivel": "familia",
+    "parentCodigo": "1.02.004"
+  },
+  {
+    "codigo": "1.02.005",
+    "descricao": "Complemento (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.02"
+  },
+  {
+    "codigo": "1.02.005.001",
+    "descricao": "Batata Palha",
+    "nivel": "familia",
+    "parentCodigo": "1.02.005"
+  },
+  {
+    "codigo": "1.02.005.002",
+    "descricao": "Queijo ralado",
+    "nivel": "familia",
+    "parentCodigo": "1.02.005"
+  },
+  {
+    "codigo": "1.03",
+    "descricao": "Mercearia Doce",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.03.001",
+    "descricao": "Bomboniere (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.001.001",
+    "descricao": "Balas em geral",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.002",
+    "descricao": "Bombons",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.003",
+    "descricao": "Chicletes",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.004",
+    "descricao": "Chocolates tabletes",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.005",
+    "descricao": "Confeitos e Doces de Amendoim",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.006",
+    "descricao": "Pipoca Doce",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.007",
+    "descricao": "Drops e pastilhas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.008",
+    "descricao": "Ovos de Páscoa",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.001.009",
+    "descricao": "Algodao doce",
+    "nivel": "familia",
+    "parentCodigo": "1.03.001"
+  },
+  {
+    "codigo": "1.03.002",
+    "descricao": "Sobremesas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.002.001",
+    "descricao": "Gelatinas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.002"
+  },
+  {
+    "codigo": "1.03.002.002",
+    "descricao": "Pó p/ Pudim, flan, maria mole",
+    "nivel": "familia",
+    "parentCodigo": "1.03.002"
+  },
+  {
+    "codigo": "1.03.002.003",
+    "descricao": "Preparo p/ Sorvete",
+    "nivel": "familia",
+    "parentCodigo": "1.03.002"
+  },
+  {
+    "codigo": "1.03.002.004",
+    "descricao": "Sagu",
+    "nivel": "familia",
+    "parentCodigo": "1.03.002"
+  },
+  {
+    "codigo": "1.03.002.005",
+    "descricao": "Outras Sobremesas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.002"
+  },
+  {
+    "codigo": "1.03.003",
+    "descricao": "Matinais (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.003.001",
+    "descricao": "Café Tradicional torrado e Moido Até 2kg",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.002",
+    "descricao": "Café Tradicional torrado e Moido Superior 2kg",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.003",
+    "descricao": "Café Solúvel",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.004",
+    "descricao": "Chá",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.005",
+    "descricao": "Erva mate",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.006",
+    "descricao": "Achocolatados até 1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.007",
+    "descricao": "Achocolatados acima  1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.008",
+    "descricao": "Cereais Matinais",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.009",
+    "descricao": "Complemento Alimentar",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.003.010",
+    "descricao": "Leite em Pó",
+    "nivel": "familia",
+    "parentCodigo": "1.03.003"
+  },
+  {
+    "codigo": "1.03.004",
+    "descricao": "Alimento Infantil (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.004.002",
+    "descricao": "Papinhas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.004"
+  },
+  {
+    "codigo": "1.03.004.003",
+    "descricao": "Complementos Alimentares",
+    "nivel": "familia",
+    "parentCodigo": "1.03.004"
+  },
+  {
+    "codigo": "1.03.004.004",
+    "descricao": "Arrozina/Cremogema",
+    "nivel": "familia",
+    "parentCodigo": "1.03.004"
+  },
+  {
+    "codigo": "1.03.005",
+    "descricao": "Culinária Doce (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.005.001",
+    "descricao": "Creme de leite",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.002",
+    "descricao": "Leite condensado",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.003",
+    "descricao": "Complemento",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.004",
+    "descricao": "Confeitos",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.005",
+    "descricao": "Recheios e cobertura",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.006",
+    "descricao": "Fermentos e coalho",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.007",
+    "descricao": "Misturas p/ Bolo e Pão de Queijo",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.005.008",
+    "descricao": "Amido",
+    "nivel": "familia",
+    "parentCodigo": "1.03.005"
+  },
+  {
+    "codigo": "1.03.006",
+    "descricao": "Doces (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.006.001",
+    "descricao": "Compotas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.006"
+  },
+  {
+    "codigo": "1.03.006.002",
+    "descricao": "Doces de leite",
+    "nivel": "familia",
+    "parentCodigo": "1.03.006"
+  },
+  {
+    "codigo": "1.03.006.003",
+    "descricao": "Doces de frutas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.006"
+  },
+  {
+    "codigo": "1.03.006.004",
+    "descricao": "Doces em geral/Rapadura",
+    "nivel": "familia",
+    "parentCodigo": "1.03.006"
+  },
+  {
+    "codigo": "1.03.006.005",
+    "descricao": "Geléias",
+    "nivel": "familia",
+    "parentCodigo": "1.03.006"
+  },
+  {
+    "codigo": "1.03.006.006",
+    "descricao": "Mel/Melados",
+    "nivel": "familia",
+    "parentCodigo": "1.03.006"
+  },
+  {
+    "codigo": "1.03.007",
+    "descricao": "Linha Diet/Light (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.007.001",
+    "descricao": "Achocolatados",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.002",
+    "descricao": "Adoçantes",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.003",
+    "descricao": "Alimentos Integrais",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.004",
+    "descricao": "Balas Diet",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.005",
+    "descricao": "Bebidas Light e Diet",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.006",
+    "descricao": "Biscoitos e Torradas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.007",
+    "descricao": "Cappuccinos",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.008",
+    "descricao": "Cereais em Barra",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.009",
+    "descricao": "Geleias e Doces",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.010",
+    "descricao": "Sobremesas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.007.011",
+    "descricao": "Sucos e  Refrescos",
+    "nivel": "familia",
+    "parentCodigo": "1.03.007"
+  },
+  {
+    "codigo": "1.03.008",
+    "descricao": "Biscoitos Doces (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.008.001",
+    "descricao": "Biscoito Doce Recheado",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.008.002",
+    "descricao": "Biscoito Doce Waffer",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.008.003",
+    "descricao": "Biscoito Doce Leite",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.008.004",
+    "descricao": "Biscoito Doce Amanteigado",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.008.005",
+    "descricao": "Biscoito Doce Maria e Maizena",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.008.006",
+    "descricao": "Biscoito Doce Caixas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.008.007",
+    "descricao": "Biscoito Doce Geral",
+    "nivel": "familia",
+    "parentCodigo": "1.03.008"
+  },
+  {
+    "codigo": "1.03.009",
+    "descricao": "Biscoitos Salgados (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.009.001",
+    "descricao": "Biscoito Salgado Cream Cracker e Agua e sal",
+    "nivel": "familia",
+    "parentCodigo": "1.03.009"
+  },
+  {
+    "codigo": "1.03.009.002",
+    "descricao": "Biscoito Salpet",
+    "nivel": "familia",
+    "parentCodigo": "1.03.009"
+  },
+  {
+    "codigo": "1.03.009.003",
+    "descricao": "Biscoito Salgado Caixas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.009"
+  },
+  {
+    "codigo": "1.03.009.004",
+    "descricao": "Biscoito Salgado Geral",
+    "nivel": "familia",
+    "parentCodigo": "1.03.009"
+  },
+  {
+    "codigo": "1.03.009.005",
+    "descricao": "Torradas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.009"
+  },
+  {
+    "codigo": "1.03.010",
+    "descricao": "Salgadinhos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.03"
+  },
+  {
+    "codigo": "1.03.010.001",
+    "descricao": "Amendoas e Castanhas",
+    "nivel": "familia",
+    "parentCodigo": "1.03.010"
+  },
+  {
+    "codigo": "1.03.010.002",
+    "descricao": "Amendoim",
+    "nivel": "familia",
+    "parentCodigo": "1.03.010"
+  },
+  {
+    "codigo": "1.03.010.003",
+    "descricao": "Batata Frita",
+    "nivel": "familia",
+    "parentCodigo": "1.03.010"
+  },
+  {
+    "codigo": "1.03.010.004",
+    "descricao": "Batata Palha",
+    "nivel": "familia",
+    "parentCodigo": "1.03.010"
+  },
+  {
+    "codigo": "1.03.010.005",
+    "descricao": "Biscoito Salgado Aperitivos",
+    "nivel": "familia",
+    "parentCodigo": "1.03.010"
+  },
+  {
+    "codigo": "1.03.010.006",
+    "descricao": "Salgadinhos Sabores",
+    "nivel": "familia",
+    "parentCodigo": "1.03.010"
+  },
+  {
+    "codigo": "1.04",
+    "descricao": "Perecíveis",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.04.001",
+    "descricao": "Padaria Produção Terceiros (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.001.001",
+    "descricao": "Produtos de Terceiros Pães Outros",
+    "nivel": "familia",
+    "parentCodigo": "1.04.001"
+  },
+  {
+    "codigo": "1.04.001.002",
+    "descricao": "Produtos Terceiros Pão Frances",
+    "nivel": "familia",
+    "parentCodigo": "1.04.001"
+  },
+  {
+    "codigo": "1.04.001.003",
+    "descricao": "Produt. Próp.tortas e bolos",
+    "nivel": "familia",
+    "parentCodigo": "1.04.001"
+  },
+  {
+    "codigo": "1.04.001.004",
+    "descricao": "Produt de Terceiros Biscoitos",
+    "nivel": "familia",
+    "parentCodigo": "1.04.001"
+  },
+  {
+    "codigo": "1.04.001.005",
+    "descricao": "Produt deTerceiros Panettones, Colombas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.001"
+  },
+  {
+    "codigo": "1.04.001.006",
+    "descricao": "Produt deTerceiros Outros",
+    "nivel": "familia",
+    "parentCodigo": "1.04.001"
+  },
+  {
+    "codigo": "1.04.002",
+    "descricao": "Lanchonete (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.002.001",
+    "descricao": "Salgadinhos",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.002",
+    "descricao": "Doces",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.003",
+    "descricao": "Sucos/Vitamina",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.004",
+    "descricao": "Café em Geral",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.005",
+    "descricao": "Sanduiches",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.006",
+    "descricao": "Salada de frutas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.007",
+    "descricao": "Tortas fatia",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.008",
+    "descricao": "Pizza/Empadão",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.002.009",
+    "descricao": "Outros Produtos de Lanchonete",
+    "nivel": "familia",
+    "parentCodigo": "1.04.002"
+  },
+  {
+    "codigo": "1.04.003",
+    "descricao": "Rotisseria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.003.001",
+    "descricao": "Assados em Geral",
+    "nivel": "familia",
+    "parentCodigo": "1.04.003"
+  },
+  {
+    "codigo": "1.04.003.002",
+    "descricao": "Pratos Prontos",
+    "nivel": "familia",
+    "parentCodigo": "1.04.003"
+  },
+  {
+    "codigo": "1.04.004",
+    "descricao": "Peixaria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.004.001",
+    "descricao": "Peixes",
+    "nivel": "familia",
+    "parentCodigo": "1.04.004"
+  },
+  {
+    "codigo": "1.04.004.002",
+    "descricao": "Frutos do Mar",
+    "nivel": "familia",
+    "parentCodigo": "1.04.004"
+  },
+  {
+    "codigo": "1.04.004.003",
+    "descricao": "Bacalhau",
+    "nivel": "familia",
+    "parentCodigo": "1.04.004"
+  },
+  {
+    "codigo": "1.04.005",
+    "descricao": "Restaurante (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.005.001",
+    "descricao": "A la Carte",
+    "nivel": "familia",
+    "parentCodigo": "1.04.005"
+  },
+  {
+    "codigo": "1.04.005.002",
+    "descricao": "Kilo",
+    "nivel": "familia",
+    "parentCodigo": "1.04.005"
+  },
+  {
+    "codigo": "1.04.005.003",
+    "descricao": "Bebidas em Geral",
+    "nivel": "familia",
+    "parentCodigo": "1.04.005"
+  },
+  {
+    "codigo": "1.04.005.004",
+    "descricao": "Sobremesas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.005"
+  },
+  {
+    "codigo": "1.04.005.005",
+    "descricao": "Sorvetes",
+    "nivel": "familia",
+    "parentCodigo": "1.04.005"
+  },
+  {
+    "codigo": "1.04.005.006",
+    "descricao": "Restaurante Outros",
+    "nivel": "familia",
+    "parentCodigo": "1.04.005"
+  },
+  {
+    "codigo": "1.04.006",
+    "descricao": "Friambreria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.006.001",
+    "descricao": "Queijos Mussarela",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.002",
+    "descricao": "Queijos Prato",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.003",
+    "descricao": "Queijos Provolone",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.004",
+    "descricao": "Queijos Parmesao",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.005",
+    "descricao": "Queijos Coalho",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.006",
+    "descricao": "Outros Tipos de Queijo",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.007",
+    "descricao": "Presunto",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.008",
+    "descricao": "Apresuntado",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.009",
+    "descricao": "Mortadela/salame",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.010",
+    "descricao": "Patês / antepasto",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.011",
+    "descricao": "Margarina até 500 gr",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.012",
+    "descricao": "Margarina acima 500 gr até 1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.013",
+    "descricao": "Margarina acima 1kg",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.014",
+    "descricao": "Massas Frescas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.015",
+    "descricao": "Defumados",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.016",
+    "descricao": "Banhas e Gordura Vegetal",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.017",
+    "descricao": "Fermento Fresco",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.006.018",
+    "descricao": "Linguiças/Salsichas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.006"
+  },
+  {
+    "codigo": "1.04.007",
+    "descricao": "Laticínios (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.007.001",
+    "descricao": "Iogurtes até 2kg",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.002",
+    "descricao": "Iogurtes superior 2kg",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.003",
+    "descricao": "Bebidas lacteas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.004",
+    "descricao": "Leites fermentados",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.005",
+    "descricao": "Sobremesas lácteas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.006",
+    "descricao": "Queijos frescos",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.007",
+    "descricao": "Queijos Especiais",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.008",
+    "descricao": "Queijo Ralado",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.009",
+    "descricao": "Manteiga",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.010",
+    "descricao": "Requeijão",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.011",
+    "descricao": "Especialidade Láctea",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.012",
+    "descricao": "Creme de Leite Fresco",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.013",
+    "descricao": "Leite UHT Integral",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.014",
+    "descricao": "Leite UHT Desnatado",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.015",
+    "descricao": "Leite UHT Semi Desnatado",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.016",
+    "descricao": "Leite Pasteurizado",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.007.017",
+    "descricao": "Leite de Cabra",
+    "nivel": "familia",
+    "parentCodigo": "1.04.007"
+  },
+  {
+    "codigo": "1.04.008",
+    "descricao": "Congelados (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.008.001",
+    "descricao": "Legumes",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.002",
+    "descricao": "Massas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.003",
+    "descricao": "Pão de Queijo",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.004",
+    "descricao": "Polpa de Frutas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.005",
+    "descricao": "Salgados",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.006",
+    "descricao": "Sorvetes/picolés",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.007",
+    "descricao": "Pratos prontos",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.008.008",
+    "descricao": "Outros prod. Congelados",
+    "nivel": "familia",
+    "parentCodigo": "1.04.008"
+  },
+  {
+    "codigo": "1.04.009",
+    "descricao": "Empório (a granel) (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.04"
+  },
+  {
+    "codigo": "1.04.009.001",
+    "descricao": "Conservas a granel",
+    "nivel": "familia",
+    "parentCodigo": "1.04.009"
+  },
+  {
+    "codigo": "1.04.009.002",
+    "descricao": "Doces a granel",
+    "nivel": "familia",
+    "parentCodigo": "1.04.009"
+  },
+  {
+    "codigo": "1.04.009.003",
+    "descricao": "Frutas secas e cristalizadas",
+    "nivel": "familia",
+    "parentCodigo": "1.04.009"
+  },
+  {
+    "codigo": "1.04.009.004",
+    "descricao": "Especiarias",
+    "nivel": "familia",
+    "parentCodigo": "1.04.009"
+  },
+  {
+    "codigo": "1.04.009.005",
+    "descricao": "Aperitivos a Granel",
+    "nivel": "familia",
+    "parentCodigo": "1.04.009"
+  },
+  {
+    "codigo": "1.05",
+    "descricao": "Padaria",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.05.001",
+    "descricao": "Padaria Produção Própria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.05"
+  },
+  {
+    "codigo": "1.05.001.001",
+    "descricao": "Produtos Próprios Pães Outros",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.002",
+    "descricao": "Produtos Próprios Pão Frances",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.003",
+    "descricao": "Produtos Própr.Salgados",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.004",
+    "descricao": "Produtos Próp. Biscoitos",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.005",
+    "descricao": "Produtos Próp.Doces",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.006",
+    "descricao": "Pão de Queijo",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.007",
+    "descricao": "Pizza Resfriada Inteira",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.008",
+    "descricao": "Produt. Próp.Tortas e Bolos",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.05.001.009",
+    "descricao": "Produt. Próp. Panettone, Colomba",
+    "nivel": "familia",
+    "parentCodigo": "1.05.001"
+  },
+  {
+    "codigo": "1.06",
+    "descricao": "Açougue",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.06.001",
+    "descricao": "Açougue (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.06"
+  },
+  {
+    "codigo": "1.06.001.001",
+    "descricao": "1- Carnes Bovinas",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.002",
+    "descricao": "2- Carnes Suínas",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.003",
+    "descricao": "3- Carnes Aves Cortes",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.004",
+    "descricao": "4- Frango Inteiro",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.005",
+    "descricao": "5 - Carnes Ovinas e Caprinas",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.006",
+    "descricao": "Carnes Temperadas",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.007",
+    "descricao": "Salsicha, Lingüiça a Granel",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.008",
+    "descricao": "Carnes Salgadas",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.009",
+    "descricao": "Carnes assadas (bov, sui e aves)",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.06.001.010",
+    "descricao": "Carnes Exoticas",
+    "nivel": "familia",
+    "parentCodigo": "1.06.001"
+  },
+  {
+    "codigo": "1.07",
+    "descricao": "Hortifruti",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.07.001",
+    "descricao": "Hortifruti (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.07"
+  },
+  {
+    "codigo": "1.07.001.001",
+    "descricao": "Frutas",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.07.001.002",
+    "descricao": "Verduras",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.07.001.003",
+    "descricao": "Legumes",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.07.001.004",
+    "descricao": "Ovos de galinha",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.07.001.005",
+    "descricao": "Outros Ovos",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.07.001.006",
+    "descricao": "Orgânicos/Hidropônicos",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.07.001.007",
+    "descricao": "Alho",
+    "nivel": "familia",
+    "parentCodigo": "1.07.001"
+  },
+  {
+    "codigo": "1.08",
+    "descricao": "Bebidas",
+    "nivel": "grupo",
+    "parentCodigo": "1"
+  },
+  {
+    "codigo": "1.08.001",
+    "descricao": "Destiladas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.08"
+  },
+  {
+    "codigo": "1.08.001.001",
+    "descricao": "Aguardentes",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.002",
+    "descricao": "Aperitivos Amargos",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.003",
+    "descricao": "Aperitivos Doces",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.004",
+    "descricao": "Champagne/Espumante/Sidra",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.005",
+    "descricao": "Conhaque",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.006",
+    "descricao": "Licores",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.007",
+    "descricao": "Vermouth",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.008",
+    "descricao": "Vodka / Rum / Gin/Tequila",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.001.009",
+    "descricao": "Whisky",
+    "nivel": "familia",
+    "parentCodigo": "1.08.001"
+  },
+  {
+    "codigo": "1.08.002",
+    "descricao": "Vinhos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.08"
+  },
+  {
+    "codigo": "1.08.002.001",
+    "descricao": "Vinho Nacional",
+    "nivel": "familia",
+    "parentCodigo": "1.08.002"
+  },
+  {
+    "codigo": "1.08.002.002",
+    "descricao": "Vinho Importado",
+    "nivel": "familia",
+    "parentCodigo": "1.08.002"
+  },
+  {
+    "codigo": "1.08.003",
+    "descricao": "Cervejas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.08"
+  },
+  {
+    "codigo": "1.08.003.001",
+    "descricao": "Cerveja Lata",
+    "nivel": "familia",
+    "parentCodigo": "1.08.003"
+  },
+  {
+    "codigo": "1.08.003.002",
+    "descricao": "Cerveja Garrafa Vidro Descartavel",
+    "nivel": "familia",
+    "parentCodigo": "1.08.003"
+  },
+  {
+    "codigo": "1.08.003.003",
+    "descricao": "Cerveja Garrafa vidro Retornavel",
+    "nivel": "familia",
+    "parentCodigo": "1.08.003"
+  },
+  {
+    "codigo": "1.08.003.004",
+    "descricao": "Cerveja Garrafa Aluminio",
+    "nivel": "familia",
+    "parentCodigo": "1.08.003"
+  },
+  {
+    "codigo": "1.08.003.005",
+    "descricao": "Cerveja em barril",
+    "nivel": "familia",
+    "parentCodigo": "1.08.003"
+  },
+  {
+    "codigo": "1.08.004",
+    "descricao": "Não Alcoólicas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.08"
+  },
+  {
+    "codigo": "1.08.004.001",
+    "descricao": "Águas Sem Gas",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.004.002",
+    "descricao": "Águas Com Gas",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.004.003",
+    "descricao": "Energéticos/Isotônicos",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.004.004",
+    "descricao": "Refresco Pó",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.004.005",
+    "descricao": "Suco Concentrado",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.004.006",
+    "descricao": "Sucos Prontos",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.004.007",
+    "descricao": "Xaropes",
+    "nivel": "familia",
+    "parentCodigo": "1.08.004"
+  },
+  {
+    "codigo": "1.08.005",
+    "descricao": "Refrigerantes (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "1.08"
+  },
+  {
+    "codigo": "1.08.005.001",
+    "descricao": "Refrigerante Garrafa Pet",
+    "nivel": "familia",
+    "parentCodigo": "1.08.005"
+  },
+  {
+    "codigo": "1.08.005.002",
+    "descricao": "Refrigerante Garrafa Vidro",
+    "nivel": "familia",
+    "parentCodigo": "1.08.005"
+  },
+  {
+    "codigo": "1.08.005.003",
+    "descricao": "Refrigerante Lata",
+    "nivel": "familia",
+    "parentCodigo": "1.08.005"
+  },
+  {
+    "codigo": "2",
+    "descricao": "Não Alimentos",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "2.01",
+    "descricao": "Perfumaria e Cosméticos",
+    "nivel": "grupo",
+    "parentCodigo": "2"
+  },
+  {
+    "codigo": "2.01.001",
+    "descricao": "Absorventes (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.001.001",
+    "descricao": "Absorventes com ou sem abas",
+    "nivel": "familia",
+    "parentCodigo": "2.01.001"
+  },
+  {
+    "codigo": "2.01.001.002",
+    "descricao": "Absorventes especiais",
+    "nivel": "familia",
+    "parentCodigo": "2.01.001"
+  },
+  {
+    "codigo": "2.01.002",
+    "descricao": "Higiene Corporal (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.002.001",
+    "descricao": "Papel Higiênico Folha Simples",
+    "nivel": "familia",
+    "parentCodigo": "2.01.002"
+  },
+  {
+    "codigo": "2.01.002.002",
+    "descricao": "Papel Higiênico Folha Dupla/Tripla",
+    "nivel": "familia",
+    "parentCodigo": "2.01.002"
+  },
+  {
+    "codigo": "2.01.002.003",
+    "descricao": "Absorventes de colchao/lencois",
+    "nivel": "familia",
+    "parentCodigo": "2.01.002"
+  },
+  {
+    "codigo": "2.01.002.004",
+    "descricao": "Esponjas / Escovas Banho",
+    "nivel": "familia",
+    "parentCodigo": "2.01.002"
+  },
+  {
+    "codigo": "2.01.002.005",
+    "descricao": "Hastes Flexíveis",
+    "nivel": "familia",
+    "parentCodigo": "2.01.002"
+  },
+  {
+    "codigo": "2.01.002.006",
+    "descricao": "Lenços Umedecidos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.002"
+  },
+  {
+    "codigo": "2.01.003",
+    "descricao": "Higiene Bebê (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.003.001",
+    "descricao": "Fraldas",
+    "nivel": "familia",
+    "parentCodigo": "2.01.003"
+  },
+  {
+    "codigo": "2.01.003.002",
+    "descricao": "Chupetas infantis",
+    "nivel": "familia",
+    "parentCodigo": "2.01.003"
+  },
+  {
+    "codigo": "2.01.003.003",
+    "descricao": "Mamadeira infantis",
+    "nivel": "familia",
+    "parentCodigo": "2.01.003"
+  },
+  {
+    "codigo": "2.01.003.004",
+    "descricao": "Cremes para Assaduras",
+    "nivel": "familia",
+    "parentCodigo": "2.01.003"
+  },
+  {
+    "codigo": "2.01.003.005",
+    "descricao": "Artigos Diversos p/ Bebês",
+    "nivel": "familia",
+    "parentCodigo": "2.01.003"
+  },
+  {
+    "codigo": "2.01.004",
+    "descricao": "Shampoo (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.004.001",
+    "descricao": "Shampoo uso Humano",
+    "nivel": "familia",
+    "parentCodigo": "2.01.004"
+  },
+  {
+    "codigo": "2.01.004.002",
+    "descricao": "Shampoo Pet",
+    "nivel": "familia",
+    "parentCodigo": "2.01.004"
+  },
+  {
+    "codigo": "2.01.005",
+    "descricao": "Desodorantes (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.005.001",
+    "descricao": "Desodorantes Liquidos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.005"
+  },
+  {
+    "codigo": "2.01.005.002",
+    "descricao": "Desodorantes Cremes",
+    "nivel": "familia",
+    "parentCodigo": "2.01.005"
+  },
+  {
+    "codigo": "2.01.005.003",
+    "descricao": "Outros Desodorantes (exceto liquidos e creme)",
+    "nivel": "familia",
+    "parentCodigo": "2.01.005"
+  },
+  {
+    "codigo": "2.01.006",
+    "descricao": "Sabonetes (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.006.001",
+    "descricao": "Sabonetes  Líquidos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.006"
+  },
+  {
+    "codigo": "2.01.006.002",
+    "descricao": "Sabonetes em barra",
+    "nivel": "familia",
+    "parentCodigo": "2.01.006"
+  },
+  {
+    "codigo": "2.01.006.003",
+    "descricao": "Sabonetes Medicinais",
+    "nivel": "familia",
+    "parentCodigo": "2.01.006"
+  },
+  {
+    "codigo": "2.01.006.004",
+    "descricao": "Sabonetes Pet",
+    "nivel": "familia",
+    "parentCodigo": "2.01.006"
+  },
+  {
+    "codigo": "2.01.007",
+    "descricao": "Higiene Bucal (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.007.001",
+    "descricao": "Creme Dental",
+    "nivel": "familia",
+    "parentCodigo": "2.01.007"
+  },
+  {
+    "codigo": "2.01.007.002",
+    "descricao": "Escovas de Dentes",
+    "nivel": "familia",
+    "parentCodigo": "2.01.007"
+  },
+  {
+    "codigo": "2.01.007.003",
+    "descricao": "Enxaguante Bucal",
+    "nivel": "familia",
+    "parentCodigo": "2.01.007"
+  },
+  {
+    "codigo": "2.01.007.004",
+    "descricao": "Fio Dental",
+    "nivel": "familia",
+    "parentCodigo": "2.01.007"
+  },
+  {
+    "codigo": "2.01.007.005",
+    "descricao": "Acessórios de Higiene Bucal",
+    "nivel": "familia",
+    "parentCodigo": "2.01.007"
+  },
+  {
+    "codigo": "2.01.008",
+    "descricao": "Farmácia (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.008.001",
+    "descricao": "Algodão",
+    "nivel": "familia",
+    "parentCodigo": "2.01.008"
+  },
+  {
+    "codigo": "2.01.008.002",
+    "descricao": "Curativos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.008"
+  },
+  {
+    "codigo": "2.01.008.003",
+    "descricao": "Outros Fármacos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.008"
+  },
+  {
+    "codigo": "2.01.008.004",
+    "descricao": "Preservativos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.008"
+  },
+  {
+    "codigo": "2.01.009",
+    "descricao": "Repelentes (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.009.001",
+    "descricao": "Repelentes uso humano",
+    "nivel": "familia",
+    "parentCodigo": "2.01.009"
+  },
+  {
+    "codigo": "2.01.009.002",
+    "descricao": "Repelentes Eletronicos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.009"
+  },
+  {
+    "codigo": "2.01.010",
+    "descricao": "Bronzeadores (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.010.001",
+    "descricao": "Loções Bronzeadoras",
+    "nivel": "familia",
+    "parentCodigo": "2.01.010"
+  },
+  {
+    "codigo": "2.01.010.002",
+    "descricao": "Filtros Solares",
+    "nivel": "familia",
+    "parentCodigo": "2.01.010"
+  },
+  {
+    "codigo": "2.01.010.003",
+    "descricao": "Óleos Bronzeadores",
+    "nivel": "familia",
+    "parentCodigo": "2.01.010"
+  },
+  {
+    "codigo": "2.01.011",
+    "descricao": "Hidratantes (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.011.001",
+    "descricao": "Cremes Hidratantes",
+    "nivel": "familia",
+    "parentCodigo": "2.01.011"
+  },
+  {
+    "codigo": "2.01.011.002",
+    "descricao": "Loções Hidratantes",
+    "nivel": "familia",
+    "parentCodigo": "2.01.011"
+  },
+  {
+    "codigo": "2.01.012",
+    "descricao": "Colônias (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.012.001",
+    "descricao": "Colônias e Perfumes",
+    "nivel": "familia",
+    "parentCodigo": "2.01.012"
+  },
+  {
+    "codigo": "2.01.012.002",
+    "descricao": "Talcos",
+    "nivel": "familia",
+    "parentCodigo": "2.01.012"
+  },
+  {
+    "codigo": "2.01.013",
+    "descricao": "Produtos Capilares (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.013.001",
+    "descricao": "Condicionadores",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.013.002",
+    "descricao": "Cremes p/ hidrat. e relaxamento",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.013.003",
+    "descricao": "Preparacoes Capilares Diversas",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.013.004",
+    "descricao": "Gel, Fixadores e Mousses",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.013.005",
+    "descricao": "Tinturas",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.013.006",
+    "descricao": "Acessórios Capilares",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.013.007",
+    "descricao": "Preparações para Pet",
+    "nivel": "familia",
+    "parentCodigo": "2.01.013"
+  },
+  {
+    "codigo": "2.01.014",
+    "descricao": "Prod. Manicure (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.014.001",
+    "descricao": "Acetona",
+    "nivel": "familia",
+    "parentCodigo": "2.01.014"
+  },
+  {
+    "codigo": "2.01.014.002",
+    "descricao": "Esmaltes",
+    "nivel": "familia",
+    "parentCodigo": "2.01.014"
+  },
+  {
+    "codigo": "2.01.014.003",
+    "descricao": "Maquiagem",
+    "nivel": "familia",
+    "parentCodigo": "2.01.014"
+  },
+  {
+    "codigo": "2.01.014.004",
+    "descricao": "Acessórios Manicure",
+    "nivel": "familia",
+    "parentCodigo": "2.01.014"
+  },
+  {
+    "codigo": "2.01.014.005",
+    "descricao": "Acessórios depilação",
+    "nivel": "familia",
+    "parentCodigo": "2.01.014"
+  },
+  {
+    "codigo": "2.01.015",
+    "descricao": "Barbearia (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.015.001",
+    "descricao": "Aparelhos Descartáveis",
+    "nivel": "familia",
+    "parentCodigo": "2.01.015"
+  },
+  {
+    "codigo": "2.01.015.002",
+    "descricao": "Cremes e Loções p/ Barbear",
+    "nivel": "familia",
+    "parentCodigo": "2.01.015"
+  },
+  {
+    "codigo": "2.01.015.003",
+    "descricao": "Lâminas (refil)",
+    "nivel": "familia",
+    "parentCodigo": "2.01.015"
+  },
+  {
+    "codigo": "2.01.015.004",
+    "descricao": "Acessórios Barbearia",
+    "nivel": "familia",
+    "parentCodigo": "2.01.015"
+  },
+  {
+    "codigo": "2.01.016",
+    "descricao": "Aparelhos e Equipamentos de Saúde",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.01"
+  },
+  {
+    "codigo": "2.01.016.001",
+    "descricao": "Aparelhos de Saúde (massagem, inalador, oxímetro, etc.)",
+    "nivel": "familia",
+    "parentCodigo": "2.01.016"
+  },
+  {
+    "codigo": "2.02",
+    "descricao": "Limpeza",
+    "nivel": "grupo",
+    "parentCodigo": "2"
+  },
+  {
+    "codigo": "2.02.001",
+    "descricao": "Limpeza de Pisos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.001.001",
+    "descricao": "Limpeza de pisos",
+    "nivel": "familia",
+    "parentCodigo": "2.02.001"
+  },
+  {
+    "codigo": "2.02.001.002",
+    "descricao": "Ceras em Pasta e Líquidas",
+    "nivel": "familia",
+    "parentCodigo": "2.02.001"
+  },
+  {
+    "codigo": "2.02.001.003",
+    "descricao": "Removedores",
+    "nivel": "familia",
+    "parentCodigo": "2.02.001"
+  },
+  {
+    "codigo": "2.02.002",
+    "descricao": "Limpeza de Banheiros (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.002.001",
+    "descricao": "Desinfetantes",
+    "nivel": "familia",
+    "parentCodigo": "2.02.002"
+  },
+  {
+    "codigo": "2.02.002.002",
+    "descricao": "Desodorizadores",
+    "nivel": "familia",
+    "parentCodigo": "2.02.002"
+  },
+  {
+    "codigo": "2.02.002.003",
+    "descricao": "Limpeza pesada",
+    "nivel": "familia",
+    "parentCodigo": "2.02.002"
+  },
+  {
+    "codigo": "2.02.003",
+    "descricao": "Limpeza de Cozinha (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.003.001",
+    "descricao": "Desengordurantes",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.003.002",
+    "descricao": "Desentupidores de Pias",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.003.003",
+    "descricao": "Detergentes Líquidos  e Gel",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.003.004",
+    "descricao": "Limpadores Alumínio e Inox",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.003.005",
+    "descricao": "Limpa Forno",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.003.006",
+    "descricao": "Saponáceos",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.003.007",
+    "descricao": "Produtos p/ Lava Louças",
+    "nivel": "familia",
+    "parentCodigo": "2.02.003"
+  },
+  {
+    "codigo": "2.02.004",
+    "descricao": "Esponjas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.004.001",
+    "descricao": "Esponjas de Aço",
+    "nivel": "familia",
+    "parentCodigo": "2.02.004"
+  },
+  {
+    "codigo": "2.02.004.002",
+    "descricao": "Esponjas Sintéticas",
+    "nivel": "familia",
+    "parentCodigo": "2.02.004"
+  },
+  {
+    "codigo": "2.02.005",
+    "descricao": "Limpeza da Casa (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.005.001",
+    "descricao": "Limpeza Geral",
+    "nivel": "familia",
+    "parentCodigo": "2.02.005"
+  },
+  {
+    "codigo": "2.02.005.002",
+    "descricao": "Multi Uso",
+    "nivel": "familia",
+    "parentCodigo": "2.02.005"
+  },
+  {
+    "codigo": "2.02.005.003",
+    "descricao": "Álcool em Geral",
+    "nivel": "familia",
+    "parentCodigo": "2.02.005"
+  },
+  {
+    "codigo": "2.02.005.004",
+    "descricao": "Limpa vidros",
+    "nivel": "familia",
+    "parentCodigo": "2.02.005"
+  },
+  {
+    "codigo": "2.02.005.005",
+    "descricao": "Purificadores de ar",
+    "nivel": "familia",
+    "parentCodigo": "2.02.005"
+  },
+  {
+    "codigo": "2.02.006",
+    "descricao": "Lavanderia (roupas)  (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.006.001",
+    "descricao": "Sabão em Pó",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.002",
+    "descricao": "Sabão Líquido",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.003",
+    "descricao": "Sabão em Barra",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.004",
+    "descricao": "Amaciantes Roupas",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.005",
+    "descricao": "Água Sanitária",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.006",
+    "descricao": "Alvejantes e Cloro",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.007",
+    "descricao": "Corantes, Tira Manchas, Goma",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.006.008",
+    "descricao": "Produtos p/ Passar Roupas",
+    "nivel": "familia",
+    "parentCodigo": "2.02.006"
+  },
+  {
+    "codigo": "2.02.007",
+    "descricao": "Inseticidas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.007.001",
+    "descricao": "Inseticidas Uso Domestico",
+    "nivel": "familia",
+    "parentCodigo": "2.02.007"
+  },
+  {
+    "codigo": "2.02.008",
+    "descricao": "Polidores (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.008.001",
+    "descricao": "Lustra Metais",
+    "nivel": "familia",
+    "parentCodigo": "2.02.008"
+  },
+  {
+    "codigo": "2.02.008.002",
+    "descricao": "Lustra Móveis",
+    "nivel": "familia",
+    "parentCodigo": "2.02.008"
+  },
+  {
+    "codigo": "2.02.009",
+    "descricao": "Ceras p/ Calçados (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.02"
+  },
+  {
+    "codigo": "2.02.009.001",
+    "descricao": "Pomadas p/ calçados",
+    "nivel": "familia",
+    "parentCodigo": "2.02.009"
+  },
+  {
+    "codigo": "2.02.009.002",
+    "descricao": "Acessórios p/ limpeza de calçado",
+    "nivel": "familia",
+    "parentCodigo": "2.02.009"
+  },
+  {
+    "codigo": "2.03",
+    "descricao": "Bazar em Geral + Têxtil",
+    "nivel": "grupo",
+    "parentCodigo": "2"
+  },
+  {
+    "codigo": "2.03.001",
+    "descricao": "Produtos Automotivos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.001.001",
+    "descricao": "Acessórios Automotivos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.002",
+    "descricao": "Baterias Automotivas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.003",
+    "descricao": "Ceras Automotivas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.004",
+    "descricao": "Desengraxantes e Óleos Lubrificantes",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.005",
+    "descricao": "Desodorizadores",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.006",
+    "descricao": "Estopas e Esponjas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.007",
+    "descricao": "Limpadores  e Lava Autos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.008",
+    "descricao": "Pneus",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.001.009",
+    "descricao": "Acessórios Artesanato",
+    "nivel": "familia",
+    "parentCodigo": "2.03.001"
+  },
+  {
+    "codigo": "2.03.002",
+    "descricao": "Ferramentaria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.002.001",
+    "descricao": "Chuveiros e Torneiras",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.002",
+    "descricao": "Ferragens",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.003",
+    "descricao": "Ferramentas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.004",
+    "descricao": "Lâmpadas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.005",
+    "descricao": "Material Elétrico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.006",
+    "descricao": "Material Hidráulico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.007",
+    "descricao": "Palha de aço",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.008",
+    "descricao": "Colas Uso Geral",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.002.009",
+    "descricao": "Arames",
+    "nivel": "familia",
+    "parentCodigo": "2.03.002"
+  },
+  {
+    "codigo": "2.03.003",
+    "descricao": "Linha Inox (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.003.001",
+    "descricao": "Artefatos uso Domestico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.003"
+  },
+  {
+    "codigo": "2.03.003.002",
+    "descricao": "Facas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.003"
+  },
+  {
+    "codigo": "2.03.003.003",
+    "descricao": "Colheres",
+    "nivel": "familia",
+    "parentCodigo": "2.03.003"
+  },
+  {
+    "codigo": "2.03.003.004",
+    "descricao": "Garfos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.003"
+  },
+  {
+    "codigo": "2.03.004",
+    "descricao": "Alumínios (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.004.001",
+    "descricao": "Artefatos uso Domestico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.004"
+  },
+  {
+    "codigo": "2.03.005",
+    "descricao": "Utilidades Cozinha (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.005.001",
+    "descricao": "Artigos de Cozinha de Madeira",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.002",
+    "descricao": "Artigos de Cozinha de Plastico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.003",
+    "descricao": "Artigos de Cozinha de Bambu",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.004",
+    "descricao": "Filtros em Geral, Vela p/ Filtro",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.005",
+    "descricao": "Fósforo",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.006",
+    "descricao": "Isqueiro",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.007",
+    "descricao": "Acendedor",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.005.008",
+    "descricao": "Outras Utilidades Cozinha",
+    "nivel": "familia",
+    "parentCodigo": "2.03.005"
+  },
+  {
+    "codigo": "2.03.006",
+    "descricao": "Acessórios para Café (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.006.001",
+    "descricao": "Coadores de Pano",
+    "nivel": "familia",
+    "parentCodigo": "2.03.006"
+  },
+  {
+    "codigo": "2.03.006.002",
+    "descricao": "Filtros de Papel",
+    "nivel": "familia",
+    "parentCodigo": "2.03.006"
+  },
+  {
+    "codigo": "2.03.006.003",
+    "descricao": "Garrafa Térmica",
+    "nivel": "familia",
+    "parentCodigo": "2.03.006"
+  },
+  {
+    "codigo": "2.03.006.004",
+    "descricao": "Suportes para Filtro de Papel",
+    "nivel": "familia",
+    "parentCodigo": "2.03.006"
+  },
+  {
+    "codigo": "2.03.007",
+    "descricao": "Vidros, cristais, porcelana (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.007.001",
+    "descricao": "Aparelhos de jantar",
+    "nivel": "familia",
+    "parentCodigo": "2.03.007"
+  },
+  {
+    "codigo": "2.03.007.002",
+    "descricao": "Copos, taças e Xícaras",
+    "nivel": "familia",
+    "parentCodigo": "2.03.007"
+  },
+  {
+    "codigo": "2.03.007.003",
+    "descricao": "Jarras e garrafas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.007"
+  },
+  {
+    "codigo": "2.03.007.004",
+    "descricao": "Pratos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.007"
+  },
+  {
+    "codigo": "2.03.007.005",
+    "descricao": "Refratários, assadeiras e formas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.007"
+  },
+  {
+    "codigo": "2.03.008",
+    "descricao": "Plásticos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.008.001",
+    "descricao": "Baldes, Cestos e bacias",
+    "nivel": "familia",
+    "parentCodigo": "2.03.008"
+  },
+  {
+    "codigo": "2.03.008.002",
+    "descricao": "Cabides",
+    "nivel": "familia",
+    "parentCodigo": "2.03.008"
+  },
+  {
+    "codigo": "2.03.008.003",
+    "descricao": "Objetos de uso Domestico Geral",
+    "nivel": "familia",
+    "parentCodigo": "2.03.008"
+  },
+  {
+    "codigo": "2.03.009",
+    "descricao": "Descartáveis (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.009.001",
+    "descricao": "Embalagens Plásticas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.002",
+    "descricao": "Embalagens Térmicas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.003",
+    "descricao": "Bandejas e Formas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.004",
+    "descricao": "Filme PVC",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.005",
+    "descricao": "Guardanapos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.006",
+    "descricao": "Papel Alumínio/Laminado/Manteiga",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.007",
+    "descricao": "Toalha Papel",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.009.008",
+    "descricao": "Canudos descartaveis",
+    "nivel": "familia",
+    "parentCodigo": "2.03.009"
+  },
+  {
+    "codigo": "2.03.010",
+    "descricao": "Festas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.010.001",
+    "descricao": "Talheres, Copos e Pratos Descartáveis",
+    "nivel": "familia",
+    "parentCodigo": "2.03.010"
+  },
+  {
+    "codigo": "2.03.010.002",
+    "descricao": "Velas aniversário",
+    "nivel": "familia",
+    "parentCodigo": "2.03.010"
+  },
+  {
+    "codigo": "2.03.010.003",
+    "descricao": "Acessórios p/ Festa",
+    "nivel": "familia",
+    "parentCodigo": "2.03.010"
+  },
+  {
+    "codigo": "2.03.011",
+    "descricao": "Encartelados (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.011.001",
+    "descricao": "Encartelados Cozinha",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.002",
+    "descricao": "Encartelados Elétrico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.003",
+    "descricao": "Encartelados Ferragens",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.004",
+    "descricao": "Encartelados Ferramentas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.005",
+    "descricao": "Encartelados Hidráulico",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.006",
+    "descricao": "Encartelados Manicure",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.007",
+    "descricao": "Encartelados Uso pessoal",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.011.008",
+    "descricao": "Outros  Encartelados",
+    "nivel": "familia",
+    "parentCodigo": "2.03.011"
+  },
+  {
+    "codigo": "2.03.012",
+    "descricao": "Limpeza Caseira (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.012.001",
+    "descricao": "Acessórios limpeza de casa",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.012.002",
+    "descricao": "Cordas Varal, Varal Teto, Pregadores",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.012.003",
+    "descricao": "Escovas Roupas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.012.004",
+    "descricao": "Flanelas e Panos de Limpeza",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.012.005",
+    "descricao": "Rodos, Vassouras e pás",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.012.006",
+    "descricao": "Sacos para Lixo",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.012.007",
+    "descricao": "Tábuas de passar roupas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.012"
+  },
+  {
+    "codigo": "2.03.013",
+    "descricao": "Papelaria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.013.001",
+    "descricao": "Acessórios Escolares",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.002",
+    "descricao": "Cadernos, agendas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.003",
+    "descricao": "Canetas / Lápis",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.004",
+    "descricao": "Colas Escolar",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.005",
+    "descricao": "Livros e revistas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.006",
+    "descricao": "Mochilas, Pastas e Fichários",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.007",
+    "descricao": "Cartões comemorativos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.013.008",
+    "descricao": "Tintas Artisticas e Guache",
+    "nivel": "familia",
+    "parentCodigo": "2.03.013"
+  },
+  {
+    "codigo": "2.03.014",
+    "descricao": "Camping e Pesca (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.014.001",
+    "descricao": "Artigos de Pescaria",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.002",
+    "descricao": "Náutica",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.003",
+    "descricao": "Barracas, Mesas e Cadeiras Plásticas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.004",
+    "descricao": "Carvão",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.005",
+    "descricao": "Churrasqueira",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.006",
+    "descricao": "Espetos e Grelhas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.007",
+    "descricao": "Isopor e caixa térmica",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.014.008",
+    "descricao": "Lanternas, lampiões e lamparinas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.014"
+  },
+  {
+    "codigo": "2.03.015",
+    "descricao": "Brinquedos (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.015.001",
+    "descricao": "Baralhos/jogos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.015"
+  },
+  {
+    "codigo": "2.03.015.002",
+    "descricao": "Brinquedos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.015"
+  },
+  {
+    "codigo": "2.03.016",
+    "descricao": "Horta e Jardim (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.016.001",
+    "descricao": "Acessórios Jardinagem",
+    "nivel": "familia",
+    "parentCodigo": "2.03.016"
+  },
+  {
+    "codigo": "2.03.016.002",
+    "descricao": "Adubos e Fertilizantes",
+    "nivel": "familia",
+    "parentCodigo": "2.03.016"
+  },
+  {
+    "codigo": "2.03.016.003",
+    "descricao": "Folhagens e Flores",
+    "nivel": "familia",
+    "parentCodigo": "2.03.016"
+  },
+  {
+    "codigo": "2.03.016.004",
+    "descricao": "Móveis",
+    "nivel": "familia",
+    "parentCodigo": "2.03.016"
+  },
+  {
+    "codigo": "2.03.016.005",
+    "descricao": "Vasos e Pratos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.016"
+  },
+  {
+    "codigo": "2.03.016.006",
+    "descricao": "Sementes",
+    "nivel": "familia",
+    "parentCodigo": "2.03.016"
+  },
+  {
+    "codigo": "2.03.017",
+    "descricao": "Rações (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.017.001",
+    "descricao": "Acessórios de pet shop",
+    "nivel": "familia",
+    "parentCodigo": "2.03.017"
+  },
+  {
+    "codigo": "2.03.017.002",
+    "descricao": "Ração p/ Aves",
+    "nivel": "familia",
+    "parentCodigo": "2.03.017"
+  },
+  {
+    "codigo": "2.03.017.003",
+    "descricao": "Ração p/ Cães e Gatos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.017"
+  },
+  {
+    "codigo": "2.03.017.004",
+    "descricao": "Arroz Para Pet",
+    "nivel": "familia",
+    "parentCodigo": "2.03.017"
+  },
+  {
+    "codigo": "2.03.017.005",
+    "descricao": "Outras rações",
+    "nivel": "familia",
+    "parentCodigo": "2.03.017"
+  },
+  {
+    "codigo": "2.03.018",
+    "descricao": "Tabacaria (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.018.001",
+    "descricao": "Acessórios e Presentes Tabacaria",
+    "nivel": "familia",
+    "parentCodigo": "2.03.018"
+  },
+  {
+    "codigo": "2.03.018.002",
+    "descricao": "Cigarros",
+    "nivel": "familia",
+    "parentCodigo": "2.03.018"
+  },
+  {
+    "codigo": "2.03.018.003",
+    "descricao": "Fumo de rolo ou corda",
+    "nivel": "familia",
+    "parentCodigo": "2.03.018"
+  },
+  {
+    "codigo": "2.03.019",
+    "descricao": "Calçados (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.019.001",
+    "descricao": "Chinelos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.019"
+  },
+  {
+    "codigo": "2.03.019.002",
+    "descricao": "Sapatos e Botas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.019"
+  },
+  {
+    "codigo": "2.03.019.003",
+    "descricao": "Tênis",
+    "nivel": "familia",
+    "parentCodigo": "2.03.019"
+  },
+  {
+    "codigo": "2.03.020",
+    "descricao": "Roupas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.020.001",
+    "descricao": "Roupas Bebê",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.020.002",
+    "descricao": "Roupas Infanto Juvenis",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.020.003",
+    "descricao": "Roupas Femininas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.020.004",
+    "descricao": "Roupas Masculinas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.020.005",
+    "descricao": "Acessórios Vestuário",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.020.006",
+    "descricao": "Armarinho",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.020.007",
+    "descricao": "Acessórios Pessoais (Guarda-chuva, Bengala)",
+    "nivel": "familia",
+    "parentCodigo": "2.03.020"
+  },
+  {
+    "codigo": "2.03.021",
+    "descricao": "Cama, Mesa e Banho (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.021.001",
+    "descricao": "Cama",
+    "nivel": "familia",
+    "parentCodigo": "2.03.021"
+  },
+  {
+    "codigo": "2.03.021.002",
+    "descricao": "Mesa",
+    "nivel": "familia",
+    "parentCodigo": "2.03.021"
+  },
+  {
+    "codigo": "2.03.021.003",
+    "descricao": "Banho",
+    "nivel": "familia",
+    "parentCodigo": "2.03.021"
+  },
+  {
+    "codigo": "2.03.021.004",
+    "descricao": "Cozinha",
+    "nivel": "familia",
+    "parentCodigo": "2.03.021"
+  },
+  {
+    "codigo": "2.03.021.005",
+    "descricao": "Tapetes",
+    "nivel": "familia",
+    "parentCodigo": "2.03.021"
+  },
+  {
+    "codigo": "2.03.022",
+    "descricao": "Serviços e Créditos",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.022.001",
+    "descricao": "Recargas e Créditos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.022"
+  },
+  {
+    "codigo": "2.03.023",
+    "descricao": "Joalheria e Bijuteria",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.023.001",
+    "descricao": "Joias e Bijuterias",
+    "nivel": "familia",
+    "parentCodigo": "2.03.023"
+  },
+  {
+    "codigo": "2.03.023.002",
+    "descricao": "Relógios",
+    "nivel": "familia",
+    "parentCodigo": "2.03.023"
+  },
+  {
+    "codigo": "2.03.024",
+    "descricao": "Ótica",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.024.001",
+    "descricao": "Ótica",
+    "nivel": "familia",
+    "parentCodigo": "2.03.024"
+  },
+  {
+    "codigo": "2.03.024.002",
+    "descricao": "Óculos de Sol e Armações",
+    "nivel": "familia",
+    "parentCodigo": "2.03.024"
+  },
+  {
+    "codigo": "2.03.024.003",
+    "descricao": "Óculos de Proteção e Natação",
+    "nivel": "familia",
+    "parentCodigo": "2.03.024"
+  },
+  {
+    "codigo": "2.03.024.004",
+    "descricao": "Binóculos e Telescópios",
+    "nivel": "familia",
+    "parentCodigo": "2.03.024"
+  },
+  {
+    "codigo": "2.03.025",
+    "descricao": "Instrumentos Musicais",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.025.001",
+    "descricao": "Instrumentos Musicais",
+    "nivel": "familia",
+    "parentCodigo": "2.03.025"
+  },
+  {
+    "codigo": "2.03.025.002",
+    "descricao": "Instrumentos de Corda",
+    "nivel": "familia",
+    "parentCodigo": "2.03.025"
+  },
+  {
+    "codigo": "2.03.025.003",
+    "descricao": "Instrumentos de Sopro",
+    "nivel": "familia",
+    "parentCodigo": "2.03.025"
+  },
+  {
+    "codigo": "2.03.025.004",
+    "descricao": "Instrumentos de Percussão",
+    "nivel": "familia",
+    "parentCodigo": "2.03.025"
+  },
+  {
+    "codigo": "2.03.025.005",
+    "descricao": "Outros Instrumentos e Acessórios",
+    "nivel": "familia",
+    "parentCodigo": "2.03.025"
+  },
+  {
+    "codigo": "2.03.026",
+    "descricao": "Armas e Acessórios",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.026.001",
+    "descricao": "Armas e Acessórios",
+    "nivel": "familia",
+    "parentCodigo": "2.03.026"
+  },
+  {
+    "codigo": "2.03.026.002",
+    "descricao": "Armas de Pressão e Ar Comprimido",
+    "nivel": "familia",
+    "parentCodigo": "2.03.026"
+  },
+  {
+    "codigo": "2.03.026.003",
+    "descricao": "Munições e Acessórios",
+    "nivel": "familia",
+    "parentCodigo": "2.03.026"
+  },
+  {
+    "codigo": "2.03.027",
+    "descricao": "Artigos Esportivos",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.03"
+  },
+  {
+    "codigo": "2.03.027.001",
+    "descricao": "Artigos Esportivos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.027"
+  },
+  {
+    "codigo": "2.03.027.002",
+    "descricao": "Esportes Aquáticos",
+    "nivel": "familia",
+    "parentCodigo": "2.03.027"
+  },
+  {
+    "codigo": "2.03.027.003",
+    "descricao": "Tênis e Raquetes",
+    "nivel": "familia",
+    "parentCodigo": "2.03.027"
+  },
+  {
+    "codigo": "2.03.027.004",
+    "descricao": "Bolas",
+    "nivel": "familia",
+    "parentCodigo": "2.03.027"
+  },
+  {
+    "codigo": "2.03.027.005",
+    "descricao": "Ginástica e Atletismo",
+    "nivel": "familia",
+    "parentCodigo": "2.03.027"
+  },
+  {
+    "codigo": "2.04",
+    "descricao": "Agroveterinário",
+    "nivel": "grupo",
+    "parentCodigo": "2"
+  },
+  {
+    "codigo": "2.04.001",
+    "descricao": "Desinfetante Veterinário (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.001.001",
+    "descricao": "Desinfetante Veterinário",
+    "nivel": "familia",
+    "parentCodigo": "2.04.001"
+  },
+  {
+    "codigo": "2.04.002",
+    "descricao": "Domissanitário (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.002.001",
+    "descricao": "Formicida / Isca",
+    "nivel": "familia",
+    "parentCodigo": "2.04.002"
+  },
+  {
+    "codigo": "2.04.002.002",
+    "descricao": "Inseticidas, Herbicidas e Fertilizantes",
+    "nivel": "familia",
+    "parentCodigo": "2.04.002"
+  },
+  {
+    "codigo": "2.04.002.003",
+    "descricao": "Raticida",
+    "nivel": "familia",
+    "parentCodigo": "2.04.002"
+  },
+  {
+    "codigo": "2.04.003",
+    "descricao": "Higiene Veterinária (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.003.001",
+    "descricao": "Higiene Veterinária",
+    "nivel": "familia",
+    "parentCodigo": "2.04.003"
+  },
+  {
+    "codigo": "2.04.004",
+    "descricao": "Identificador Veterinário (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.004.001",
+    "descricao": "Identificador Veterinário",
+    "nivel": "familia",
+    "parentCodigo": "2.04.004"
+  },
+  {
+    "codigo": "2.04.005",
+    "descricao": "INSETICIDA VETERINARIO (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.005.001",
+    "descricao": "Inseticida Veterinário",
+    "nivel": "familia",
+    "parentCodigo": "2.04.005"
+  },
+  {
+    "codigo": "2.04.005.002",
+    "descricao": "Mata Bicheira",
+    "nivel": "familia",
+    "parentCodigo": "2.04.005"
+  },
+  {
+    "codigo": "2.04.006",
+    "descricao": "Luva Veterinária (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.006.001",
+    "descricao": "Luva Veterinária",
+    "nivel": "familia",
+    "parentCodigo": "2.04.006"
+  },
+  {
+    "codigo": "2.04.007",
+    "descricao": "MEDICAMENTO (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.007.001",
+    "descricao": "Vitamina, Estimulante, Tônico Fortificante",
+    "nivel": "familia",
+    "parentCodigo": "2.04.007"
+  },
+  {
+    "codigo": "2.04.007.002",
+    "descricao": "Anti-Inflamatório, Antitérmico",
+    "nivel": "familia",
+    "parentCodigo": "2.04.007"
+  },
+  {
+    "codigo": "2.04.007.003",
+    "descricao": "Antibiótico",
+    "nivel": "familia",
+    "parentCodigo": "2.04.007"
+  },
+  {
+    "codigo": "2.04.007.004",
+    "descricao": "Antitóxico",
+    "nivel": "familia",
+    "parentCodigo": "2.04.007"
+  },
+  {
+    "codigo": "2.04.007.005",
+    "descricao": "Hormônio",
+    "nivel": "familia",
+    "parentCodigo": "2.04.007"
+  },
+  {
+    "codigo": "2.04.007.006",
+    "descricao": "Uuguento",
+    "nivel": "familia",
+    "parentCodigo": "2.04.007"
+  },
+  {
+    "codigo": "2.04.008",
+    "descricao": "Seringa / Agulha Veterinária (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.008.001",
+    "descricao": "Seringa / Agulha Veterinária",
+    "nivel": "familia",
+    "parentCodigo": "2.04.008"
+  },
+  {
+    "codigo": "2.04.009",
+    "descricao": "Utensílio Veterinário (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.009.001",
+    "descricao": "Mamadeira / Desmamador Veterinário",
+    "nivel": "familia",
+    "parentCodigo": "2.04.009"
+  },
+  {
+    "codigo": "2.04.010",
+    "descricao": "Vermífugo Veterinário (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.04"
+  },
+  {
+    "codigo": "2.04.010.001",
+    "descricao": "Vermífugo",
+    "nivel": "familia",
+    "parentCodigo": "2.04.010"
+  },
+  {
+    "codigo": "2.05",
+    "descricao": "Eletro",
+    "nivel": "grupo",
+    "parentCodigo": "2"
+  },
+  {
+    "codigo": "2.05.001",
+    "descricao": "Eletrodomésticos em Geral (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "2.05"
+  },
+  {
+    "codigo": "2.05.001.001",
+    "descricao": "Portáteis",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.002",
+    "descricao": "CD - DVD",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.003",
+    "descricao": "Celulares/Telefonia/Tablets",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.004",
+    "descricao": "Cine Foto Som -pilhas",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.005",
+    "descricao": "Informática",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.006",
+    "descricao": "Linha Branca",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.007",
+    "descricao": "Móveis e Colchões",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "2.05.001.008",
+    "descricao": "Televisores",
+    "nivel": "familia",
+    "parentCodigo": "2.05.001"
+  },
+  {
+    "codigo": "3",
+    "descricao": "Apropriações",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "3.01",
+    "descricao": "Insumos de Produção",
+    "nivel": "grupo",
+    "parentCodigo": "3"
+  },
+  {
+    "codigo": "3.01.001",
+    "descricao": "Matéria Prima Produção (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "3.01"
+  },
+  {
+    "codigo": "3.01.001.001",
+    "descricao": "Açougue",
+    "nivel": "familia",
+    "parentCodigo": "3.01.001"
+  },
+  {
+    "codigo": "3.01.001.002",
+    "descricao": "Padaria",
+    "nivel": "familia",
+    "parentCodigo": "3.01.001"
+  },
+  {
+    "codigo": "3.01.001.003",
+    "descricao": "Restaurante e/ou Rotisseria",
+    "nivel": "familia",
+    "parentCodigo": "3.01.001"
+  },
+  {
+    "codigo": "3.02",
+    "descricao": "Materiais para Uso",
+    "nivel": "grupo",
+    "parentCodigo": "3"
+  },
+  {
+    "codigo": "3.02.001",
+    "descricao": "Almoxarifado (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "3.02"
+  },
+  {
+    "codigo": "3.02.001.001",
+    "descricao": "1-Embalagens Açougue",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.002",
+    "descricao": "2-Embalagens Frente de loja",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.003",
+    "descricao": "3-Embalagens Padaria",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.004",
+    "descricao": "4-Embalagens do Horti",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.005",
+    "descricao": "5-Materiais p/ escritório",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.006",
+    "descricao": "6-Materiais p/ uso informática",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.007",
+    "descricao": "7-Materiais p/ limpeza",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.02.001.008",
+    "descricao": "8-Materiais EPI e uniformes",
+    "nivel": "familia",
+    "parentCodigo": "3.02.001"
+  },
+  {
+    "codigo": "3.03",
+    "descricao": "Despesas",
+    "nivel": "grupo",
+    "parentCodigo": "3"
+  },
+  {
+    "codigo": "3.03.001",
+    "descricao": "Apropriação de Despesas (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "3.03"
+  },
+  {
+    "codigo": "3.03.001.001",
+    "descricao": "1-Despesas Administrativas",
+    "nivel": "familia",
+    "parentCodigo": "3.03.001"
+  },
+  {
+    "codigo": "3.03.001.002",
+    "descricao": "2-Taxa de Entrega",
+    "nivel": "familia",
+    "parentCodigo": "3.03.001"
+  },
+  {
+    "codigo": "3.03.001.003",
+    "descricao": "3-Transporte",
+    "nivel": "familia",
+    "parentCodigo": "3.03.001"
+  },
+  {
+    "codigo": "3.03.001.004",
+    "descricao": "4-Outras",
+    "nivel": "familia",
+    "parentCodigo": "3.03.001"
+  },
+  {
+    "codigo": "3.04",
+    "descricao": "Ativo Imobilizado",
+    "nivel": "grupo",
+    "parentCodigo": "3"
+  },
+  {
+    "codigo": "3.04.001",
+    "descricao": "Ativo Imobilizado (GRUPO)",
+    "nivel": "subgrupo",
+    "parentCodigo": "3.04"
+  },
+  {
+    "codigo": "3.04.001.001",
+    "descricao": "1-Imóveis",
+    "nivel": "familia",
+    "parentCodigo": "3.04.001"
+  },
+  {
+    "codigo": "3.04.001.002",
+    "descricao": "2-Máquinas & Utensílios",
+    "nivel": "familia",
+    "parentCodigo": "3.04.001"
+  },
+  {
+    "codigo": "3.04.001.003",
+    "descricao": "3-Móveis",
+    "nivel": "familia",
+    "parentCodigo": "3.04.001"
+  },
+  {
+    "codigo": "3.05",
+    "descricao": "Resíduos e Reciclagem",
+    "nivel": "grupo",
+    "parentCodigo": "3"
+  },
+  {
+    "codigo": "3.05.001",
+    "descricao": "Resíduos e Reciclagem",
+    "nivel": "subgrupo",
+    "parentCodigo": "3.05"
+  },
+  {
+    "codigo": "3.05.001.001",
+    "descricao": "Resíduos e Sucatas para Reciclagem",
+    "nivel": "familia",
+    "parentCodigo": "3.05.001"
+  },
+  {
+    "codigo": "3.06",
+    "descricao": "Administrativo",
+    "nivel": "grupo",
+    "parentCodigo": "3"
+  },
+  {
+    "codigo": "3.06.001",
+    "descricao": "Administrativo",
+    "nivel": "subgrupo",
+    "parentCodigo": "3.06"
+  },
+  {
+    "codigo": "3.06.001.001",
+    "descricao": "Apropriações Administrativas",
+    "nivel": "familia",
+    "parentCodigo": "3.06.001"
+  },
+  {
+    "codigo": "4",
+    "descricao": "Animais Vivos",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "4.01",
+    "descricao": "Para Abate",
+    "nivel": "grupo",
+    "parentCodigo": "4"
+  },
+  {
+    "codigo": "4.01.001",
+    "descricao": "Animais Vivos para Abate",
+    "nivel": "subgrupo",
+    "parentCodigo": "4.01"
+  },
+  {
+    "codigo": "4.01.001.001",
+    "descricao": "Animais para Abate (Bovinos, Suínos)",
+    "nivel": "familia",
+    "parentCodigo": "4.01.001"
+  },
+  {
+    "codigo": "4.01.001.002",
+    "descricao": "Animais para Abate (Aves)",
+    "nivel": "familia",
+    "parentCodigo": "4.01.001"
+  },
+  {
+    "codigo": "4.02",
+    "descricao": "Para Reprodução",
+    "nivel": "grupo",
+    "parentCodigo": "4"
+  },
+  {
+    "codigo": "4.02.001",
+    "descricao": "Animais Vivos para Reprodução",
+    "nivel": "subgrupo",
+    "parentCodigo": "4.02"
+  },
+  {
+    "codigo": "4.02.001.001",
+    "descricao": "Animais para Reprodção (Bovinos, Suínos)",
+    "nivel": "familia",
+    "parentCodigo": "4.02.001"
+  },
+  {
+    "codigo": "4.02.001.002",
+    "descricao": "Animais para Reprodução (Aves)",
+    "nivel": "familia",
+    "parentCodigo": "4.02.001"
+  },
+  {
+    "codigo": "4.03",
+    "descricao": "Pet Shop",
+    "nivel": "grupo",
+    "parentCodigo": "4"
+  },
+  {
+    "codigo": "4.03.001",
+    "descricao": "Animais de Estimação Vivos (Pet)",
+    "nivel": "subgrupo",
+    "parentCodigo": "4.03"
+  },
+  {
+    "codigo": "4.03.001.001",
+    "descricao": "Animais de Estimação Vivos (Pet)",
+    "nivel": "familia",
+    "parentCodigo": "4.03.001"
+  },
+  {
+    "codigo": "5",
+    "descricao": "Material de Construção",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "5.01",
+    "descricao": "Cimento e Argamassas",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.01.001",
+    "descricao": "Cimento e Argamassas",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.01"
+  },
+  {
+    "codigo": "5.01.001.001",
+    "descricao": "Cimento",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.01.001.002",
+    "descricao": "Argamassas e Rejuntes",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.01.001.003",
+    "descricao": "Impermeabilizantes",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.01.001.004",
+    "descricao": "Areia e Agregados",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.01.001.005",
+    "descricao": "Pedra Britada",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.01.001.006",
+    "descricao": "Cal e Gesso",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.01.001.007",
+    "descricao": "Aditivos para Cimento",
+    "nivel": "familia",
+    "parentCodigo": "5.01.001"
+  },
+  {
+    "codigo": "5.02",
+    "descricao": "Madeiras e Derivados",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.02.001",
+    "descricao": "Madeiras e Derivados",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.02"
+  },
+  {
+    "codigo": "5.02.001.001",
+    "descricao": "Madeira Serrada",
+    "nivel": "familia",
+    "parentCodigo": "5.02.001"
+  },
+  {
+    "codigo": "5.02.001.002",
+    "descricao": "Compensados e MDF",
+    "nivel": "familia",
+    "parentCodigo": "5.02.001"
+  },
+  {
+    "codigo": "5.02.001.003",
+    "descricao": "Pisos e Revestimentos de Madeira",
+    "nivel": "familia",
+    "parentCodigo": "5.02.001"
+  },
+  {
+    "codigo": "5.03",
+    "descricao": "Metais e Tubulações",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.03.001",
+    "descricao": "Metais e Tubulações",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.03"
+  },
+  {
+    "codigo": "5.03.001.001",
+    "descricao": "Vergalhões e Perfis de Aço",
+    "nivel": "familia",
+    "parentCodigo": "5.03.001"
+  },
+  {
+    "codigo": "5.03.001.002",
+    "descricao": "Tubos e Conexões",
+    "nivel": "familia",
+    "parentCodigo": "5.03.001"
+  },
+  {
+    "codigo": "5.03.001.003",
+    "descricao": "Alumínio (perfis, chapas, tubos)",
+    "nivel": "familia",
+    "parentCodigo": "5.03.001"
+  },
+  {
+    "codigo": "5.03.001.004",
+    "descricao": "Cobre e Outros Metais",
+    "nivel": "familia",
+    "parentCodigo": "5.03.001"
+  },
+  {
+    "codigo": "5.03.001.005",
+    "descricao": "Parafusos, Rebites e Fixadores",
+    "nivel": "familia",
+    "parentCodigo": "5.03.001"
+  },
+  {
+    "codigo": "5.04",
+    "descricao": "Cerâmica e Vidro",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.04.001",
+    "descricao": "Cerâmica e Vidro",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.04"
+  },
+  {
+    "codigo": "5.04.001.001",
+    "descricao": "Pisos e Revestimentos Cerâmicos",
+    "nivel": "familia",
+    "parentCodigo": "5.04.001"
+  },
+  {
+    "codigo": "5.04.001.002",
+    "descricao": "Tijolos, Blocos e Telhas",
+    "nivel": "familia",
+    "parentCodigo": "5.04.001"
+  },
+  {
+    "codigo": "5.04.001.003",
+    "descricao": "Vidros e Espelhos",
+    "nivel": "familia",
+    "parentCodigo": "5.04.001"
+  },
+  {
+    "codigo": "5.04.001.004",
+    "descricao": "Louças Sanitárias",
+    "nivel": "familia",
+    "parentCodigo": "5.04.001"
+  },
+  {
+    "codigo": "5.05",
+    "descricao": "Tintas e Acabamentos",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.05.001",
+    "descricao": "Tintas e Acabamentos",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.05"
+  },
+  {
+    "codigo": "5.05.001.001",
+    "descricao": "Tintas e Vernizes",
+    "nivel": "familia",
+    "parentCodigo": "5.05.001"
+  },
+  {
+    "codigo": "5.05.001.002",
+    "descricao": "Solventes e Diluentes",
+    "nivel": "familia",
+    "parentCodigo": "5.05.001"
+  },
+  {
+    "codigo": "5.05.001.003",
+    "descricao": "Massa Corrida e Seladores",
+    "nivel": "familia",
+    "parentCodigo": "5.05.001"
+  },
+  {
+    "codigo": "5.05.001.004",
+    "descricao": "Corantes e Pigmentos",
+    "nivel": "familia",
+    "parentCodigo": "5.05.001"
+  },
+  {
+    "codigo": "5.05.001.005",
+    "descricao": "Pincéis e Rolos de Pintura",
+    "nivel": "familia",
+    "parentCodigo": "5.05.001"
+  },
+  {
+    "codigo": "5.06",
+    "descricao": "Instalações",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.06.001",
+    "descricao": "Instalações",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.06"
+  },
+  {
+    "codigo": "5.06.001.001",
+    "descricao": "Tubulações e Conexões",
+    "nivel": "familia",
+    "parentCodigo": "5.06.001"
+  },
+  {
+    "codigo": "5.06.001.002",
+    "descricao": "Ferragens e Fixadores",
+    "nivel": "familia",
+    "parentCodigo": "5.06.001"
+  },
+  {
+    "codigo": "5.06.001.003",
+    "descricao": "Portas, Janelas e Esquadrias",
+    "nivel": "familia",
+    "parentCodigo": "5.06.001"
+  },
+  {
+    "codigo": "5.06.001.004",
+    "descricao": "Revestimentos de Piso e Parede",
+    "nivel": "familia",
+    "parentCodigo": "5.06.001"
+  },
+  {
+    "codigo": "5.06.001.005",
+    "descricao": "Lonas e Toldos",
+    "nivel": "familia",
+    "parentCodigo": "5.06.001"
+  },
+  {
+    "codigo": "5.06.001.006",
+    "descricao": "Reservatórios e Caixas d'água",
+    "nivel": "familia",
+    "parentCodigo": "5.06.001"
+  },
+  {
+    "codigo": "5.07",
+    "descricao": "Insumos Diversos",
+    "nivel": "grupo",
+    "parentCodigo": "5"
+  },
+  {
+    "codigo": "5.07.001",
+    "descricao": "Insumos Diversos",
+    "nivel": "subgrupo",
+    "parentCodigo": "5.07"
+  },
+  {
+    "codigo": "5.07.001.001",
+    "descricao": "Matérias-Primas Químicas",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.002",
+    "descricao": "Produtos Químicos para Piscina",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.003",
+    "descricao": "Insumos de Escritório e Gráfica",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.004",
+    "descricao": "Embalagens Industriais",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.005",
+    "descricao": "Ferramentas e Abrasivos",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.006",
+    "descricao": "Equipamentos Comerciais",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.007",
+    "descricao": "Materiais Explosivos e Pirotécnicos",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "5.07.001.008",
+    "descricao": "Couros e Matérias-Primas Têxteis",
+    "nivel": "familia",
+    "parentCodigo": "5.07.001"
+  },
+  {
+    "codigo": "6",
+    "descricao": "Automotivo",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "6.01",
+    "descricao": "Combustíveis e Lubrificantes",
+    "nivel": "grupo",
+    "parentCodigo": "6"
+  },
+  {
+    "codigo": "6.01.001",
+    "descricao": "Combustíveis e Lubrificantes",
+    "nivel": "subgrupo",
+    "parentCodigo": "6.01"
+  },
+  {
+    "codigo": "6.01.001.001",
+    "descricao": "Gasolina",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.01.001.002",
+    "descricao": "Diesel",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.01.001.003",
+    "descricao": "Querosene",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.01.001.004",
+    "descricao": "GLP e Gases",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.01.001.005",
+    "descricao": "Óleos Lubrificantes",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.01.001.006",
+    "descricao": "Aditivos e Fluidos Automotivos",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.01.001.007",
+    "descricao": "Energia Elétrica",
+    "nivel": "familia",
+    "parentCodigo": "6.01.001"
+  },
+  {
+    "codigo": "6.02",
+    "descricao": "Peças Automotivas",
+    "nivel": "grupo",
+    "parentCodigo": "6"
+  },
+  {
+    "codigo": "6.02.001",
+    "descricao": "Peças Automotivas",
+    "nivel": "subgrupo",
+    "parentCodigo": "6.02"
+  },
+  {
+    "codigo": "6.02.001.001",
+    "descricao": "Motor e Transmissão",
+    "nivel": "familia",
+    "parentCodigo": "6.02.001"
+  },
+  {
+    "codigo": "6.02.001.002",
+    "descricao": "Suspensão e Freios",
+    "nivel": "familia",
+    "parentCodigo": "6.02.001"
+  },
+  {
+    "codigo": "6.02.001.003",
+    "descricao": "Elétrica Automotiva",
+    "nivel": "familia",
+    "parentCodigo": "6.02.001"
+  },
+  {
+    "codigo": "6.02.001.004",
+    "descricao": "Carroceria e Acabamento",
+    "nivel": "familia",
+    "parentCodigo": "6.02.001"
+  },
+  {
+    "codigo": "6.02.001.005",
+    "descricao": "Pneus e Câmaras",
+    "nivel": "familia",
+    "parentCodigo": "6.02.001"
+  },
+  {
+    "codigo": "7",
+    "descricao": "Hospitalar e Médico",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "7.01",
+    "descricao": "Equipamentos Médicos",
+    "nivel": "grupo",
+    "parentCodigo": "7"
+  },
+  {
+    "codigo": "7.01.001",
+    "descricao": "Equipamentos Médicos",
+    "nivel": "subgrupo",
+    "parentCodigo": "7.01"
+  },
+  {
+    "codigo": "7.01.001.001",
+    "descricao": "Aparelhos de Diagnóstico",
+    "nivel": "familia",
+    "parentCodigo": "7.01.001"
+  },
+  {
+    "codigo": "7.01.001.002",
+    "descricao": "Equipamentos Cirúrgicos e Hospitalares",
+    "nivel": "familia",
+    "parentCodigo": "7.01.001"
+  },
+  {
+    "codigo": "7.02",
+    "descricao": "Materiais Hospitalares",
+    "nivel": "grupo",
+    "parentCodigo": "7"
+  },
+  {
+    "codigo": "7.02.001",
+    "descricao": "Materiais Hospitalares",
+    "nivel": "subgrupo",
+    "parentCodigo": "7.02"
+  },
+  {
+    "codigo": "7.02.001.001",
+    "descricao": "Seringas e Agulhas",
+    "nivel": "familia",
+    "parentCodigo": "7.02.001"
+  },
+  {
+    "codigo": "7.02.001.002",
+    "descricao": "Cateteres e Sondas",
+    "nivel": "familia",
+    "parentCodigo": "7.02.001"
+  },
+  {
+    "codigo": "7.02.001.003",
+    "descricao": "Materiais de Sutura e Curativo",
+    "nivel": "familia",
+    "parentCodigo": "7.02.001"
+  },
+  {
+    "codigo": "7.03",
+    "descricao": "Medicamentos Especiais",
+    "nivel": "grupo",
+    "parentCodigo": "7"
+  },
+  {
+    "codigo": "7.03.001",
+    "descricao": "Medicamentos Especiais",
+    "nivel": "subgrupo",
+    "parentCodigo": "7.03"
+  },
+  {
+    "codigo": "7.03.001.001",
+    "descricao": "Medicamentos Oncológicos",
+    "nivel": "familia",
+    "parentCodigo": "7.03.001"
+  },
+  {
+    "codigo": "7.03.001.002",
+    "descricao": "Vacinas Humanas",
+    "nivel": "familia",
+    "parentCodigo": "7.03.001"
+  },
+  {
+    "codigo": "7.03.001.003",
+    "descricao": "Medicamentos Biológicos",
+    "nivel": "familia",
+    "parentCodigo": "7.03.001"
+  },
+  {
+    "codigo": "8",
+    "descricao": "Veículos",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "8.01",
+    "descricao": "Veículos de Passeio",
+    "nivel": "grupo",
+    "parentCodigo": "8"
+  },
+  {
+    "codigo": "8.01.001",
+    "descricao": "Veículos de Passeio",
+    "nivel": "subgrupo",
+    "parentCodigo": "8.01"
+  },
+  {
+    "codigo": "8.01.001.001",
+    "descricao": "Automóveis de Passeio",
+    "nivel": "familia",
+    "parentCodigo": "8.01.001"
+  },
+  {
+    "codigo": "8.02",
+    "descricao": "Veículos Comerciais",
+    "nivel": "grupo",
+    "parentCodigo": "8"
+  },
+  {
+    "codigo": "8.02.001",
+    "descricao": "Veículos Comerciais",
+    "nivel": "subgrupo",
+    "parentCodigo": "8.02"
+  },
+  {
+    "codigo": "8.02.001.001",
+    "descricao": "Caminhões e Utilitários",
+    "nivel": "familia",
+    "parentCodigo": "8.02.001"
+  },
+  {
+    "codigo": "8.03",
+    "descricao": "Motocicletas e Similares",
+    "nivel": "grupo",
+    "parentCodigo": "8"
+  },
+  {
+    "codigo": "8.03.001",
+    "descricao": "Motocicletas e Similares",
+    "nivel": "subgrupo",
+    "parentCodigo": "8.03"
+  },
+  {
+    "codigo": "8.03.001.001",
+    "descricao": "Motocicletas e Ciclomotores",
+    "nivel": "familia",
+    "parentCodigo": "8.03.001"
+  },
+  {
+    "codigo": "8.03.001.002",
+    "descricao": "Motocicletas Elétricas",
+    "nivel": "familia",
+    "parentCodigo": "8.03.001"
+  },
+  {
+    "codigo": "8.04",
+    "descricao": "Bicicletas e Ciclos",
+    "nivel": "grupo",
+    "parentCodigo": "8"
+  },
+  {
+    "codigo": "8.04.001",
+    "descricao": "Bicicletas e Ciclos",
+    "nivel": "subgrupo",
+    "parentCodigo": "8.04"
+  },
+  {
+    "codigo": "8.04.001.001",
+    "descricao": "Bicicletas",
+    "nivel": "familia",
+    "parentCodigo": "8.04.001"
+  },
+  {
+    "codigo": "8.04.001.002",
+    "descricao": "Ciclos, Triciclos e Quadriciclos",
+    "nivel": "familia",
+    "parentCodigo": "8.04.001"
+  },
+  {
+    "codigo": "8.04.001.003",
+    "descricao": "Peças e Acessórios para Bicicleta",
+    "nivel": "familia",
+    "parentCodigo": "8.04.001"
+  },
+  {
+    "codigo": "9",
+    "descricao": "Industrial e Equipamentos",
+    "nivel": "secao",
+    "parentCodigo": null
+  },
+  {
+    "codigo": "9.01",
+    "descricao": "Máquinas Industriais",
+    "nivel": "grupo",
+    "parentCodigo": "9"
+  },
+  {
+    "codigo": "9.01.001",
+    "descricao": "Máquinas Industriais",
+    "nivel": "subgrupo",
+    "parentCodigo": "9.01"
+  },
+  {
+    "codigo": "9.01.001.001",
+    "descricao": "Máquinas de Processamento",
+    "nivel": "familia",
+    "parentCodigo": "9.01.001"
+  },
+  {
+    "codigo": "9.01.001.002",
+    "descricao": "Compressores e Bombas",
+    "nivel": "familia",
+    "parentCodigo": "9.01.001"
+  },
+  {
+    "codigo": "9.01.001.003",
+    "descricao": "Ferramentas Industriais",
+    "nivel": "familia",
+    "parentCodigo": "9.01.001"
+  },
+  {
+    "codigo": "9.02",
+    "descricao": "Material Elétrico Industrial",
+    "nivel": "grupo",
+    "parentCodigo": "9"
+  },
+  {
+    "codigo": "9.02.001",
+    "descricao": "Material Elétrico Industrial",
+    "nivel": "subgrupo",
+    "parentCodigo": "9.02"
+  },
+  {
+    "codigo": "9.02.001.001",
+    "descricao": "Transformadores e Geradores",
+    "nivel": "familia",
+    "parentCodigo": "9.02.001"
+  },
+  {
+    "codigo": "9.02.001.002",
+    "descricao": "Componentes Elétricos",
+    "nivel": "familia",
+    "parentCodigo": "9.02.001"
+  },
+  {
+    "codigo": "9.02.001.003",
+    "descricao": "Cabos, Fios e Condutores",
+    "nivel": "familia",
+    "parentCodigo": "9.02.001"
+  },
+  {
+    "codigo": "9.03",
+    "descricao": "Equipamentos de Logística",
+    "nivel": "grupo",
+    "parentCodigo": "9"
+  },
+  {
+    "codigo": "9.03.001",
+    "descricao": "Equipamentos de Logística",
+    "nivel": "subgrupo",
+    "parentCodigo": "9.03"
+  },
+  {
+    "codigo": "9.03.001.001",
+    "descricao": "Equipamentos de Logística e Transporte",
+    "nivel": "familia",
+    "parentCodigo": "9.03.001"
+  },
+  {
+    "codigo": "9.04",
+    "descricao": "Máquinas e Equipamentos Agrícolas",
+    "nivel": "grupo",
+    "parentCodigo": "9"
+  },
+  {
+    "codigo": "9.04.001",
+    "descricao": "Máquinas e Equipamentos Agrícolas",
+    "nivel": "subgrupo",
+    "parentCodigo": "9.04"
+  },
+  {
+    "codigo": "9.04.001.001",
+    "descricao": "Máquinas e Equipamentos Agrícolas",
+    "nivel": "familia",
+    "parentCodigo": "9.04.001"
+  },
+  {
+    "codigo": "9.04.001.002",
+    "descricao": "Peças para Máquinas Agrícolas",
+    "nivel": "familia",
+    "parentCodigo": "9.04.001"
+  }
+]

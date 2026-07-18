@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Check, Eye, EyeOff, KeyRound, Loader2, User } from 'lucide-react'
 
 import { ufOptions } from '@/lib/labels'
 import { Button } from '@/components/ui/button'
@@ -97,8 +97,15 @@ export function UpdateProfileForm({ user }: { user: PublicUser }) {
 
   return (
     <SpotlightCard className="rounded-2xl border border-border bg-card/70 p-5 backdrop-blur-sm">
-      <h2 className="text-base font-semibold tracking-tight">Informações pessoais</h2>
-      <p className="mt-1 text-sm text-muted-foreground">Atualize seus dados de perfil.</p>
+      <div className="flex items-center gap-3">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
+          <User className="h-4 w-4" />
+        </div>
+        <div>
+          <h2 className="text-base font-semibold tracking-tight">Informações pessoais</h2>
+          <p className="text-sm text-muted-foreground">Atualize seus dados de perfil.</p>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
         {error && <Alert variant="destructive">{error}</Alert>}
         {success && <SuccessAlert />}
@@ -195,10 +202,17 @@ export function ChangePasswordForm() {
 
   return (
     <SpotlightCard className="rounded-2xl border border-border bg-card/70 p-5 backdrop-blur-sm">
-      <h2 className="text-base font-semibold tracking-tight">Alterar senha</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Escolha uma senha forte com pelo menos 8 caracteres.
-      </p>
+      <div className="flex items-center gap-3">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
+          <KeyRound className="h-4 w-4" />
+        </div>
+        <div>
+          <h2 className="text-base font-semibold tracking-tight">Alterar senha</h2>
+          <p className="text-sm text-muted-foreground">
+            Escolha uma senha forte com pelo menos 8 caracteres.
+          </p>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
         {error && <Alert variant="destructive">{error}</Alert>}
         {success && <SuccessAlert />}

@@ -1,12 +1,16 @@
 import type { Metadata } from 'next'
-import { Mail, ShieldCheck } from 'lucide-react'
 
 import { requireUser } from '@/lib/auth'
+import { listCompaniesByUser } from '@/lib/db'
+import { getSelectedCompany } from '@/lib/active-company'
+import { regimeAtualLabels } from '@/lib/labels'
 import { AppShell } from '@/components/app/app-shell'
+import { AccountHeader } from '@/components/app/account-header'
+import { AccountTabs } from '@/components/app/account-tabs'
 import { UpdateProfileForm, ChangePasswordForm } from '@/components/app/account-form'
+import { CompanyManager } from '@/components/app/company-manager'
 import { Reveal } from '@/components/landing/reveal'
 import { WordReveal } from '@/components/landing/word-reveal'
-import { SpotlightCard } from '@/components/landing/spotlight-card'
 
 export const metadata: Metadata = {
   title: 'Minha conta — Reforma NextGen',
@@ -14,6 +18,8 @@ export const metadata: Metadata = {
 
 export default async function ContaPage() {
   const user = await requireUser('/conta')
+  const companies = listCompaniesByUser(user.id)
+  const company = await getSelectedCompany(user.id, companies)
 
   return (
     <AppShell user={user}>
@@ -31,38 +37,23 @@ export default async function ContaPage() {
           />
         </Reveal>
 
-        <div className="mt-8 flex flex-col gap-5">
-          {/* e-mail readonly */}
-          <Reveal delay={0.06} y={14}>
-            <SpotlightCard className="rounded-2xl border border-border bg-card/70 p-5 backdrop-blur-sm">
-              <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent text-primary">
-                  <Mail className="h-4 w-4" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    E-mail
-                  </p>
-                  <p className="mt-0.5 text-sm font-semibold">{user.email}</p>
-                </div>
-              </div>
-              <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
-                <ShieldCheck className="h-3.5 w-3.5 text-success" />
-                O e-mail não pode ser alterado após o cadastro.
-              </p>
-            </SpotlightCard>
-          </Reveal>
+        <Reveal delay={0.08} y={14} className="mt-8">
+          <AccountHeader
+            name={user.name}
+            email={user.email}
+            logo={company?.logo}
+            companyName={company?.razao_social}
+            regime={company ? regimeAtualLabels[company.regime_atual] : undefined}
+          />
+        </Reveal>
 
-          {/* update profile (name, phone, UF, business area) */}
-          <Reveal delay={0.1} y={14}>
-            <UpdateProfileForm user={user} />
-          </Reveal>
-
-          {/* change password */}
-          <Reveal delay={0.14} y={14}>
-            <ChangePasswordForm />
-          </Reveal>
-        </div>
+        <Reveal delay={0.12} y={14} className="mt-6">
+          <AccountTabs
+            perfil={<UpdateProfileForm user={user} />}
+            empresa={<CompanyManager initialCompanies={companies} initialSelectedId={company?.id ?? null} />}
+            seguranca={<ChangePasswordForm />}
+          />
+        </Reveal>
       </div>
     </AppShell>
   )

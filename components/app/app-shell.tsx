@@ -3,22 +3,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, LogOut, Plus, UserCircle, BarChart3 } from 'lucide-react'
+import { LayoutDashboard, LogOut, UserCircle } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { ThemeToggle } from '@/components/landing/theme-toggle'
+import { NotificationBell } from '@/components/app/notification-bell'
 
 const links = [
   { label: 'Dashboard', href: '/dashboard' },
-  { label: 'Análise da empresa', href: '/analise/nova' },
-  { label: 'Nova simulação', href: '/simulacao/novo' },
   { label: 'Minha conta', href: '/conta' },
 ]
 
 const mobileLinks = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Análise', href: '/analise/nova', icon: BarChart3 },
-  { label: 'Simulação', href: '/simulacao/novo', icon: Plus },
   { label: 'Conta', href: '/conta', icon: UserCircle },
 ]
 
@@ -49,7 +46,7 @@ export function AppShell({
       />
 
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+        <div className="mx-auto flex max-w-[1600px] items-center justify-between px-4 py-3 md:px-6">
           <div className="flex items-center gap-8">
             <Link href="/dashboard" className="flex items-center gap-2">
               <Image src="/logo.png" alt="Reforma NextGen" width={32} height={32} className="h-8 w-8" />
@@ -77,6 +74,7 @@ export function AppShell({
 
           <div className="flex items-center gap-3">
             <span className="hidden text-sm text-muted-foreground sm:inline">{user.name}</span>
+            <NotificationBell />
             <ThemeToggle />
             <button
               type="button"
@@ -90,7 +88,7 @@ export function AppShell({
         </div>
       </header>
 
-      <main className="relative mx-auto max-w-6xl px-4 py-10 pb-24 md:px-6 md:pb-10">{children}</main>
+      <main className="relative mx-auto max-w-[1600px] px-4 py-10 pb-24 md:px-6 md:pb-10">{children}</main>
 
       {/* bottom nav — mobile only */}
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/90 backdrop-blur-xl md:hidden">

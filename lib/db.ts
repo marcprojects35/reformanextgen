@@ -39,6 +39,8 @@ export interface CompanyRow {
   regime_atual: RegimeAtual
   faturamento_anual: number
   margem_lucro: number
+  admin_empresa_id: number | null
+  logo: string | null
   created_at: string
 }
 
@@ -82,6 +84,38 @@ export interface ResultRow {
   carga_atual_pct: number
   carga_reforma_pct: number
   payload_json: string | null
+}
+
+export interface NotificationRow {
+  id: number
+  user_id: number
+  type: string
+  title: string
+  body: string | null
+  link: string | null
+  report_id: number | null
+  read_at: string | null
+  created_at: string
+}
+
+export interface CompanyEditChange {
+  field: string
+  label: string
+  before: unknown
+  after: unknown
+}
+
+export interface CompanyEditRow {
+  id: number
+  company_id: number
+  user_id: number
+  motivo: string
+  changes_json: string
+  created_at: string
+}
+
+export interface CompanyEditWithUser extends CompanyEditRow {
+  user_name: string
 }
 
 let instance: DatabaseSync | null = null
@@ -155,11 +189,34 @@ function createSchema(db: DatabaseSync) {
       payload_json TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS notifications (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL REFERENCES users(id),
+      type TEXT NOT NULL,
+      title TEXT NOT NULL,
+      body TEXT,
+      link TEXT,
+      report_id INTEGER,
+      read_at TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS company_edits (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      company_id INTEGER NOT NULL REFERENCES companies(id),
+      user_id INTEGER NOT NULL REFERENCES users(id),
+      motivo TEXT NOT NULL,
+      changes_json TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
     CREATE INDEX IF NOT EXISTS idx_companies_user ON companies(user_id);
     CREATE INDEX IF NOT EXISTS idx_simulations_company ON simulations(company_id);
     CREATE INDEX IF NOT EXISTS idx_documents_simulation ON documents(simulation_id);
     CREATE INDEX IF NOT EXISTS idx_line_items_simulation ON line_items(simulation_id);
     CREATE INDEX IF NOT EXISTS idx_results_simulation ON results(simulation_id);
+    CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id, read_at);
+    CREATE INDEX IF NOT EXISTS idx_company_edits_company ON company_edits(company_id);
   `)
 }
 
@@ -170,6 +227,8 @@ function migrateSchema(db: DatabaseSync) {
     'ALTER TABLE users ADD COLUMN phone TEXT',
     'ALTER TABLE users ADD COLUMN uf TEXT',
     'ALTER TABLE users ADD COLUMN business_area TEXT',
+    'ALTER TABLE companies ADD COLUMN admin_empresa_id INTEGER',
+    'ALTER TABLE companies ADD COLUMN logo TEXT',
   ]
   for (const sql of migrations) {
     try { db.exec(sql) } catch { /* coluna já existe */ }
@@ -310,6 +369,75 @@ export function listCompaniesByUser(userId: number): CompanyRow[] {
     getDb()
       .prepare('SELECT * FROM companies WHERE user_id = ? ORDER BY created_at DESC')
       .all(userId),
+  )
+}
+
+export function setCompanyAdminEmpresaId(companyId: number, empresaId: number) {
+  getDb()
+    .prepare('UPDATE companies SET admin_empresa_id = ? WHERE id = ?')
+    .run(empresaId, companyId)
+}
+
+export function updateCompany(
+  id: number,
+  fields: Partial<{
+    razaoSocial: string
+    cnpj: string | null
+    setor: Setor
+    uf: string
+    regimeAtual: RegimeAtual
+    faturamentoAnual: number
+    margemLucro: number
+    logo: string | null
+  }>,
+) {
+  const colMap: Record<string, string> = {
+    razaoSocial: 'razao_social',
+    cnpj: 'cnpj',
+    setor: 'setor',
+    uf: 'uf',
+    regimeAtual: 'regime_atual',
+    faturamentoAnual: 'faturamento_anual',
+    margemLucro: 'margem_lucro',
+    logo: 'logo',
+  }
+  const sets: string[] = []
+  const values: unknown[] = []
+  for (const [key, col] of Object.entries(colMap)) {
+    if (key in fields) {
+      sets.push(`${col} = ?`)
+      values.push((fields as Record<string, unknown>)[key])
+    }
+  }
+  if (sets.length === 0) return
+  values.push(id)
+  getDb().prepare(`UPDATE companies SET ${sets.join(', ')} WHERE id = ?`).run(...values)
+}
+
+// --- company edit history ---
+
+export function insertCompanyEdit(input: {
+  companyId: number
+  userId: number
+  motivo: string
+  changes: CompanyEditChange[]
+}): void {
+  getDb()
+    .prepare('INSERT INTO company_edits (company_id, user_id, motivo, changes_json) VALUES (?, ?, ?, ?)')
+    .run(input.companyId, input.userId, input.motivo, JSON.stringify(input.changes))
+}
+
+export function listCompanyEditsWithUser(companyId: number): CompanyEditWithUser[] {
+  return toRows<CompanyEditWithUser>(
+    getDb()
+      .prepare(
+        `SELECT ce.*, u.name as user_name
+         FROM company_edits ce
+         JOIN users u ON u.id = ce.user_id
+         WHERE ce.company_id = ?
+         ORDER BY ce.created_at DESC`,
+      )
+      .all(companyId),
   )
 }
 
@@ -506,4 +634,60 @@ export function deleteSimulation(simulationId: number) {
   db.prepare('DELETE FROM line_items WHERE simulation_id = ?').run(simulationId)
   db.prepare('DELETE FROM documents WHERE simulation_id = ?').run(simulationId)
   db.prepare('DELETE FROM simulations WHERE id = ?').run(simulationId)
+}
+
+// --- notifications ---
+
+export function createNotification(input: {
+  userId: number
+  type: string
+  title: string
+  body?: string | null
+  link?: string | null
+  reportId?: number | null
+}): NotificationRow {
+  const db = getDb()
+  const info = db
+    .prepare(
+      'INSERT INTO notifications (user_id, type, title, body, link, report_id) VALUES (?, ?, ?, ?, ?, ?)',
+    )
+    .run(
+      input.userId,
+      input.type,
+      input.title,
+      input.body ?? null,
+      input.link ?? null,
+      input.reportId ?? null,
+    )
+  return toRow<NotificationRow>(
+    db.prepare('SELECT * FROM notifications WHERE id = ?').get(Number(info.lastInsertRowid)),
+  )!
+}
+
+export function listNotificationsByUser(userId: number, opts?: { onlyUnread?: boolean }): NotificationRow[] {
+  const where = opts?.onlyUnread ? 'AND read_at IS NULL' : ''
+  return toRows<NotificationRow>(
+    getDb()
+      .prepare(`SELECT * FROM notifications WHERE user_id = ? ${where} ORDER BY created_at DESC LIMIT 50`)
+      .all(userId),
+  )
+}
+
+export function countUnreadNotifications(userId: number): number {
+  const result = getDb()
+    .prepare('SELECT COUNT(*) as count FROM notifications WHERE user_id = ? AND read_at IS NULL')
+    .get(userId) as { count: number }
+  return result.count
+}
+
+export function markNotificationRead(id: number, userId: number) {
+  getDb()
+    .prepare("UPDATE notifications SET read_at = datetime('now') WHERE id = ? AND user_id = ? AND read_at IS NULL")
+    .run(id, userId)
+}
+
+export function markAllNotificationsRead(userId: number) {
+  getDb()
+    .prepare("UPDATE notifications SET read_at = datetime('now') WHERE user_id = ? AND read_at IS NULL")
+    .run(userId)
 }
