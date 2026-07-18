@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ReferenceLine, ResponsiveContainer, CartesianGrid, Cell,
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell,
 } from 'recharts'
 import { Search } from 'lucide-react'
-import type { SimuladorRow, DreProdutoRow, MargemContribuicaoCategoriaRow, DRELinha } from '@/lib/admin-engine'
+import type { SimuladorRow, DreProdutoRow, DRELinha } from '@/lib/admin-engine'
 import { margemLiquidaInsight } from '@/lib/admin-engine'
 import { normalizeSearch } from '@/lib/utils'
 import { GAIN, LOSS, ChartTooltip, ACTIVE_BAR } from '@/lib/admin-colors'
@@ -33,8 +33,8 @@ function getAnoValues(row: SimuladorRow, ano: number) {
 const PROJECAO_COLUMNS: DrillColumn[] = [
   { key: 'ano', label: 'Ano' },
   { key: 'precoVenda', label: 'Preço Venda', format: 'currency' },
-  { key: 'resultado', label: 'Resultado', format: 'currency' },
   { key: 'markupPct', label: 'Markup', format: 'percent' },
+  { key: 'resultado', label: 'Margem Bruta', format: 'currency' },
 ]
 
 // ─── Summary Cards ────────────────────────────────────────────────────────────
@@ -226,194 +226,6 @@ function margemContribuicaoDrillContent(r: DreProdutoRow): DrillContent {
   }
 }
 
-const MARGEM_CONTRIB_RANK_COUNT = 5
-
-function MargemContribuicaoTornado({ margemProdutos }: { margemProdutos: DreProdutoRow[] }) {
-  const { open } = useDrillDown()
-  const comDelta = margemProdutos.map(r => ({ ...r, delta: r.margemContribuicaoDRPct - r.margemContribuicaoARPct }))
-  const beneficiados = [...comDelta].filter(r => r.delta > 0).sort((a, b) => b.delta - a.delta).slice(0, MARGEM_CONTRIB_RANK_COUNT)
-  const prejudicados = [...comDelta].filter(r => r.delta < 0).sort((a, b) => a.delta - b.delta).slice(0, MARGEM_CONTRIB_RANK_COUNT)
-
-  if (!beneficiados.length && !prejudicados.length) return null
-
-  const data = [...beneficiados, ...[...prejudicados].reverse()]
-  const maxAbs = Math.max(...data.map(d => Math.abs(d.delta)), 1)
-  const labelByChave = new Map(data.map(d => [chave(d), d.descricao || d.ncm]))
-
-  function abrirDetalhe(d: DreProdutoRow) {
-    open(margemContribuicaoDrillContent(d))
-  }
-
-  const todosContent: DrillContent = {
-    title: 'Todos os produtos — variação da margem de contribuição',
-    subtitle: `${comDelta.length} produtos analisados`,
-    wide: true,
-    columns: [
-      { key: 'produto', label: 'Produto' },
-      { key: 'ncm', label: 'NCM', mono: true },
-      { key: 'delta', label: 'Variação', format: 'pctPointDeltaGain' },
-      { key: 'ar', label: 'Antes', format: 'percent' },
-      { key: 'dr', label: 'Depois', format: 'percent' },
-    ],
-    rows: [...comDelta].sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta)).map(r => ({
-      produto: r.descricao || 'Produto sem descrição',
-      ncm: r.ncm,
-      delta: r.delta,
-      ar: r.margemContribuicaoARPct,
-      dr: r.margemContribuicaoDRPct,
-    })),
-  }
-
-  return (
-    <div className="rounded-xl border border-border bg-foreground/[0.025] p-4">
-      <div className="flex items-center gap-4 mb-3">
-        <Explain text="Margem de Contribuição desconta da receita também o tributo que incide na própria venda, além do custo — por isso pode mudar mais que a Margem Bruta." className="block w-fit">
-          <h3 className="text-sm font-semibold text-foreground">Produtos que mais mudam a Margem de Contribuição</h3>
-        </Explain>
-        <div className="flex items-center gap-1.5">
-          <div className="h-2 w-2 rounded-full bg-gain" />
-          <span className="text-xs text-gain">aumentam ({beneficiados.length})</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="h-2 w-2 rounded-full bg-loss" />
-          <span className="text-xs text-loss">reduzem ({prejudicados.length})</span>
-        </div>
-      </div>
-      <ResponsiveContainer width="100%" height={Math.max(220, data.length * 34)}>
-        <BarChart data={data} layout="vertical" margin={{ top: 4, right: 24, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="color-mix(in srgb, var(--foreground) 4%, transparent)" horizontal={false} />
-          <XAxis
-            type="number"
-            domain={[-maxAbs, maxAbs]}
-            tickFormatter={v => `${v.toFixed(0)}pp`}
-            tick={{ fill: 'color-mix(in srgb, var(--foreground) 25%, transparent)', fontSize: 10 }}
-            axisLine={false}
-            tickLine={false}
-            className="font-tabular"
-          />
-          <YAxis
-            type="category"
-            dataKey={(d: DreProdutoRow) => chave(d)}
-            width={130}
-            axisLine={false}
-            tickLine={false}
-            tick={
-              <ClickableTick
-                onSelect={i => abrirDetalhe(data[i])}
-                formatter={(c: string) => shortLabel(labelByChave.get(c) ?? c)}
-                fontSize={11}
-              />
-            }
-          />
-          <ReferenceLine x={0} stroke="color-mix(in srgb, var(--foreground) 15%, transparent)" />
-          <Tooltip
-            content={<ChartTooltip formatter={(v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}pp`} />}
-            labelFormatter={(c: unknown) => labelByChave.get(String(c)) ?? String(c)}
-            cursor={{ fill: 'color-mix(in srgb, var(--foreground) 3%, transparent)' }}
-          />
-          <Bar dataKey="delta" name="Variação da margem de contribuição" radius={[3, 3, 3, 3]} barSize={14} activeBar={ACTIVE_BAR}>
-            {data.map((d, i) => (
-              <Cell key={i} fill={d.delta >= 0 ? GAIN : LOSS} cursor="pointer" onClick={() => abrirDetalhe(d)} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-      {comDelta.length > data.length && (
-        <DrillMoreRow
-          content={todosContent}
-          label={`Ver todos os produtos (${comDelta.length})`}
-          className="mt-2 justify-end"
-        />
-      )}
-    </div>
-  )
-}
-
-// ─── Margem de contribuição por categoria mercadológica ────────────────────────
-// Mesma taxonomia Seção/Grupo/Subgrupo/Família de lib/merc-categorias.ts, já usada em
-// MercadologicaCharts pra custo/carga tributária — aqui aplicada à margem de contribuição.
-
-const MERC_CATEGORIA_INITIAL_COUNT = 8
-
-function MargemContribuicaoPorCategoria({ categorias }: { categorias: MargemContribuicaoCategoriaRow[] }) {
-  const { open } = useDrillDown()
-  if (!categorias.length) return null
-
-  const sorted = [...categorias].sort((a, b) => b.receitaDR - a.receitaDR)
-  const top = sorted.slice(0, MERC_CATEGORIA_INITIAL_COUNT)
-
-  function abrirCategoria(r: MargemContribuicaoCategoriaRow) {
-    open({
-      title: r.categoria,
-      subtitle: `${r.count} produtos`,
-      accentColor: r.margemContribuicaoDRPct >= r.margemContribuicaoARPct ? GAIN : LOSS,
-      columns: [
-        { key: 'metrica', label: 'Métrica' },
-        { key: 'ar', label: 'Antes', format: 'percent' },
-        { key: 'dr', label: 'Depois', format: 'percent' },
-      ],
-      rows: [
-        { metrica: 'Margem de Contribuição', ar: r.margemContribuicaoARPct, dr: r.margemContribuicaoDRPct },
-      ],
-    })
-  }
-
-  const todasContent: DrillContent = {
-    title: 'Todas as categorias mercadológicas',
-    subtitle: `${sorted.length} categorias analisadas`,
-    wide: true,
-    columns: [
-      { key: 'categoria', label: 'Categoria' },
-      { key: 'produtos', label: 'Produtos' },
-      { key: 'receitaDr', label: 'Receita (Depois)', format: 'currency' },
-      { key: 'ar', label: 'Margem Antes', format: 'percent' },
-      { key: 'dr', label: 'Margem Depois', format: 'percent' },
-    ],
-    rows: sorted.map(r => ({
-      categoria: r.categoria,
-      produtos: r.count,
-      receitaDr: r.receitaDR,
-      ar: r.margemContribuicaoARPct,
-      dr: r.margemContribuicaoDRPct,
-    })),
-  }
-
-  return (
-    <div className="rounded-xl border border-border bg-foreground/[0.025] p-4">
-      <Explain text="Agrupa a margem de contribuição por Seção da taxonomia de mercado (alimentos, saúde etc.), ponderada pela receita de cada produto." className="mb-3 block w-fit">
-        <p className="text-sm font-semibold text-foreground">Margem de Contribuição por Categoria Mercadológica</p>
-      </Explain>
-      <ResponsiveContainer width="100%" height={Math.max(220, top.length * 34)}>
-        <BarChart data={top} layout="vertical" margin={{ top: 4, right: 24, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="color-mix(in srgb, var(--foreground) 4%, transparent)" horizontal={false} />
-          <XAxis type="number" tickFormatter={v => `${v.toFixed(0)}%`} tick={{ fill: 'color-mix(in srgb, var(--foreground) 25%, transparent)', fontSize: 10 }} axisLine={false} tickLine={false} className="font-tabular" />
-          <YAxis
-            type="category"
-            dataKey="categoria"
-            width={150}
-            axisLine={false}
-            tickLine={false}
-            tick={<ClickableTick onSelect={i => abrirCategoria(top[i])} formatter={(v: string) => shortLabel(v, 20)} fontSize={11} />}
-          />
-          <Tooltip content={<ChartTooltip formatter={(v: number) => `${v.toFixed(1)}%`} />} cursor={{ fill: 'color-mix(in srgb, var(--foreground) 3%, transparent)' }} />
-          <Bar dataKey="margemContribuicaoARPct" name="Antes" fill="color-mix(in srgb, var(--foreground) 22%, transparent)" radius={[0, 3, 3, 0]} barSize={9} activeBar={ACTIVE_BAR} />
-          <Bar dataKey="margemContribuicaoDRPct" name="Depois" radius={[0, 3, 3, 0]} barSize={9} activeBar={ACTIVE_BAR}>
-            {top.map((r, i) => (
-              <Cell key={i} fill={r.margemContribuicaoDRPct >= r.margemContribuicaoARPct ? GAIN : LOSS} cursor="pointer" onClick={() => abrirCategoria(top[i])} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-      {sorted.length > top.length && (
-        <DrillMoreRow
-          content={todasContent}
-          label={`Ver todas as categorias (${sorted.length})`}
-          className="mt-2 justify-end"
-        />
-      )}
-    </div>
-  )
-}
 
 // ─── Table ────────────────────────────────────────────────────────────────────
 
@@ -548,20 +360,6 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
           className="w-full justify-center border-t border-border py-2.5"
         />
       )}
-    </div>
-  )
-}
-
-// ─── Margem de contribuição: categoria + ranking de produtos lado a lado ───────
-
-export function MargemContribuicaoCharts({ margemProdutos, categorias }: {
-  margemProdutos: DreProdutoRow[]
-  categorias: MargemContribuicaoCategoriaRow[]
-}) {
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <MargemContribuicaoPorCategoria categorias={categorias} />
-      <MargemContribuicaoTornado margemProdutos={margemProdutos} />
     </div>
   )
 }
