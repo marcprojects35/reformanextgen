@@ -135,7 +135,7 @@ function CatSummary({ row, delay }: { row: CategoriaMercadologicaRow; delay: num
 // O card de detalhe só aparece depois de clicar numa categoria do gráfico —
 // mostrar as 8 categorias sempre ligadas ocupava a tela toda sem necessidade.
 
-function MercadologicaBlock({ tag, tagClass, subtitle, data, ano }: {
+export function MercadologicaBlock({ tag, tagClass, subtitle, data, ano }: {
   tag: string
   tagClass: string
   subtitle: string
@@ -165,53 +165,3 @@ function MercadologicaBlock({ tag, tagClass, subtitle, data, ano }: {
   )
 }
 
-// ─── Main Export ──────────────────────────────────────────────────────────────
-
-export function MercadologicaCharts({
-  comprasMercadologica,
-  vendasMercadologica,
-  ano,
-}: {
-  comprasMercadologica: CategoriaMercadologicaRow[]
-  vendasMercadologica: CategoriaMercadologicaRow[]
-  ano?: number | null
-}) {
-  const hasData = comprasMercadologica.length > 0 || vendasMercadologica.length > 0
-
-  if (!hasData) {
-    return (
-      <div className="rounded-2xl border border-border bg-foreground/[0.015] p-8 text-center">
-        <p className="text-sm text-foreground/30">Dados de categoria mercadológica não disponíveis.</p>
-        <p className="mt-1 text-xs text-foreground/20">Depende da descrição do produto vir preenchida na planilha de transações.</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="space-y-8">
-      {(comprasMercadologica.length > 0 || vendasMercadologica.length > 0) && (
-        <div className="grid gap-6 lg:grid-cols-2">
-          {comprasMercadologica.length > 0 && (
-            <MercadologicaBlock
-              tag="COMPRAS"
-              tagClass="bg-chart-1/10 text-chart-1"
-              subtitle="Custo de aquisição por categoria de produto"
-              data={comprasMercadologica}
-              ano={ano}
-            />
-          )}
-
-          {vendasMercadologica.length > 0 && (
-            <MercadologicaBlock
-              tag="VENDAS"
-              tagClass="bg-chart-2/10 text-chart-2"
-              subtitle="Receita e impacto tributário por categoria de produto"
-              data={vendasMercadologica}
-              ano={ano}
-            />
-          )}
-        </div>
-      )}
-    </div>
-  )
-}

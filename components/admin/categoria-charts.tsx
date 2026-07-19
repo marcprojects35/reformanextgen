@@ -216,9 +216,11 @@ function CatSummary({ row, delay }: { row: CategoriaRow; delay: number }) {
   )
 }
 
-export function CategoriaCharts({
+// ─── Compras — categoria de operação + quebras adicionais (Tipo de Operação, UF do
+// Fornecedor, Benefício Fiscal, Origem) ────────────────────────────────────────
+
+export function CompraCategoriaCharts({
   comprasCategorias,
-  vendasCategorias,
   comprasTipoOperacao = [],
   comprasOrigemUF = [],
   comprasBeneficio = [],
@@ -227,7 +229,6 @@ export function CategoriaCharts({
   ano,
 }: {
   comprasCategorias: CategoriaRow[]
-  vendasCategorias: CategoriaRow[]
   comprasTipoOperacao?: CategoriaRow[]
   comprasOrigemUF?: CategoriaRow[]
   comprasBeneficio?: CategoriaRow[]
@@ -237,54 +238,19 @@ export function CategoriaCharts({
 }) {
   const temDimensoes = comprasTipoOperacao.length > 0 || comprasOrigemUF.length > 0
     || comprasBeneficio.length > 0 || comprasOrigem.length > 0 || comprasCST.length > 0
-  const empty = comprasCategorias.length === 0 && vendasCategorias.length === 0 && !temDimensoes
 
-  if (empty) {
-    return (
-      <div className="rounded-2xl border border-border bg-foreground/[0.015] p-8 text-center">
-        <p className="text-sm text-foreground/30">Dados de categorias não disponíveis.</p>
-        <p className="mt-1 text-xs text-foreground/20">As categorias são derivadas dos códigos CFOP presentes nas transações.</p>
-      </div>
-    )
-  }
+  if (comprasCategorias.length === 0 && !temDimensoes) return null
 
   return (
     <div className="space-y-8">
-      {(comprasCategorias.length > 0 || vendasCategorias.length > 0) && (
-        <div className="grid gap-6 lg:grid-cols-2">
-          {comprasCategorias.length > 0 && (
-            <div className="space-y-3">
-              <FadeUp>
-                <div className="flex items-center gap-3">
-                  <span className="rounded-lg bg-chart-1/10 px-2.5 py-0.5 text-xs font-semibold text-chart-1">COMPRAS</span>
-                  <p className="text-xs text-foreground/30">Custo de aquisição por categoria de operação</p>
-                </div>
-              </FadeUp>
-              <CategoriaBarChart data={comprasCategorias} ano={ano} />
-              <div className="grid gap-3 sm:grid-cols-2">
-                {comprasCategorias.map((row, i) => (
-                  <CatSummary key={row.categoria} row={row} delay={i * 0.06} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {vendasCategorias.length > 0 && (
-            <div className="space-y-3">
-              <FadeUp>
-                <div className="flex items-center gap-3">
-                  <span className="rounded-lg bg-chart-2/10 px-2.5 py-0.5 text-xs font-semibold text-chart-2">VENDAS</span>
-                  <p className="text-xs text-foreground/30">Receita e impacto tributário por categoria de operação</p>
-                </div>
-              </FadeUp>
-              <CategoriaBarChart data={vendasCategorias} ano={ano} />
-              <div className="grid gap-3 sm:grid-cols-2">
-                {vendasCategorias.map((row, i) => (
-                  <CatSummary key={row.categoria} row={row} delay={i * 0.06} />
-                ))}
-              </div>
-            </div>
-          )}
+      {comprasCategorias.length > 0 && (
+        <div className="space-y-3">
+          <CategoriaBarChart data={comprasCategorias} ano={ano} />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {comprasCategorias.map((row, i) => (
+              <CatSummary key={row.categoria} row={row} delay={i * 0.06} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -312,6 +278,29 @@ export function CategoriaCharts({
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+// ─── Vendas — categoria de operação ────────────────────────────────────────────
+
+export function VendaCategoriaCharts({
+  vendasCategorias,
+  ano,
+}: {
+  vendasCategorias: CategoriaRow[]
+  ano?: number | null
+}) {
+  if (vendasCategorias.length === 0) return null
+
+  return (
+    <div className="space-y-3">
+      <CategoriaBarChart data={vendasCategorias} ano={ano} />
+      <div className="grid gap-3 sm:grid-cols-2">
+        {vendasCategorias.map((row, i) => (
+          <CatSummary key={row.categoria} row={row} delay={i * 0.06} />
+        ))}
+      </div>
     </div>
   )
 }

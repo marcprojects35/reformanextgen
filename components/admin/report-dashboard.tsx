@@ -23,10 +23,10 @@ import { comprasInsight, vendasInsight, vendasImpactoInsight, dreInsight, fluxoI
 import { ComprasCharts } from '@/components/admin/compras-charts'
 import { VendasCharts } from '@/components/admin/vendas-charts'
 import { MercadoCharts } from '@/components/admin/mercado-charts'
-import { PriceSimulator, MargemContribuicaoCharts } from '@/components/admin/price-simulator'
+import { PriceSimulator } from '@/components/admin/price-simulator'
 import { ImpactoProduto } from '@/components/admin/impacto-produto'
-import { CategoriaCharts } from '@/components/admin/categoria-charts'
-import { MercadologicaCharts } from '@/components/admin/mercadologica-charts'
+import { CompraCategoriaCharts, VendaCategoriaCharts } from '@/components/admin/categoria-charts'
+import { MercadologicaBlock } from '@/components/admin/mercadologica-charts'
 import { EstruturaMercadologicaImpacto, ProdutosMaisImpactadosCards, ProdutosMaisAfetadosMercadologica } from '@/components/admin/estrutura-mercadologica-impacto'
 import { DreProduto } from '@/components/admin/dre-produto'
 import { TributoCharts } from '@/components/admin/tributo-charts'
@@ -1398,8 +1398,8 @@ async function exportPPTX(report: AdminReportV2) {
       s.addText(`Impacto líquido total: ${totalNet >= 0 ? '+' : ''}${fmtS(totalNet)}  |  ${impacts.length} NCMs analisados`, { x: 0.3, y: 1.2, w: 12, h: 0.35, color: totalNet >= 0 ? GREEN : RED, fontSize: 13, bold: true })
       const top5 = impacts.filter(r => r.netImpact > 0).slice(0, 5)
       const bot5 = [...impacts].reverse().filter(r => r.netImpact < 0).slice(0, 5)
-      s.addText('+ Mais beneficiados', { x: 0.3, y: 1.7, w: 6, h: 0.3, color: GREEN, fontSize: 10, bold: true })
-      s.addText('– Mais prejudicados', { x: 6.8, y: 1.7, w: 6, h: 0.3, color: RED, fontSize: 10, bold: true })
+      s.addText('+ Mais beneficiados em Margem Bruta', { x: 0.3, y: 1.7, w: 6, h: 0.3, color: GREEN, fontSize: 10, bold: true })
+      s.addText('– Mais afetados em Margem Bruta', { x: 6.8, y: 1.7, w: 6, h: 0.3, color: RED, fontSize: 10, bold: true })
       if (top5.length > 0) {
         s.addTable([
           [TH('NCM'), TH('Δ Receita'), TH('Δ Custo'), TH('Impacto Líq.')],
@@ -1497,13 +1497,39 @@ export function ReportDashboard({
   const [anoSelecionado, setAnoSelecionado] = useState<number | null>(null)
   const [anosDisponiveis, setAnosDisponiveis] = useState<{ ano: number; reportId: number }[]>([])
   const [trocandoAno, setTrocandoAno] = useState(false)
+  // true assim que o ano "depois da reforma" default (2033) foi decidido — antes disso, o
+  // relatório em tela é o inicial (normalmente ano-base 2026, AR≈DR), mostrar esses números
+  // brevemente como se já fossem definitivos é o "vem vazio" que o usuário via: sem essa guarda,
+  // o hero renderiza 0,0%/R$0 por um instante até o fetch de 2033 (carregarAno) terminar.
+  const [anoResolvido, setAnoResolvido] = useState(false)
   // Textos editáveis por empresa (título/subtítulo do hero, card de ano, títulos dos KPIs) —
   // com fallback pro texto padrão hardcoded quando a empresa não tem override salvo.
   const [textos, setTextos] = useState<Record<string, string>>({})
 
+  /** Busca e troca pro relatório de `alvo.ano`, atualizando `report` + `anoSelecionado` juntos —
+   *  nunca só o label. Usada tanto pela troca manual (`trocarAno`) quanto pelo default automático
+   *  (2033) no load inicial: sem isso, o seletor mostrava "2033" mas os dados continuavam sendo
+   *  os do relatório inicial (normalmente o ano-base 2026, onde AR≈DR — "dados zerados" — já que
+   *  o IBS/CBS praticamente não está implementado em 2026), até o usuário trocar de ano manualmente. */
+  const carregarAno = useCallback(async (alvo: { ano: number; reportId: number }) => {
+    setTrocandoAno(true)
+    try {
+      const res = await fetch(clientMode ? `/api/client/reports/${alvo.reportId}` : `/api/admin/reports?id=${alvo.reportId}`)
+      const data = await res.json()
+      if (data.report) {
+        setReport(data.report as AdminReportV2)
+        setAnoSelecionado(alvo.ano)
+        if (!clientMode && !publicMode) router.replace(`/admin/relatorio?id=${alvo.reportId}`)
+      }
+    } finally {
+      setTrocandoAno(false)
+      setAnoResolvido(true)
+    }
+  }, [clientMode, publicMode, router])
+
   useEffect(() => {
     const empresaId = report?.empresa.empresaId
-    if (!empresaId || publicMode) return
+    if (!empresaId || publicMode) { setAnoResolvido(true); return }
     const base = clientMode ? '/api/client' : '/api/admin'
     // Manda o reportId do relatório aberto na tela — o servidor usa o lote dele pra escopar
     // "anos irmãos" só à MESMA análise, em vez de misturar reportIds de análises diferentes
@@ -1515,29 +1541,23 @@ export function ReportDashboard({
       .then(data => {
         const anos = (data.anos ?? []) as { ano: number; reportId: number }[]
         setAnosDisponiveis(anos)
-        setAnoSelecionado(prev => prev ?? anos.find(a => a.ano === 2033)?.ano ?? anos[anos.length - 1]?.ano ?? null)
         setTextos(data.textos ?? {})
+        if (anoSelecionado !== null) { setAnoResolvido(true); return }
+        const alvo = anos.find(a => a.ano === 2033) ?? anos[anos.length - 1]
+        if (!alvo) { setAnoResolvido(true); return }
+        // Relatório inicial (reportData/refReportId) já É o ano-alvo — só rotula, sem refetch.
+        if (alvo.reportId === refReportId) { setAnoSelecionado(alvo.ano); setAnoResolvido(true) }
+        else carregarAno(alvo)
       })
-      .catch(() => { /* sem anos irmãos — relatório antigo ou empresa sem outros imports */ })
+      .catch(() => setAnoResolvido(true)) // sem anos irmãos — relatório antigo ou empresa sem outros imports
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [report?.empresa.empresaId])
 
   const trocarAno = useCallback(async (ano: number) => {
     const alvo = anosDisponiveis.find(a => a.ano === ano)
     if (!alvo || trocandoAno) return
-    setTrocandoAno(true)
-    try {
-      const res = await fetch(clientMode ? `/api/client/reports/${alvo.reportId}` : `/api/admin/reports?id=${alvo.reportId}`)
-      const data = await res.json()
-      if (data.report) {
-        setReport(data.report as AdminReportV2)
-        setAnoSelecionado(ano)
-        if (!clientMode && !publicMode) router.replace(`/admin/relatorio?id=${alvo.reportId}`)
-      }
-    } finally {
-      setTrocandoAno(false)
-    }
-  }, [anosDisponiveis, trocandoAno, clientMode, publicMode, router])
+    await carregarAno(alvo)
+  }, [anosDisponiveis, trocandoAno, carregarAno])
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok })
@@ -1600,8 +1620,7 @@ export function ReportDashboard({
     const items: NavItem[] = [{ id: 'summary', label: 'Visão Geral', icon: <Layers className="h-3.5 w-3.5" /> }]
     if (report?.compras.length) items.push({ id: 'compras', label: 'Compras', icon: <ShoppingCart className="h-3.5 w-3.5" /> })
     if (report?.vendas.length) items.push({ id: 'vendas', label: 'Vendas', icon: <TrendingUp className="h-3.5 w-3.5" /> })
-    const temCategorias = (report?.comprasCategorias?.length ?? 0) + (report?.vendasCategorias?.length ?? 0) > 0
-    if (report?.tributos || temCategorias) items.push({ id: 'tributos', label: 'Tributos', icon: <Landmark className="h-3.5 w-3.5" /> })
+    if (report?.tributos) items.push({ id: 'tributos', label: 'Tributos', icon: <Landmark className="h-3.5 w-3.5" /> })
     if (report?.dre.length) items.push({ id: 'dre', label: 'Resultado', icon: <BarChart3 className="h-3.5 w-3.5" /> })
     if (report?.fluxo.length) items.push({ id: 'fluxo', label: 'Caixa', icon: <Waves className="h-3.5 w-3.5" /> })
     if (report?.regimes.length) items.push({ id: 'regime', label: 'Regime', icon: <Scale className="h-3.5 w-3.5" /> })
@@ -1617,17 +1636,18 @@ export function ReportDashboard({
   }, [report])
 
   // ── Seções disponíveis para marcação de comentários (rótulos completos) ──
-  // "Categorias" agora vive dentro da tela Tributos, e Simulador/Impacto/Resultado
-  // por Produto vivem dentro da tela Produto — não são mais itens de navegação próprios,
-  // então a lista é montada direto pelas mesmas condições de dado usadas no render, em vez
-  // de derivar de `navItems`.
+  // "Categorias de Operação" vive dentro das telas Compras e Vendas (uma metade em
+  // cada), e Simulador/Impacto/Resultado por Produto vivem dentro da tela Produto —
+  // não são mais itens de navegação próprios, então a lista é montada direto pelas
+  // mesmas condições de dado usadas no render, em vez de derivar de `navItems`.
   const commentSections = useMemo(() => {
     const labels: Record<string, string> = {
       compras: 'Compras',
+      categoriasCompras: 'Categorias de Operação — Compras',
       fornecedoresSimples: 'Impacto de Fornecedores',
       vendas: 'Vendas',
+      categoriasVendas: 'Categorias de Operação — Vendas',
       tributos: 'Tributos',
-      categorias: 'Categorias de Operação',
       dre: 'Resultado',
       fluxo: 'Fluxo de Caixa',
       regime: 'Regime Tributário',
@@ -1639,13 +1659,11 @@ export function ReportDashboard({
     }
     const ids: string[] = []
     if (report?.compras.length) ids.push('compras')
+    if ((report?.comprasCategorias?.length ?? 0) > 0) ids.push('categoriasCompras')
     if ((report?.comprasSimples?.length ?? 0) > 0) ids.push('fornecedoresSimples')
     if (report?.vendas.length) ids.push('vendas')
-    const temCategorias = (report?.comprasCategorias?.length ?? 0) + (report?.vendasCategorias?.length ?? 0) > 0
-    if (report?.tributos || temCategorias) {
-      ids.push('tributos')
-      if (temCategorias) ids.push('categorias')
-    }
+    if ((report?.vendasCategorias?.length ?? 0) > 0) ids.push('categoriasVendas')
+    if (report?.tributos) ids.push('tributos')
     if (report?.dre.length) ids.push('dre')
     if (report?.fluxo.length) ids.push('fluxo')
     if (report?.regimes.length) ids.push('regime')
@@ -1678,7 +1696,7 @@ export function ReportDashboard({
     return () => window.removeEventListener('keydown', onKey)
   }, [navItems.length])
 
-  if (loading) {
+  if (loading || !anoResolvido) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="flex flex-col items-center gap-4">
@@ -1735,9 +1753,32 @@ export function ReportDashboard({
             <MetricPair labelAR="Custo Total" labelDR="Custo Total" valueAR={totalComprasAR} valueDR={totalComprasDR} delta={comprasData.diff} deltaPct={comprasData.pct} goodWhenNegativeDelta ano={anoSelecionado} explain="Soma de tudo que você comprou, comparando o custo com as regras de hoje (2026) e com as regras do ano selecionado. Custo menor é bom pra você." />
             <ComprasSection compras={report!.compras} ano={anoSelecionado} />
             <ComprasCharts comprasNCM={report!.comprasNCM ?? []} comprasRegime={report!.comprasRegime ?? []} comprasFornecedores={report!.comprasFornecedores ?? []} ano={anoSelecionado} />
+            {(report!.comprasMercadologica?.length ?? 0) > 0 && (
+              <MercadologicaBlock
+                tag="COMPRAS"
+                tagClass="bg-chart-1/10 text-chart-1"
+                subtitle="Custo de aquisição por categoria de produto"
+                data={report!.comprasMercadologica ?? []}
+                ano={anoSelecionado}
+              />
+            )}
+            {((report!.comprasCategorias?.length ?? 0) > 0 || (report!.comprasTipoOperacao?.length ?? 0) > 0 || (report!.comprasOrigemUF?.length ?? 0) > 0 || (report!.comprasBeneficio?.length ?? 0) > 0 || (report!.comprasOrigem?.length ?? 0) > 0 || (report!.comprasCST?.length ?? 0) > 0) && (
+              <>
+                <SectionHeader num="02" title="Categorias de Operação — Compras" subtitle="Quebra das compras por tipo de operação (Produtos, Serviços, Locação, Substituição Tributária, Ativo Imobilizado/Uso e Consumo, Exportação, Créditos de ICMS e outras), derivada dos códigos CFOP." sectionId="categoriasCompras" explain="O CFOP de cada nota fiscal indica o tipo de operação — usamos ele pra separar suas compras em Produtos, Serviços, Locação, Substituição Tributária, Ativo Imobilizado, Exportação etc., já que cada uma pode ter tratamento tributário diferente na Reforma." />
+                <CompraCategoriaCharts
+                  comprasCategorias={report!.comprasCategorias ?? []}
+                  comprasTipoOperacao={report!.comprasTipoOperacao ?? []}
+                  comprasOrigemUF={report!.comprasOrigemUF ?? []}
+                  comprasBeneficio={report!.comprasBeneficio ?? []}
+                  comprasOrigem={report!.comprasOrigem ?? []}
+                  comprasCST={report!.comprasCST ?? []}
+                  ano={anoSelecionado}
+                />
+              </>
+            )}
             {(report!.comprasSimples?.length ?? 0) > 0 && (
               <>
-                <SectionHeader num="02" title="Impacto de Fornecedores" subtitle="Fornecedores do Simples Nacional e sua participação nas compras — atenção redobrada, já que o crédito de IBS/CBS deles funciona diferente do regime normal." sectionId="fornecedoresSimples" explain="Empresas do Simples Nacional recolhem os tributos de forma unificada — isso muda o crédito de IBS/CBS que você consegue aproveitar ao comprar delas, por isso vale acompanhar à parte." />
+                <SectionHeader num="03" title="Impacto de Fornecedores" subtitle="Fornecedores do Simples Nacional e sua participação nas compras — atenção redobrada, já que o crédito de IBS/CBS deles funciona diferente do regime normal." sectionId="fornecedoresSimples" explain="Empresas do Simples Nacional recolhem os tributos de forma unificada — isso muda o crédito de IBS/CBS que você consegue aproveitar ao comprar delas, por isso vale acompanhar à parte." />
                 <SimplesCharts comprasSimples={report!.comprasSimples ?? []} totalComprasAR={totalComprasAR} />
               </>
             )}
@@ -1746,34 +1787,38 @@ export function ReportDashboard({
       case 'vendas':
         return (
           <div className="space-y-10">
-            <SectionHeader num="03" title="Vendas" subtitle="Variação da receita de vendas — como sua precificação e margens são afetadas." sectionId="vendas" explain="Todos os valores comparam o que você já vendeu (Antes da Reforma, 2026) com o que receberia pelas mesmas vendas, mas com as regras do ano que você escolher no seletor de ano." />
+            <SectionHeader num="04" title="Vendas" subtitle="Variação da receita de vendas — como sua precificação e margens são afetadas." sectionId="vendas" explain="Todos os valores comparam o que você já vendeu (Antes da Reforma, 2026) com o que receberia pelas mesmas vendas, mas com as regras do ano que você escolher no seletor de ano." />
             <MetricPair labelAR="Receita Total" labelDR="Receita Total" valueAR={totalVendasAR} valueDR={totalVendasDR} delta={vendasData.diff} deltaPct={vendasData.pct} goodWhenNegativeDelta={false} ano={anoSelecionado} explain="Soma de tudo que você vendeu, comparando a receita com as regras de hoje (2026) e com as regras do ano selecionado. Receita maior é bom pra você." />
             <VendasSection vendas={report!.vendas} ano={anoSelecionado} />
             <VendasCharts vendasNCM={report!.vendasNCM ?? []} vendasClientes={report!.vendasClientes ?? []} ano={anoSelecionado} />
+            {(report!.vendasMercadologica?.length ?? 0) > 0 && (
+              <MercadologicaBlock
+                tag="VENDAS"
+                tagClass="bg-chart-2/10 text-chart-2"
+                subtitle="Receita e impacto tributário por categoria de produto"
+                data={report!.vendasMercadologica ?? []}
+                ano={anoSelecionado}
+              />
+            )}
+            {(report!.vendasCategorias?.length ?? 0) > 0 && (
+              <>
+                <SectionHeader num="05" title="Categorias de Operação — Vendas" subtitle="Quebra das vendas por tipo de operação (Produtos, Serviços, Locação, Venda de Imóveis, Substituição Tributária, Ativo Imobilizado/Uso e Consumo, Exportação e outras), derivada dos códigos CFOP." sectionId="categoriasVendas" explain="O CFOP de cada nota fiscal indica o tipo de operação — usamos ele pra separar suas vendas em Produtos, Serviços, Locação, Venda de Imóveis, Substituição Tributária, Exportação etc., já que cada uma pode ter tratamento tributário diferente na Reforma." />
+                <VendaCategoriaCharts vendasCategorias={report!.vendasCategorias ?? []} ano={anoSelecionado} />
+              </>
+            )}
           </div>
         )
       case 'tributos':
         return (
           <div className="space-y-10">
-            <SectionHeader num="04" title="Tributos" subtitle="Composição da carga tributária — como os tributos antigos dão lugar ao IBS e à CBS." sectionId="tributos" explain="ICMS, ISS, IPI e PIS/COFINS somem gradualmente até 2033 e são substituídos por IBS (estados/municípios) e CBS (federal) — essa tela mostra o quanto de cada um pesa hoje e depois." />
+            <SectionHeader num="06" title="Tributos" subtitle="Composição da carga tributária — como os tributos antigos dão lugar ao IBS e à CBS." sectionId="tributos" explain="ICMS, ISS, IPI e PIS/COFINS somem gradualmente até 2033 e são substituídos por IBS (estados/municípios) e CBS (federal) — essa tela mostra o quanto de cada um pesa hoje e depois." />
             <TributoCharts tributos={report!.tributos} ano={anoSelecionado} />
-            <SectionHeader num="05" title="Categorias de Operação" subtitle="Quebra por tipo de operação (Produtos, Serviços, Locação, Venda de Imóveis, Substituição Tributária, Ativo Imobilizado/Uso e Consumo, Exportação, Créditos de ICMS e outras) derivada dos códigos CFOP." sectionId="categorias" explain="O CFOP de cada nota fiscal indica o tipo de operação — usamos ele pra separar suas compras/vendas em Produtos, Serviços, Locação, Substituição Tributária, Ativo Imobilizado, Exportação etc., já que cada uma pode ter tratamento tributário diferente na Reforma." />
-            <CategoriaCharts
-              comprasCategorias={report!.comprasCategorias ?? []}
-              vendasCategorias={report!.vendasCategorias ?? []}
-              comprasTipoOperacao={report!.comprasTipoOperacao ?? []}
-              comprasOrigemUF={report!.comprasOrigemUF ?? []}
-              comprasBeneficio={report!.comprasBeneficio ?? []}
-              comprasOrigem={report!.comprasOrigem ?? []}
-              comprasCST={report!.comprasCST ?? []}
-              ano={anoSelecionado}
-            />
           </div>
         )
       case 'dre':
         return (
           <div className="space-y-10">
-            <SectionHeader num="06" title="Resultado" subtitle="Demonstração de resultado projetada — impacto no lucro líquido até 2033." sectionId="dre" explain="Vem direto da sua DRE (Demonstração de Resultado) importada — cada linha é recalculada ano a ano seguindo o cronograma oficial de transição da Reforma." />
+            <SectionHeader num="07" title="Resultado" subtitle="Demonstração de resultado projetada — impacto no lucro líquido até 2033." sectionId="dre" explain="Vem direto da sua DRE (Demonstração de Resultado) importada — cada linha é recalculada ano a ano seguindo o cronograma oficial de transição da Reforma." />
             {dreData && <MetricPair labelAR="Lucro Líquido" labelDR="Lucro Líquido" valueAR={lucroLiqAR} valueDR={lucroLiqDR} delta={dreData.diffRS} deltaPct={dreData.diffPct} goodWhenNegativeDelta={false} ano={anoSelecionado} explain="Vem da linha 'Lucro Líquido' da sua DRE, recalculada com o efeito conjunto da mudança de custos e receitas pela Reforma." />}
             <DRESection dre={report!.dre} />
           </div>
@@ -1781,7 +1826,7 @@ export function ReportDashboard({
       case 'fluxo':
         return (
           <div className="space-y-10">
-            <SectionHeader num="07" title="Fluxo de Caixa" subtitle="Impacto no caixa da empresa com projeção para os próximos anos." sectionId="fluxo" explain="Vem direto da sua planilha de Fluxo de Caixa importada — inclui o efeito de créditos e débitos tributários, que mudam de timing/valor com o IBS/CBS." />
+            <SectionHeader num="08" title="Fluxo de Caixa" subtitle="Impacto no caixa da empresa com projeção para os próximos anos." sectionId="fluxo" explain="Vem direto da sua planilha de Fluxo de Caixa importada — inclui o efeito de créditos e débitos tributários, que mudam de timing/valor com o IBS/CBS." />
             {fluxoData && <MetricPair labelAR="Resultado de Caixa" labelDR="Resultado de Caixa" valueAR={fluxoResultAR} valueDR={fluxoResultDR} delta={fluxoData.diffRS} deltaPct={fluxoData.diffPct} goodWhenNegativeDelta={false} ano={anoSelecionado} explain="Vem da linha 'Resultado' do seu Fluxo de Caixa, recalculada considerando os créditos e débitos tributários que mudam com o IBS/CBS." />}
             <FluxoSection fluxo={report!.fluxo} />
           </div>
@@ -1789,14 +1834,14 @@ export function ReportDashboard({
       case 'regime':
         return (
           <div className="space-y-10">
-            <SectionHeader num="08" title="Regime Tributário" subtitle="Qual regime otimiza melhor seu resultado depois da reforma?" sectionId="regime" explain="Simulamos o mesmo movimento em Lucro Real, Presumido e Simples e comparamos o resultado líquido — útil pra decidir se vale a pena mudar de regime depois da Reforma." />
+            <SectionHeader num="09" title="Regime Tributário" subtitle="Qual regime otimiza melhor seu resultado depois da reforma?" sectionId="regime" explain="Simulamos o mesmo movimento em Lucro Real, Presumido e Simples e comparamos o resultado líquido — útil pra decidir se vale a pena mudar de regime depois da Reforma." />
             <RegimeSection regimes={report!.regimes} />
           </div>
         )
       case 'mercado':
         return (
           <div className="space-y-10">
-            <SectionHeader num="09" title="Mercado" subtitle="Perfil dos seus compradores: B2B (CNPJ) vs B2C (CPF) e regime tributário dos clientes." sectionId="mercado" explain="Entender pra quem você vende ajuda a antecipar o impacto da Reforma — vendas B2B costumam gerar mais crédito de IBS/CBS pro comprador do que vendas B2C." />
+            <SectionHeader num="10" title="Mercado" subtitle="Perfil dos seus compradores: B2B (CNPJ) vs B2C (CPF) e regime tributário dos clientes." sectionId="mercado" explain="Entender pra quem você vende ajuda a antecipar o impacto da Reforma — vendas B2B costumam gerar mais crédito de IBS/CBS pro comprador do que vendas B2C." />
             <MercadoCharts
               vendasB2C={report!.vendasB2C ?? []}
               vendasRegime={report!.vendasRegime ?? []}
@@ -1806,7 +1851,7 @@ export function ReportDashboard({
       case 'mercadologica':
         return (
           <div className="space-y-10">
-            <SectionHeader num="10" title="Categoria de Produto" subtitle="Compras e vendas agrupadas pela taxonomia de mercado (Seção/Grupo/Subgrupo/Família) — útil pra ver o impacto da reforma em categorias como cesta básica, saúde ou agropecuária, que o NCM sozinho não deixa evidente." sectionId="mercadologica" explain="A categoria de cada produto é sugerida automaticamente pela descrição a partir da planilha importada." />
+            <SectionHeader num="11" title="Categoria de Produto" subtitle="Compras e vendas agrupadas pela taxonomia de mercado (Seção/Grupo/Subgrupo/Família) — útil pra ver o impacto da reforma em categorias como cesta básica, saúde ou agropecuária, que o NCM sozinho não deixa evidente." sectionId="mercadologica" explain="A categoria de cada produto é sugerida automaticamente pela descrição a partir da planilha importada." />
             <EstruturaMercadologicaImpacto
               margemProdutos={report!.margemProdutos ?? []}
               ano={anoSelecionado}
@@ -1819,30 +1864,21 @@ export function ReportDashboard({
               margemProdutos={report!.margemProdutos ?? []}
               ano={anoSelecionado}
             />
-            <MargemContribuicaoCharts
-              margemProdutos={report!.margemProdutos ?? []}
-              categorias={report!.simuladorMercadologica ?? []}
-            />
-            <MercadologicaCharts
-              comprasMercadologica={report!.comprasMercadologica ?? []}
-              vendasMercadologica={report!.vendasMercadologica ?? []}
-              ano={anoSelecionado}
-            />
 
-            <SectionHeader num="11" title="Simulador de Preço" subtitle="Simule o impacto no markup e no resultado por produto com diferentes cenários de reajuste de preço." sectionId="simulador" explain="Mostra, produto a produto, qual markup você precisaria praticar em cada ano da transição pra manter o mesmo resultado de hoje, sem precisar reajustar preço." />
+            <SectionHeader num="12" title="Simulador de Preço" subtitle="Simule o impacto no markup e no resultado por produto com diferentes cenários de reajuste de preço." sectionId="simulador" explain="Mostra, produto a produto, qual markup você precisaria praticar em cada ano da transição pra manter o mesmo resultado de hoje, sem precisar reajustar preço." />
             <PriceSimulator
               simulador={report!.simulador ?? []}
               margemProdutos={report!.margemProdutos ?? []}
               dre={report!.dre ?? []}
             />
 
-            <SectionHeader num="12" title="Impacto por Produto" subtitle="Quais produtos são mais beneficiados e quais são mais prejudicados pela reforma, considerando custo e receita." sectionId="impacto" explain="Só entram produtos que aparecem tanto em compras quanto em vendas (pra calcular receita e custo do mesmo item). Impacto líquido = variação de receita menos variação de custo." />
+            <SectionHeader num="13" title="Impacto por Produto" subtitle="Quais produtos são mais beneficiados e quais são mais prejudicados pela reforma, considerando custo e receita." sectionId="impacto" explain="Só entram produtos que aparecem tanto em compras quanto em vendas (pra calcular receita e custo do mesmo item). Impacto líquido = variação de receita menos variação de custo." />
             <ImpactoProduto
               comprasNCM={report!.comprasNCM ?? []}
               vendasNCM={report!.vendasNCM ?? []}
             />
 
-            <SectionHeader num="13" title="Resultado por Produto" subtitle="Resultado, margem bruta e projeção 2026–2033 para cada NCM — visão individual de impacto com fase de transição da reforma." sectionId="dreproduto" explain="Se você já importou a planilha real de um ano específico, o gráfico troca o ponto projetado (fórmula) pelo valor real daquele ano — procure a bolinha marcada como 'Real'." />
+            <SectionHeader num="14" title="Resultado por Produto" subtitle="Resultado, margem bruta e projeção 2026–2033 para cada NCM — visão individual de impacto com fase de transição da reforma." sectionId="dreproduto" explain="Se você já importou a planilha real de um ano específico, o gráfico troca o ponto projetado (fórmula) pelo valor real daquele ano — procure a bolinha marcada como 'Real'." />
             <DreProduto dreProduto={report!.dreProduto ?? []} />
           </div>
         )

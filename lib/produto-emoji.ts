@@ -19,7 +19,7 @@ const PALAVRAS_CHAVE: [string[], string][] = [
   [['milho'], '🌽'],
   [['farinha', 'farinaceo', 'farináceo'], '🌾'],
   [['aveia'], '🌾'],
-  [['macarrao', 'macarrão', 'massa', 'espaguete', 'lasanha', 'nhoque'], '🍝'],
+  [['macarrao', 'macarrão', 'espaguete', 'lasanha', 'nhoque'], '🍝'],
   [['acucar', 'açúcar'], '🍬'],
   [['sal ', 'sal,', 'temperos', 'tempero', 'condimento'], '🧂'],
   [['cafe', 'café'], '☕'],
@@ -144,14 +144,14 @@ const PALAVRAS_CHAVE: [string[], string][] = [
   // Automotivo
   [['combustivel', 'combustível', 'gasolina', 'diesel', 'etanol', 'lubrificante'], '⛽'],
   [['pneu'], '🛞'],
-  [['peca automotiva', 'peça automotiva', 'automotivo'], '🔧'],
+  [['peca automotiva', 'peça automotiva', 'automotiv'], '🔧'],
 
   // Construção
   [['cimento', 'argamassa'], '🧱'],
   [['madeira'], '🪵'],
   [['tinta'], '🎨'],
   [['ceramica', 'cerâmica', 'azulejo', 'vidro'], '🧱'],
-  [['metal', 'tubulacao', 'tubulação', 'cano'], '🔩'],
+  [['metal', 'metais', 'tubula', 'cano'], '🔩'],
 
   // Veículos
   [['caminhao', 'caminhão', 'veiculo comercial', 'veículo comercial'], '🚚'],
@@ -164,6 +164,25 @@ const PALAVRAS_CHAVE: [string[], string][] = [
   [['material eletrico', 'material elétrico'], '🔌'],
   [['logistica', 'logística'], '📦'],
   [['agricola', 'agrícola'], '🚜'],
+
+  // Nomes de Grupo/Seção da taxonomia (fallback quando a palavra específica do produto não
+  // aparece, mas o nome da categoria mercadológica em si já é reconhecível) — cobre os 42
+  // Grupos de lib/data/estrutura-mercadologica.json que não batem em nenhuma palavra acima.
+  [['perec'], '❄️'],
+  [['bebida'], '🥤'],
+  [['perfumaria', 'cosmetico', 'cosmético'], '💄'],
+  [['bazar', 'textil', 'têxtil'], '🛍️'],
+  [['eletro'], '🔌'],
+  [['insumo'], '🏭'],
+  [['materiais para uso', 'material para uso'], '🧰'],
+  [['despesa'], '🧾'],
+  [['ativo imobilizado'], '🏢'],
+  [['residuo', 'resíduo', 'reciclagem'], '♻️'],
+  [['administrativo'], '🗂️'],
+  [['para abate', 'abate'], '🐄'],
+  [['reproducao', 'reprodução'], '🐑'],
+  [['cesta'], '🧺'],
+  [['mercearia'], '🛒'],
 ]
 
 // Ícones por Seção (mesma taxonomia de components/admin/estrutura-mercadologica-tree.tsx,

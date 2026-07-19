@@ -6,7 +6,7 @@ import { X, ChevronDown, Search, FileDown, Maximize2 } from 'lucide-react'
 import { R$, pct, fmtShort, sign } from '@/lib/admin-format'
 import { GAIN, LOSS } from '@/lib/admin-colors'
 import { normalizeSearch } from '@/lib/utils'
-import type { DetalhesTecnicos } from '@/lib/admin-engine'
+import type { DetalhesTecnicos, TributoComposicao } from '@/lib/admin-engine'
 
 export type DrillFormat = 'currency' | 'currencyShort' | 'percent' | 'text' | 'delta' | 'pctPointDelta' | 'pctPointDeltaGain' | 'costDelta'
 
@@ -25,12 +25,36 @@ export interface DrillExtraItem {
   format?: DrillFormat
 }
 
+/** Base de cálculo completa de um produto (lado Compra ou Venda) — Preço da Mercadoria,
+ *  Impostos embutidos/fora do preço (ICMS, PIS-COFINS, ICMS-DIFAL, ISS por dentro; IPI,
+ *  ICMS-ST, IBS, CBS por fora), Valor Total Pago, e opcionalmente Custo/Crédito. `valorTotalAR/DR`
+ *  é o bruto (com tributos fora do preço já somados); `custoLiquido` some quando não informado. */
+export interface DrillBaseCalculoBloco {
+  titulo: string
+  valorTotalAR: number
+  valorTotalDR: number
+  impostosAR?: number
+  impostosDR?: number
+  creditoAR?: number
+  creditoDR?: number
+  custoLiquidoLabel?: string
+  custoLiquidoAR?: number
+  custoLiquidoDR?: number
+  tributos: TributoComposicao
+  /** true pro lado compra (aumento de custo é ruim → vermelho); false/omitido pro lado venda
+   *  (aumento de receita/tributo mostrado é neutro/informativo → cor padrão). */
+  custoSemantics?: boolean
+}
+
 export interface DrillContent {
   title: string
   subtitle?: string
   accentColor?: string
   columns: DrillColumn[]
   rows: Array<Record<string, string | number | undefined>>
+  /** Base de cálculo completa (Preço da Mercadoria, tributos embutidos/fora do preço, Valor
+   *  Total Pago) — um bloco por lado (Compra/Venda) quando o produto tiver os dois. */
+  baseCalculo?: DrillBaseCalculoBloco[]
   /** Seção secundária colapsável — campos técnicos/de cauda longa da planilha original. */
   extra?: { title: string; items: DrillExtraItem[] }
   /** Painel mais largo — para tabelas com várias colunas numéricas + texto longo na primeira coluna. */
@@ -383,6 +407,79 @@ function ExportMenu({ content, rows, iconOnly = false }: { content: DrillContent
   )
 }
 
+// ─── Base de cálculo (Preço da Mercadoria, tributos embutidos/fora do preço) ───────────────
+
+function BaseCalculoLinha({ label, ar, dr, bold, indent }: { label: string; ar: number; dr: number; bold?: boolean; indent?: boolean }) {
+  const diff = dr - ar
+  const cor = diff === 0 ? undefined : diff > 0 ? GAIN : LOSS
+  return (
+    <tr className={bold ? '' : 'border-t border-border/40'}>
+      <td className={`px-4 py-1.5 text-xs ${bold ? 'font-semibold text-foreground' : 'text-foreground/55'} ${indent ? 'pl-8' : ''}`}>{label}</td>
+      <td className={`px-4 py-1.5 text-right text-xs font-tabular ${bold ? 'font-semibold text-foreground' : 'text-foreground/70'}`}>{R$(ar)}</td>
+      <td className={`px-4 py-1.5 text-right text-xs font-tabular ${bold ? 'font-semibold text-foreground' : 'text-foreground/70'}`}>{R$(dr)}</td>
+      <td className="px-4 py-1.5 text-right text-xs font-tabular font-medium" style={{ color: cor }}>
+        {diff === 0 ? <span className="text-foreground/20">—</span> : `${sign(diff)}${R$(diff)}`}
+      </td>
+    </tr>
+  )
+}
+
+function BaseCalculoSecao({ titulo }: { titulo: string }) {
+  return (
+    <tr>
+      <td colSpan={4} className="px-4 pb-1 pt-3 text-[10px] font-medium uppercase tracking-wider text-foreground/30">{titulo}</td>
+    </tr>
+  )
+}
+
+function BaseCalculoTable({ bloco }: { bloco: DrillBaseCalculoBloco }) {
+  const t = bloco.tributos
+  const foraDoPrecoAR = t.ipi.ar + t.icmsSt.ar + t.ibs.ar + t.cbs.ar
+  const foraDoPrecoDR = t.ipi.dr + t.icmsSt.dr + t.ibs.dr + t.cbs.dr
+  const precoAR = bloco.valorTotalAR - foraDoPrecoAR
+  const precoDR = bloco.valorTotalDR - foraDoPrecoDR
+  const temCustoLiquido = bloco.custoLiquidoLabel !== undefined && bloco.custoLiquidoAR !== undefined && bloco.custoLiquidoDR !== undefined
+
+  return (
+    <div className="px-1 py-3">
+      <p className="mb-1.5 px-3 text-xs font-semibold text-foreground/60 uppercase tracking-wide">{bloco.titulo}</p>
+      <table className="w-full">
+        <thead>
+          <tr className="border-b border-border bg-foreground/[0.015]">
+            <th className="px-4 py-2 text-left text-[10px] font-medium uppercase tracking-wider text-foreground/30">Descrição</th>
+            <th className="px-4 py-2 text-right text-[10px] font-medium uppercase tracking-wider text-foreground/30">Antes (AR)</th>
+            <th className="px-4 py-2 text-right text-[10px] font-medium uppercase tracking-wider text-foreground/30">Depois (DR)</th>
+            <th className="px-4 py-2 text-right text-[10px] font-medium uppercase tracking-wider text-foreground/30">Diferença</th>
+          </tr>
+        </thead>
+        <tbody>
+          <BaseCalculoLinha label="Preço da Mercadoria/Serviço" ar={precoAR} dr={precoDR} bold />
+          {(bloco.impostosAR !== undefined || bloco.impostosDR !== undefined) && (
+            <BaseCalculoLinha label="Total de Tributos" ar={bloco.impostosAR ?? 0} dr={bloco.impostosDR ?? 0} bold />
+          )}
+          <BaseCalculoSecao titulo="Tributos embutidos no preço" />
+          <BaseCalculoLinha label="ICMS" ar={t.icms.ar} dr={t.icms.dr} indent />
+          <BaseCalculoLinha label="PIS-COFINS" ar={t.pisCofins.ar} dr={t.pisCofins.dr} indent />
+          <BaseCalculoLinha label="ICMS DIFAL" ar={t.icmsDifal.ar} dr={t.icmsDifal.dr} indent />
+          <BaseCalculoLinha label="ISS" ar={t.iss.ar} dr={t.iss.dr} indent />
+          <BaseCalculoSecao titulo="Tributos fora do preço" />
+          <BaseCalculoLinha label="IPI" ar={t.ipi.ar} dr={t.ipi.dr} indent />
+          <BaseCalculoLinha label="ICMS-ST" ar={t.icmsSt.ar} dr={t.icmsSt.dr} indent />
+          <BaseCalculoLinha label="IBS" ar={t.ibs.ar} dr={t.ibs.dr} indent />
+          <BaseCalculoLinha label="CBS" ar={t.cbs.ar} dr={t.cbs.dr} indent />
+          <BaseCalculoLinha label="Valor Total Pago" ar={bloco.valorTotalAR} dr={bloco.valorTotalDR} bold />
+          {temCustoLiquido && (
+            <BaseCalculoLinha label={bloco.custoLiquidoLabel!} ar={bloco.custoLiquidoAR!} dr={bloco.custoLiquidoDR!} bold />
+          )}
+          {temCustoLiquido && (bloco.creditoAR !== undefined || bloco.creditoDR !== undefined) && (
+            <BaseCalculoLinha label="Total Crédito" ar={bloco.creditoAR ?? 0} dr={bloco.creditoDR ?? 0} bold />
+          )}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 function DrillDownPanel({ content, onClose }: { content: DrillContent | null; onClose: () => void }) {
   const [query, setQuery] = useState('')
   const [sortValue, setSortValue] = useState('')
@@ -502,6 +599,11 @@ function DrillDownPanel({ content, onClose }: { content: DrillContent | null; on
                   ))}
                 </tbody>
               </table>
+              {content.baseCalculo && content.baseCalculo.length > 0 && (
+                <div className="border-t border-border">
+                  {content.baseCalculo.map((bloco, i) => <BaseCalculoTable key={i} bloco={bloco} />)}
+                </div>
+              )}
               {content.extra && content.extra.items.length > 0 && (
                 <details className="border-t border-border group">
                   <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-xs font-medium text-foreground/40 hover:text-foreground/70 transition">

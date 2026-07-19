@@ -299,8 +299,8 @@ export function ImpactoProduto({ comprasNCM, vendasNCM }: {
       {/* Duas listas ranqueadas — mais beneficiados e mais prejudicados */}
       <FadeUp delay={0.05}>
         <div className="grid gap-4 md:grid-cols-2">
-          <ImpactoLista titulo="Mais beneficiados" itens={beneficiados} cor={GAIN} />
-          <ImpactoLista titulo="Mais prejudicados" itens={prejudicados} cor={LOSS} />
+          <ImpactoLista titulo="Mais beneficiados em Margem Bruta" itens={beneficiados} cor={GAIN} />
+          <ImpactoLista titulo="Mais afetados em Margem Bruta" itens={prejudicados} cor={LOSS} />
         </div>
       </FadeUp>
 

@@ -27,14 +27,19 @@ function pct(v: number): string {
 const ANOS = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033]
 
 function getAnoValues(row: SimuladorRow, ano: number) {
-  return row.projecao?.find(p => p.ano === ano) ?? { precoVenda: row.valorVendaAR, resultado: row.resultadoAtual, markupPct: row.markupAtualPct }
+  return row.projecao?.find(p => p.ano === ano)
+    ?? { precoVenda: row.valorVendaAR, custo: row.custoAR, resultado: row.resultadoAtual, markupPct: row.markupAtualPct }
 }
 
+// Markup = (Preço − Custo) ÷ Custo, mostrado em valor (R$) e percentual lado a lado pra deixar
+// o cálculo auditável. Margem Bruta = (Preço − Custo) ÷ Preço — percentual diferente do markup
+// (base é o preço, não o custo) — ver computeSimulador em lib/admin-engine.ts.
 const PROJECAO_COLUMNS: DrillColumn[] = [
   { key: 'ano', label: 'Ano' },
   { key: 'precoVenda', label: 'Preço Venda', format: 'currency' },
-  { key: 'markupPct', label: 'Markup', format: 'percent' },
-  { key: 'resultado', label: 'Margem Bruta', format: 'currency' },
+  { key: 'custo', label: 'Custo', format: 'currency' },
+  { key: 'markupDisplay', label: 'Markup', format: 'text' },
+  { key: 'margemBrutaPct', label: 'Margem Bruta', format: 'percent' },
 ]
 
 // ─── Summary Cards ────────────────────────────────────────────────────────────
@@ -42,12 +47,25 @@ const PROJECAO_COLUMNS: DrillColumn[] = [
 function SummaryCards({ simulador, ano }: { simulador: SimuladorRow[]; ano: number }) {
   if (!simulador.length) return null
 
-  const avgMarkupAtual = simulador.reduce((s, r) => s + r.markupAtualPct, 0) / simulador.length
+  // Média ponderada pelo custo (Σresultado ÷ Σcusto), não média simples entre produtos — senão
+  // um produto de ticket baixo com markup alto pesa igual a um de ticket alto com markup baixo,
+  // distorcendo o markup "da carteira". Mesmo padrão de ponderação usado nas margens (MargemCards).
+  const totalCustoAtual = simulador.reduce((s, r) => s + r.custoAR, 0) || 1
+  const avgMarkupAtual = simulador.reduce((s, r) => s + r.markupAtualPct * r.custoAR, 0) / totalCustoAtual
 
-  const anoVals = simulador.map(r => getAnoValues(r, ano))
-  const avgMarkupAno = anoVals.reduce((s, v) => s + v.markupPct, 0) / anoVals.length
+  // `custo` do ano vem de precoVenda − resultado (o próprio ponto da projeção), não custoAR —
+  // o custo interpolado muda ano a ano junto com a transição.
+  const anoVals = simulador.map(r => {
+    const v = getAnoValues(r, ano)
+    return { ...v, custo: v.precoVenda - v.resultado }
+  })
+  const totalCustoAno = anoVals.reduce((s, v) => s + v.custo, 0) || 1
+  const avgMarkupAno = anoVals.reduce((s, v) => s + v.markupPct * v.custo, 0) / totalCustoAno
 
   const markupDeltaFromAtual = avgMarkupAno - avgMarkupAtual
+
+  const totalResultadoAtual = simulador.reduce((s, r) => s + r.resultadoAtual, 0)
+  const totalResultadoAno = anoVals.reduce((s, v) => s + v.resultado, 0)
 
   return (
     <Explain text="Markup é quanto você soma sobre o custo pra chegar no preço de venda." className="block">
@@ -55,7 +73,7 @@ function SummaryCards({ simulador, ano }: { simulador: SimuladorRow[]; ano: numb
       <div className="rounded-2xl border border-border bg-foreground/[0.025] p-4">
         <p className="text-[10px] text-foreground/25 uppercase tracking-widest mb-3">Markup Atual (2026)</p>
         <p className="text-2xl font-bold text-foreground font-tabular">{pct(avgMarkupAtual)}</p>
-        <p className="text-xs text-foreground/30 mt-1">margem média sobre custo</p>
+        <p className="text-xs text-foreground/30 mt-1">{R$(totalResultadoAtual, 0)} de resultado sobre custo</p>
       </div>
       <div className={`rounded-2xl border p-4 ${
         markupDeltaFromAtual >= 0
@@ -71,7 +89,7 @@ function SummaryCards({ simulador, ano }: { simulador: SimuladorRow[]; ano: numb
           {pct(avgMarkupAno)}
         </p>
         <p className="text-xs text-foreground/30 mt-1">
-          {markupDeltaFromAtual >= 0 ? '+' : ''}{pct(markupDeltaFromAtual)} vs. atual
+          {R$(totalResultadoAno, 0)} de resultado · {markupDeltaFromAtual >= 0 ? '+' : ''}{pct(markupDeltaFromAtual)} vs. atual
         </p>
       </div>
     </div>
@@ -92,14 +110,19 @@ function MargemCards({ margemProdutos, dre }: { margemProdutos: DreProdutoRow[];
   const margemBrutaDRPct = margemProdutos.reduce((s, r) => s + r.margemBrutaDRPct * r.receitaDR, 0) / totalReceitaDR
   const margemContribuicaoARPct = margemProdutos.reduce((s, r) => s + r.margemContribuicaoARPct * r.receitaAR, 0) / totalReceitaAR
   const margemContribuicaoDRPct = margemProdutos.reduce((s, r) => s + r.margemContribuicaoDRPct * r.receitaDR, 0) / totalReceitaDR
+  const totalResultadoAR = margemProdutos.reduce((s, r) => s + r.resultadoAtual, 0)
+  const totalResultadoDR = margemProdutos.reduce((s, r) => s + r.resultadoDR, 0)
+  const totalResultadoContribuicaoAR = margemProdutos.reduce((s, r) => s + r.resultadoContribuicaoAR, 0)
+  const totalResultadoContribuicaoDR = margemProdutos.reduce((s, r) => s + r.resultadoContribuicaoDR, 0)
   const margemLiquida = margemLiquidaInsight(dre)
 
-  const CARD = (label: string, value: number, baseline: number, sub: string) => {
+  const CARD = (label: string, value: number, baseline: number, valorRS: number, sub: string) => {
     const melhora = value >= baseline
     return (
       <div className={`rounded-2xl border p-4 ${melhora ? 'border-gain/20 bg-gain/[0.03]' : 'border-loss/20 bg-loss/[0.03]'}`}>
         <p className="text-[10px] text-foreground/25 uppercase tracking-widest mb-3">{label}</p>
         <p className={`text-2xl font-bold font-tabular ${melhora ? 'text-gain' : 'text-loss'}`}>{pct(value)}</p>
+        <p className="text-xs text-foreground/40 mt-1 font-tabular">{R$(valorRS, 0)}</p>
         <p className="text-xs text-foreground/30 mt-1">{sub}</p>
       </div>
     )
@@ -111,23 +134,26 @@ function MargemCards({ margemProdutos, dre }: { margemProdutos: DreProdutoRow[];
       <div className="rounded-2xl border border-border bg-foreground/[0.025] p-4">
         <p className="text-[10px] text-foreground/25 uppercase tracking-widest mb-3">Margem Bruta (Antes)</p>
         <p className="text-2xl font-bold text-foreground font-tabular">{pct(margemBrutaARPct)}</p>
+        <p className="text-xs text-foreground/40 mt-1 font-tabular">{R$(totalResultadoAR, 0)}</p>
         <p className="text-xs text-foreground/30 mt-1">(receita − custo) ÷ receita</p>
       </div>
-      {CARD('Margem Bruta (Depois)', margemBrutaDRPct, margemBrutaARPct, `${margemBrutaDRPct >= margemBrutaARPct ? '+' : ''}${pct(margemBrutaDRPct - margemBrutaARPct)} vs. antes`)}
+      {CARD('Margem Bruta (Depois)', margemBrutaDRPct, margemBrutaARPct, totalResultadoDR, `${margemBrutaDRPct >= margemBrutaARPct ? '+' : ''}${pct(margemBrutaDRPct - margemBrutaARPct)} vs. antes`)}
       <div className="rounded-2xl border border-border bg-foreground/[0.025] p-4">
         <p className="text-[10px] text-foreground/25 uppercase tracking-widest mb-3">Margem Contribuição (Antes)</p>
         <p className="text-2xl font-bold text-foreground font-tabular">{pct(margemContribuicaoARPct)}</p>
+        <p className="text-xs text-foreground/40 mt-1 font-tabular">{R$(totalResultadoContribuicaoAR, 0)}</p>
         <p className="text-xs text-foreground/30 mt-1">(receita − custo − tributo venda) ÷ receita</p>
       </div>
-      {CARD('Margem Contribuição (Depois)', margemContribuicaoDRPct, margemContribuicaoARPct, `${margemContribuicaoDRPct >= margemContribuicaoARPct ? '+' : ''}${pct(margemContribuicaoDRPct - margemContribuicaoARPct)} vs. antes`)}
+      {CARD('Margem Contribuição (Depois)', margemContribuicaoDRPct, margemContribuicaoARPct, totalResultadoContribuicaoDR, `${margemContribuicaoDRPct >= margemContribuicaoARPct ? '+' : ''}${pct(margemContribuicaoDRPct - margemContribuicaoARPct)} vs. antes`)}
       {margemLiquida && (
         <>
           <div className="rounded-2xl border border-border bg-foreground/[0.025] p-4">
             <p className="text-[10px] text-foreground/25 uppercase tracking-widest mb-3">Margem Líquida (Antes)</p>
             <p className="text-2xl font-bold text-foreground font-tabular">{pct(margemLiquida.arPct)}</p>
+            <p className="text-xs text-foreground/40 mt-1 font-tabular">{R$(margemLiquida.lucroLiquidoAR, 0)}</p>
             <p className="text-xs text-foreground/30 mt-1">lucro líquido ÷ receita líquida</p>
           </div>
-          {CARD('Margem Líquida (Depois)', margemLiquida.drPct, margemLiquida.arPct, `${margemLiquida.drPct >= margemLiquida.arPct ? '+' : ''}${pct(margemLiquida.drPct - margemLiquida.arPct)} vs. antes`)}
+          {CARD('Margem Líquida (Depois)', margemLiquida.drPct, margemLiquida.arPct, margemLiquida.lucroLiquidoDR, `${margemLiquida.drPct >= margemLiquida.arPct ? '+' : ''}${pct(margemLiquida.drPct - margemLiquida.arPct)} vs. antes`)}
         </>
       )}
     </div>
@@ -140,10 +166,11 @@ function MargemCards({ margemProdutos, dre }: { margemProdutos: DreProdutoRow[];
 // especificamente puxa cada extremo — mesmo universo `margemProdutos` (não filtrado
 // como o `simulador`), valores "Depois da Reforma".
 
-function ProdutoExtremoCard({ label, produto, valor, isGain, onClick }: {
+function ProdutoExtremoCard({ label, produto, valor, valorRS, isGain, onClick }: {
   label: string
   produto: DreProdutoRow
   valor: number
+  valorRS: number
   isGain: boolean
   onClick: () => void
 }) {
@@ -157,6 +184,7 @@ function ProdutoExtremoCard({ label, produto, valor, isGain, onClick }: {
     >
       <p className="text-[10px] text-foreground/25 uppercase tracking-widest mb-3">{label}</p>
       <p className={`text-2xl font-bold font-tabular ${isGain ? 'text-gain' : 'text-loss'}`}>{pct(valor)}</p>
+      <p className="text-xs text-foreground/40 font-tabular">{R$(valorRS, 0)}</p>
       <p className="mt-1 truncate text-xs text-foreground/40" title={produto.descricao || `NCM ${produto.ncm}`}>
         {produto.descricao || `NCM ${produto.ncm}`}
       </p>
@@ -183,10 +211,10 @@ function MargemExtremos({ margemProdutos }: { margemProdutos: DreProdutoRow[] })
   return (
     <Explain text="Aponta, entre todos os produtos casados (compra + venda), qual tem a maior e a menor margem — Bruta é (receita − custo) ÷ receita; de Contribuição (a 'margem líquida' do produto) também desconta o tributo que incide na própria venda. Valores já 'Depois da Reforma'." className="block">
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-      <ProdutoExtremoCard label="Maior Margem Bruta" produto={maiorBruta} valor={maiorBruta.margemBrutaDRPct} isGain onClick={() => abrir(maiorBruta)} />
-      <ProdutoExtremoCard label="Menor Margem Bruta" produto={menorBruta} valor={menorBruta.margemBrutaDRPct} isGain={false} onClick={() => abrir(menorBruta)} />
-      <ProdutoExtremoCard label="Maior Margem de Contribuição (Líquida)" produto={maiorContribuicao} valor={maiorContribuicao.margemContribuicaoDRPct} isGain onClick={() => abrir(maiorContribuicao)} />
-      <ProdutoExtremoCard label="Menor Margem de Contribuição (Líquida)" produto={menorContribuicao} valor={menorContribuicao.margemContribuicaoDRPct} isGain={false} onClick={() => abrir(menorContribuicao)} />
+      <ProdutoExtremoCard label="Maior Margem Bruta" produto={maiorBruta} valor={maiorBruta.margemBrutaDRPct} valorRS={maiorBruta.resultadoDR} isGain onClick={() => abrir(maiorBruta)} />
+      <ProdutoExtremoCard label="Menor Margem Bruta" produto={menorBruta} valor={menorBruta.margemBrutaDRPct} valorRS={menorBruta.resultadoDR} isGain={false} onClick={() => abrir(menorBruta)} />
+      <ProdutoExtremoCard label="Maior Margem de Contribuição (Líquida)" produto={maiorContribuicao} valor={maiorContribuicao.margemContribuicaoDRPct} valorRS={maiorContribuicao.resultadoContribuicaoDR} isGain onClick={() => abrir(maiorContribuicao)} />
+      <ProdutoExtremoCard label="Menor Margem de Contribuição (Líquida)" produto={menorContribuicao} valor={menorContribuicao.margemContribuicaoDRPct} valorRS={menorContribuicao.resultadoContribuicaoDR} isGain={false} onClick={() => abrir(menorContribuicao)} />
     </div>
     </Explain>
   )
@@ -215,12 +243,14 @@ function margemContribuicaoDrillContent(r: DreProdutoRow): DrillContent {
     accentColor: delta >= 0 ? GAIN : LOSS,
     columns: [
       { key: 'metrica', label: 'Métrica' },
+      { key: 'valorAr', label: 'Valor Antes', format: 'currency' },
       { key: 'ar', label: 'Antes', format: 'percent' },
+      { key: 'valorDr', label: 'Valor Depois', format: 'currency' },
       { key: 'dr', label: 'Depois', format: 'percent' },
     ],
     rows: [
-      { metrica: 'Margem Bruta', ar: r.margemBrutaARPct, dr: r.margemBrutaDRPct },
-      { metrica: 'Margem de Contribuição', ar: r.margemContribuicaoARPct, dr: r.margemContribuicaoDRPct },
+      { metrica: 'Margem Bruta', valorAr: r.resultadoAtual, ar: r.margemBrutaARPct, valorDr: r.resultadoDR, dr: r.margemBrutaDRPct },
+      { metrica: 'Margem de Contribuição', valorAr: r.resultadoContribuicaoAR, ar: r.margemContribuicaoARPct, valorDr: r.resultadoContribuicaoDR, dr: r.margemContribuicaoDRPct },
     ],
     extra: { title: 'Detalhes técnicos da planilha', items: buildDetalhesExtra(r.detalhes) },
   }
@@ -349,11 +379,13 @@ function MargemContribuicaoPorCategoria({ categorias }: { categorias: MargemCont
       accentColor: r.margemContribuicaoDRPct >= r.margemContribuicaoARPct ? GAIN : LOSS,
       columns: [
         { key: 'metrica', label: 'Métrica' },
+        { key: 'valorAr', label: 'Valor Antes', format: 'currency' },
         { key: 'ar', label: 'Antes', format: 'percent' },
+        { key: 'valorDr', label: 'Valor Depois', format: 'currency' },
         { key: 'dr', label: 'Depois', format: 'percent' },
       ],
       rows: [
-        { metrica: 'Margem de Contribuição', ar: r.margemContribuicaoARPct, dr: r.margemContribuicaoDRPct },
+        { metrica: 'Margem de Contribuição', valorAr: r.resultadoContribuicaoAR, ar: r.margemContribuicaoARPct, valorDr: r.resultadoContribuicaoDR, dr: r.margemContribuicaoDRPct },
       ],
     })
   }
@@ -366,6 +398,7 @@ function MargemContribuicaoPorCategoria({ categorias }: { categorias: MargemCont
       { key: 'categoria', label: 'Categoria' },
       { key: 'produtos', label: 'Produtos' },
       { key: 'receitaDr', label: 'Receita (Depois)', format: 'currency' },
+      { key: 'valorDr', label: 'Margem Contribuição (Depois)', format: 'currency' },
       { key: 'ar', label: 'Margem Antes', format: 'percent' },
       { key: 'dr', label: 'Margem Depois', format: 'percent' },
     ],
@@ -373,6 +406,7 @@ function MargemContribuicaoPorCategoria({ categorias }: { categorias: MargemCont
       categoria: r.categoria,
       produtos: r.count,
       receitaDr: r.receitaDR,
+      valorDr: r.resultadoContribuicaoDR,
       ar: r.margemContribuicaoARPct,
       dr: r.margemContribuicaoDRPct,
     })),
@@ -430,7 +464,13 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
       title: row.descricao || 'Produto sem descrição',
       subtitle: 'Preço de venda necessário pra manter a receita líquida de 2026, ano a ano',
       columns: PROJECAO_COLUMNS,
-      rows: row.projecao ?? [],
+      rows: (row.projecao ?? []).map(p => ({
+        ano: p.ano,
+        precoVenda: p.precoVenda,
+        custo: p.custo,
+        markupDisplay: `${R$(p.resultado)} (${pct(p.markupPct)})`,
+        margemBrutaPct: p.precoVenda > 0 ? (p.resultado / p.precoVenda) * 100 : 0,
+      })),
       extra: { title: 'Detalhes técnicos da planilha', items: buildDetalhesExtra(row.detalhes) },
     })
   }
@@ -444,8 +484,11 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
       { key: 'ncm', label: 'NCM', mono: true },
       { key: 'custoAr', label: 'Custo AR', format: 'currency' },
       { key: 'custoDr', label: 'Custo DR', format: 'currency' },
+      { key: 'resultadoAtual', label: 'Resultado Atual', format: 'currency' },
       { key: 'markupAtual', label: 'Markup Atual', format: 'percent' },
+      { key: 'resultadoDr', label: 'Resultado (Depois)', format: 'currency' },
       { key: 'margemBruta', label: 'Margem Bruta', format: 'percent' },
+      { key: 'resultadoContribuicaoDr', label: 'Result. Contribuição (Depois)', format: 'currency' },
       { key: 'margemContribuicao', label: 'Margem Contribuição', format: 'percent' },
     ],
     rows: simulador.map(row => ({
@@ -453,8 +496,11 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
       ncm: row.ncm,
       custoAr: row.custoAR,
       custoDr: row.custoDR,
+      resultadoAtual: row.resultadoAtual,
       markupAtual: row.markupAtualPct,
+      resultadoDr: row.resultadoDR,
       margemBruta: row.margemBrutaDRPct,
+      resultadoContribuicaoDr: row.resultadoContribuicaoDR,
       margemContribuicao: row.margemContribuicaoDRPct,
     })),
   }
@@ -475,8 +521,8 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
               <th className={th}>Margem Bruta</th>
               <th className={th}>Margem Contribuição</th>
               <th className={`${th} border-l border-primary/20`}>Preço Venda ({ano})</th>
-              <th className={th}>Resultado ({ano})</th>
               <th className={th}>Markup ({ano})</th>
+              <th className={th}>Margem Bruta ({ano})</th>
             </tr>
           </thead>
           <tbody>
@@ -494,7 +540,7 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
                 <ExplainRow
                   key={chave(row) + i}
                   onClick={() => abrirDetalhe(row)}
-                  text="Clique na linha pra ver a projeção de preço, resultado e markup ano a ano (2026-2033) deste produto."
+                  text="Clique na linha pra ver a projeção de preço, custo, markup e margem bruta ano a ano (2026-2033) deste produto."
                   className="border-b border-border"
                 >
                   <td className="px-2.5 py-1.5 text-sm sticky left-0 bg-popover max-w-[220px]">
@@ -510,30 +556,35 @@ function SimuladorTable({ simulador, ano }: { simulador: SimuladorRow[]; ano: nu
                   <td className={td}>{R$(row.valorVendaAR)}</td>
                   <td className={td}>{R$(row.valorVendaDR)}</td>
                   <td className="px-2.5 py-1.5 text-right text-sm text-foreground/55 whitespace-nowrap font-tabular">
-                    {pct(row.markupAtualPct)}
+                    <p>{R$(row.resultadoAtual)}</p>
+                    <p className="text-xs text-foreground/35">{pct(row.markupAtualPct)}</p>
                   </td>
                   <td className={`px-2.5 py-1.5 text-right text-sm whitespace-nowrap font-tabular ${
                     row.margemBrutaDRPct >= row.margemBrutaARPct ? 'text-gain' : 'text-loss'
                   }`}>
-                    {pct(row.margemBrutaDRPct)}
+                    <p>{R$(row.resultadoDR)}</p>
+                    <p className="text-xs opacity-70">{pct(row.margemBrutaDRPct)}</p>
                   </td>
                   <td className={`px-2.5 py-1.5 text-right text-sm whitespace-nowrap font-tabular ${
                     row.margemContribuicaoDRPct >= row.margemContribuicaoARPct ? 'text-gain' : 'text-loss'
                   }`}>
-                    {pct(row.margemContribuicaoDRPct)}
+                    <p>{R$(row.resultadoContribuicaoDR)}</p>
+                    <p className="text-xs opacity-70">{pct(row.margemContribuicaoDRPct)}</p>
                   </td>
                   <td className={`px-2.5 py-1.5 text-right text-sm text-foreground/70 whitespace-nowrap font-tabular border-l border-primary/10`}>
                     {R$(av.precoVenda)}
                   </td>
-                  <td className={`px-2.5 py-1.5 text-right text-sm whitespace-nowrap font-tabular font-semibold ${
-                    av.resultado >= row.resultadoAtual ? 'text-gain' : 'text-loss'
-                  }`}>
-                    {R$(av.resultado)}
-                  </td>
                   <td className={`px-2.5 py-1.5 text-right text-sm whitespace-nowrap font-tabular ${
                     av.markupPct >= row.markupAtualPct ? 'text-gain/80' : 'text-primary/80'
                   }`}>
-                    {pct(av.markupPct)}
+                    <p>{R$(av.resultado)}</p>
+                    <p className="text-xs opacity-70">{pct(av.markupPct)}</p>
+                  </td>
+                  <td className={`px-2.5 py-1.5 text-right text-sm whitespace-nowrap font-tabular font-semibold ${
+                    av.precoVenda > 0 && (av.resultado / av.precoVenda) * 100 >= row.margemBrutaARPct ? 'text-gain' : 'text-loss'
+                  }`}>
+                    <p>{R$(av.resultado)}</p>
+                    <p className="text-xs font-normal opacity-70">{pct(av.precoVenda > 0 ? (av.resultado / av.precoVenda) * 100 : 0)}</p>
                   </td>
                 </ExplainRow>
               )

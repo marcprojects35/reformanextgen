@@ -293,10 +293,14 @@ export interface SimuladorRow {
    *  que incide na venda (ICMS/PIS-COFINS antes, IBS/CBS depois), não só o custo de aquisição. */
   margemContribuicaoARPct: number
   margemContribuicaoDRPct: number
+  /** Valor em R$ da margem de contribuição (Resultado − Tributo de venda) — numerador de
+   *  margemContribuicaoARPct/DRPct, pra exibir o valor junto do percentual. */
+  resultadoContribuicaoAR: number
+  resultadoContribuicaoDR: number
   /** Categoria da taxonomia mercadológica (Seção/Grupo/Subgrupo/Família) do produto. */
   categoriaMercadologica?: CategoriaComCaminho
-  /** Preço de venda, resultado e markup ano a ano (2026-2033) — ver simularPrecificacaoAnos. */
-  projecao: { ano: number; precoVenda: number; resultado: number; markupPct: number }[]
+  /** Preço de venda, custo, resultado e markup ano a ano (2026-2033) — ver simularPrecificacaoAnos. */
+  projecao: { ano: number; precoVenda: number; custo: number; resultado: number; markupPct: number }[]
 }
 
 export interface CategoriaRow {
@@ -331,6 +335,10 @@ export interface DreProdutoRow {
   /** (Receita − Custo − Tributo de venda) ÷ Receita — ver SimuladorRow.margemContribuicaoPct. */
   margemContribuicaoARPct: number
   margemContribuicaoDRPct: number
+  /** Valor em R$ da margem de contribuição (Resultado − Tributo de venda) — numerador de
+   *  margemContribuicaoARPct/DRPct, pra exibir o valor junto do percentual. */
+  resultadoContribuicaoAR: number
+  resultadoContribuicaoDR: number
   /** Categoria da taxonomia mercadológica (Seção/Grupo/Subgrupo/Família) do produto. */
   categoriaMercadologica?: CategoriaComCaminho
   resultadoAtual: number
@@ -369,6 +377,10 @@ export interface MargemContribuicaoCategoriaRow {
   receitaDR: number
   margemContribuicaoARPct: number
   margemContribuicaoDRPct: number
+  /** Soma em R$ da margem de contribuição (Resultado − Tributo de venda) dos produtos da
+   *  categoria — valor absoluto por trás de margemContribuicaoARPct/DRPct. */
+  resultadoContribuicaoAR: number
+  resultadoContribuicaoDR: number
   count: number
 }
 
@@ -421,9 +433,34 @@ function n(s: string): string {
     .replace(/[^a-z0-9]/g, '')
 }
 
+/**
+ * Detecta qual separador é o decimal em vez de assumir sempre formato BR (ponto = milhar,
+ * vírgula = decimal) — planilhas às vezes chegam exportadas em formato internacional (ponto =
+ * decimal, "1234.56"), e o parser antigo removia esse ponto como se fosse milhar, inflando o
+ * valor ~100x. Regra: com os dois separadores presentes, o que aparece por último é o decimal.
+ * Com só um tipo presente, mais de uma ocorrência (ou, no caso do ponto sozinho, exatamente 3
+ * dígitos depois dele — "1.234" típico de milhar BR redondo) é tratado como milhar; caso
+ * contrário é decimal.
+ */
 function parseNum(v: unknown): number {
   if (typeof v === 'number') return isFinite(v) ? v : 0
-  const s = String(v ?? '').trim().replace(/\./g, '').replace(',', '.')
+  let s = String(v ?? '').trim()
+  if (!s) return 0
+
+  const lastComma = s.lastIndexOf(',')
+  const lastDot = s.lastIndexOf('.')
+
+  if (lastComma !== -1 && lastDot !== -1) {
+    s = lastComma > lastDot ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, '')
+  } else if (lastComma !== -1) {
+    const commaCount = s.split(',').length - 1
+    s = commaCount > 1 ? s.replace(/,/g, '') : s.replace(',', '.')
+  } else if (lastDot !== -1) {
+    const dotCount = s.split('.').length - 1
+    const digitsAfterLastDot = s.length - lastDot - 1
+    if (dotCount > 1 || digitsAfterLastDot === 3) s = s.replace(/\./g, '')
+  }
+
   const num = parseFloat(s)
   return isFinite(num) ? num : 0
 }
@@ -877,7 +914,7 @@ function parseRawTransactions(ws: XLSX.WorkSheet): {
     const tipoCol = findCol(headers, 'tipo_movimentacao')
     const tipoRaw = tipoCol ? n(String(row[tipoCol] ?? '')) : ''
     const isEntrada = tipoRaw === 'entrada'
-    const isSaida   = tipoRaw === 'saida' || tipoRaw === 'saida'
+    const isSaida   = tipoRaw === 'saida'
     if (!isEntrada && !isSaida) continue
 
     const valorAR = getNum(row, headers, 'valor_ar')
@@ -1921,8 +1958,10 @@ export function computeSimulador(comprasNCM: ComprasNCMRow[], vendasNCM: VendasD
     const margemBrutaDRPct = vendaDR > 0 ? (resultadoDR / vendaDR) * 100 : 0
     const tributoVendaAR = venda.tributosAR ?? 0
     const tributoVendaDR = venda.tributosDR ?? 0
-    const margemContribuicaoARPct = vendaAR > 0 ? ((resultadoAtual - tributoVendaAR) / vendaAR) * 100 : 0
-    const margemContribuicaoDRPct = vendaDR > 0 ? ((resultadoDR - tributoVendaDR) / vendaDR) * 100 : 0
+    const resultadoContribuicaoAR = resultadoAtual - tributoVendaAR
+    const resultadoContribuicaoDR = resultadoDR - tributoVendaDR
+    const margemContribuicaoARPct = vendaAR > 0 ? (resultadoContribuicaoAR / vendaAR) * 100 : 0
+    const margemContribuicaoDRPct = vendaDR > 0 ? (resultadoContribuicaoDR / vendaDR) * 100 : 0
 
     // Preço de venda ano a ano pra preservar a receita líquida de hoje (2026), dado o
     // cronograma real de transição — ver simularPrecificacaoAnos. O custo de cada ano
@@ -1943,7 +1982,7 @@ export function computeSimulador(comprasNCM: ComprasNCMRow[], vendasNCM: VendasD
       const custo = custoAR + (custoDR - custoAR) * (fracaoCusto[p.ano] ?? 1)
       const resultado = p.precoVenda - custo
       const markupPct = custo > 0 ? (resultado / custo) * 100 : 0
-      return { ano: p.ano, precoVenda: p.precoVenda, resultado, markupPct }
+      return { ano: p.ano, precoVenda: p.precoVenda, custo, resultado, markupPct }
     })
 
     rows.push({
@@ -1954,6 +1993,7 @@ export function computeSimulador(comprasNCM: ComprasNCMRow[], vendasNCM: VendasD
       custoAR, custoDR, valorVendaAR: vendaAR, valorVendaDR: vendaDR,
       markupAtualPct, resultadoAtual, resultadoDR,
       margemBrutaARPct, margemBrutaDRPct, margemContribuicaoARPct, margemContribuicaoDRPct,
+      resultadoContribuicaoAR, resultadoContribuicaoDR,
       categoriaMercadologica: c.categoriaMercadologica ?? venda.categoriaMercadologica,
       projecao,
     })
@@ -1974,24 +2014,33 @@ export function computeSimulador(comprasNCM: ComprasNCMRow[], vendasNCM: VendasD
 // aproximado aqui como inalterado). O preço de venda em cada ano é o necessário pra
 // manter constante a receita líquida que o produto já gera hoje (2026).
 
-const ALIQUOTA_PADRAO_BASE = 0.28 // IBS + CBS combinados, alíquota padrão cheia (sem redução)
-const IBS_SHARE = 2 / 3 // IBS é 66,67% da alíquota padrão combinada
-const CBS_SHARE = 1 / 3 // CBS é 33,33% da alíquota padrão combinada
-
 /** Fração do ICMS/ISS "antes" que ainda incide em cada ano (o resto já virou IBS). */
 const ICMS_REMANESCENTE: Record<number, number> = {
   2026: 1, 2027: 1, 2028: 1, 2029: 0.9, 2030: 0.8, 2031: 0.7, 2032: 0.6, 2033: 0,
 }
-/** Fração da alíquota-padrão de IBS já em vigor em cada ano. */
-const IBS_IMPLEMENTADO: Record<number, number> = {
-  2026: 0, 2027: 0, 2028: 0, 2029: 0.10, 2030: 0.20, 2031: 0.30, 2032: 0.40, 2033: 1,
+
+// Alíquotas de CBS e IBS (Estadual+Municipal) já em vigor em cada ano, alíquota padrão cheia
+// (sem redução) — LC 214/2025, arts. 343-348 (fonte: "Calculos Portal2.xlsx" > aba "ALIQ
+// REFORMA", que cita planalto.gov.br). Antes disso o código aproximava por uma alíquota
+// combinada única (28%) dividida numa proporção fixa 1/3 CBS · 2/3 IBS — a proporção real não é
+// constante: CBS salta pra praticamente o valor cheio já em 2027 (~8,4-8,5%) e fica achatada
+// dali em diante, enquanto o IBS é que rampa devagar até 2033 (~18,5%). A aproximação antiga
+// inflava a CBS de todo produto em ~10% (9,33% modelado vs. 8,5% real) de 2027 a 2032.
+// 2026 fica com alíquota 0 nas duas — é ano de teste (CBS 0,9%/IBS 0,1%), integralmente
+// compensado via crédito de PIS/Cofins, então não muda a carga real (ver simularPrecificacaoAnos,
+// que usa a alíquota de PIS/Cofins/ICMS de hoje em 2026, não essa alíquota-teste).
+const CBS_ALIQUOTA: Record<number, number> = {
+  2026: 0, 2027: 0.084, 2028: 0.084, 2029: 0.085, 2030: 0.085, 2031: 0.085, 2032: 0.085, 2033: 0.085,
+}
+const IBS_ALIQUOTA: Record<number, number> = {
+  2026: 0, 2027: 0.001, 2028: 0.001, 2029: 0.0185, 2030: 0.037, 2031: 0.0555, 2032: 0.074, 2033: 0.185,
 }
 
-/** Alíquota-padrão combinada (IBS+CBS) do produto em 2033, dada sua fração de redução
- *  (lib/admin-engine.ts: DetalhesTecnicos.beneficioReducaoFrac — 0 = sem redução, 0.6 =
- *  redução de 60%, 1 = isento). */
-function aliquotaPadraoProduto(reducaoFrac: number | undefined): number {
-  return ALIQUOTA_PADRAO_BASE * (1 - (reducaoFrac ?? 0))
+/** Fração (0-1) da alíquota padrão de IBS/CBS que resta depois do benefício do produto — 0 =
+ *  sem redução, 0.6 = redução de 60%, 1 = isento (lib/admin-engine.ts: DetalhesTecnicos.
+ *  beneficioReducaoFrac). Multiplica CBS_ALIQUOTA/IBS_ALIQUOTA pra chegar na alíquota efetiva. */
+function fracaoAposReducao(reducaoFrac: number | undefined): number {
+  return 1 - (reducaoFrac ?? 0)
 }
 
 export interface PrecificacaoAno {
@@ -2008,7 +2057,7 @@ export interface PrecificacaoAno {
  * receita líquida atual do produto, dado o cronograma de transição acima. `precoAtual`
  * é o preço de venda hoje (2026); `icmsAntesFrac`/`pisCofinsAntesFrac` são as alíquotas
  * efetivas atuais do produto (frações 0-1, não pontos percentuais); `reducaoFrac` é a
- * fração de redução de IBS/CBS aplicável (ver aliquotaPadraoProduto).
+ * fração de redução de IBS/CBS aplicável (ver fracaoAposReducao).
  */
 export function simularPrecificacaoAnos(params: {
   precoAtual: number
@@ -2017,9 +2066,7 @@ export function simularPrecificacaoAnos(params: {
   reducaoFrac: number | undefined
 }): PrecificacaoAno[] {
   const { precoAtual, icmsAntesFrac, pisCofinsAntesFrac } = params
-  const aliquotaPadrao = aliquotaPadraoProduto(params.reducaoFrac)
-  const ibsAlvo = aliquotaPadrao * IBS_SHARE
-  const cbsAlvo = aliquotaPadrao * CBS_SHARE
+  const reducao = fracaoAposReducao(params.reducaoFrac)
 
   // 2026: os valores reais de hoje — ainda nada mudou.
   const icms2026 = precoAtual * icmsAntesFrac
@@ -2030,8 +2077,8 @@ export function simularPrecificacaoAnos(params: {
     if (ano === 2026) {
       return { ano, precoVenda: precoAtual, icms: icms2026, pisCofins: pisCofins2026, ibs: 0, cbs: 0 }
     }
-    const cbs = ano >= 2027 ? cbsAlvo : 0 // CBS substitui o PIS/Cofins cheio a partir de 2027
-    const ibs = ibsAlvo * (IBS_IMPLEMENTADO[ano] ?? 0)
+    const cbs = (CBS_ALIQUOTA[ano] ?? 0) * reducao
+    const ibs = (IBS_ALIQUOTA[ano] ?? 0) * reducao
     const icmsPct = icmsAntesFrac * (ICMS_REMANESCENTE[ano] ?? 0)
     const icmsEfetivo = icmsPct * (1 + cbs + ibs) // ICMS incide "por dentro", já com IBS/CBS na base
     const precoVenda = icmsEfetivo < 1 ? precoSemTributos / (1 - icmsEfetivo) : precoSemTributos
@@ -2059,9 +2106,15 @@ function fracaoTransicaoAnos(params: {
   const precoAtual = precificacao[0].precoVenda
   const precoFinal = precificacao[precificacao.length - 1].precoVenda
   const gap = precoAtual - precoFinal
+  // Sem tributo algum incidindo (icmsAntesFrac e pisCofinsAntesFrac ambos 0), precoVenda não
+  // muda em nenhum ano (gap=0) — cai pra a fração de CBS+IBS já implementada como proxy de
+  // "quanto da transição já passou", já que não há uma curva de preço própria pra derivar dela.
+  const alvoCombinado = (CBS_ALIQUOTA[2033] ?? 0) + (IBS_ALIQUOTA[2033] ?? 0)
   const fracoes: Record<number, number> = {}
   for (const p of precificacao) {
-    fracoes[p.ano] = Math.abs(gap) > 1e-9 ? (precoAtual - p.precoVenda) / gap : (IBS_IMPLEMENTADO[p.ano] ?? 1)
+    fracoes[p.ano] = Math.abs(gap) > 1e-9
+      ? (precoAtual - p.precoVenda) / gap
+      : alvoCombinado > 0 ? ((CBS_ALIQUOTA[p.ano] ?? 0) + (IBS_ALIQUOTA[p.ano] ?? 0)) / alvoCombinado : 1
   }
   return fracoes
 }
@@ -2106,6 +2159,8 @@ export function computeDreProduto(comprasNCM: ComprasNCMRow[], vendasNCM: Vendas
 
     const tributoVendaAR = venda.tributosAR ?? 0
     const tributoVendaDR = venda.tributosDR ?? 0
+    const resultadoContribuicaoAR = resultadoAtual - tributoVendaAR
+    const resultadoContribuicaoDR = resultadoDR - tributoVendaDR
 
     rows.push({
       ncm: c.ncm,
@@ -2116,8 +2171,9 @@ export function computeDreProduto(comprasNCM: ComprasNCMRow[], vendasNCM: Vendas
       receitaAR, receitaDR, custoAR, custoDR,
       margemBrutaARPct: receitaAR > 0 ? (resultadoAtual / receitaAR) * 100 : 0,
       margemBrutaDRPct: receitaDR > 0 ? (resultadoDR    / receitaDR) * 100 : 0,
-      margemContribuicaoARPct: receitaAR > 0 ? ((resultadoAtual - tributoVendaAR) / receitaAR) * 100 : 0,
-      margemContribuicaoDRPct: receitaDR > 0 ? ((resultadoDR    - tributoVendaDR) / receitaDR) * 100 : 0,
+      margemContribuicaoARPct: receitaAR > 0 ? (resultadoContribuicaoAR / receitaAR) * 100 : 0,
+      margemContribuicaoDRPct: receitaDR > 0 ? (resultadoContribuicaoDR / receitaDR) * 100 : 0,
+      resultadoContribuicaoAR, resultadoContribuicaoDR,
       categoriaMercadologica: c.categoriaMercadologica ?? venda.categoriaMercadologica,
       resultadoAtual, resultadoDR,
       diffResultado: resultadoDR - resultadoAtual,
@@ -2203,6 +2259,8 @@ export function computeMargemProdutos(comprasNCM: ComprasNCMRow[], vendasNCM: Ve
 
     const tributoVendaAR = venda.tributosAR ?? 0
     const tributoVendaDR = venda.tributosDR ?? 0
+    const resultadoContribuicaoAR = resultadoAtual - tributoVendaAR
+    const resultadoContribuicaoDR = resultadoDR - tributoVendaDR
 
     rows.push({
       ncm: c.ncm,
@@ -2213,8 +2271,9 @@ export function computeMargemProdutos(comprasNCM: ComprasNCMRow[], vendasNCM: Ve
       receitaAR, receitaDR, custoAR, custoDR,
       margemBrutaARPct: receitaAR > 0 ? (resultadoAtual / receitaAR) * 100 : 0,
       margemBrutaDRPct: receitaDR > 0 ? (resultadoDR    / receitaDR) * 100 : 0,
-      margemContribuicaoARPct: receitaAR > 0 ? ((resultadoAtual - tributoVendaAR) / receitaAR) * 100 : 0,
-      margemContribuicaoDRPct: receitaDR > 0 ? ((resultadoDR    - tributoVendaDR) / receitaDR) * 100 : 0,
+      margemContribuicaoARPct: receitaAR > 0 ? (resultadoContribuicaoAR / receitaAR) * 100 : 0,
+      margemContribuicaoDRPct: receitaDR > 0 ? (resultadoContribuicaoDR / receitaDR) * 100 : 0,
+      resultadoContribuicaoAR, resultadoContribuicaoDR,
       categoriaMercadologica: c.categoriaMercadologica ?? venda.categoriaMercadologica,
       resultadoAtual, resultadoDR,
       diffResultado: resultadoDR - resultadoAtual,
@@ -2231,15 +2290,17 @@ export function computeMargemProdutos(comprasNCM: ComprasNCMRow[], vendasNCM: Ve
  *  `simulador`) pra não enviesar a agregação por categoria. Média ponderada pela receita,
  *  igual ao padrão de `computeCategoriaMercadologicaRollup`. */
 export function computeMargemContribuicaoPorCategoria(margemProdutos: DreProdutoRow[]): MargemContribuicaoCategoriaRow[] {
-  interface Acc { receitaAR: number; receitaDR: number; margemARWSum: number; margemDRWSum: number; count: number }
+  interface Acc { receitaAR: number; receitaDR: number; margemARWSum: number; margemDRWSum: number; resultadoContribuicaoAR: number; resultadoContribuicaoDR: number; count: number }
   const map = new Map<string, Acc>()
   for (const r of margemProdutos) {
     const categoria = r.categoriaMercadologica?.secao ?? 'Não Classificado'
-    const acc = map.get(categoria) ?? { receitaAR: 0, receitaDR: 0, margemARWSum: 0, margemDRWSum: 0, count: 0 }
+    const acc = map.get(categoria) ?? { receitaAR: 0, receitaDR: 0, margemARWSum: 0, margemDRWSum: 0, resultadoContribuicaoAR: 0, resultadoContribuicaoDR: 0, count: 0 }
     acc.receitaAR += r.receitaAR
     acc.receitaDR += r.receitaDR
     acc.margemARWSum += r.margemContribuicaoARPct * r.receitaAR
     acc.margemDRWSum += r.margemContribuicaoDRPct * r.receitaDR
+    acc.resultadoContribuicaoAR += r.resultadoContribuicaoAR
+    acc.resultadoContribuicaoDR += r.resultadoContribuicaoDR
     acc.count += 1
     map.set(categoria, acc)
   }
@@ -2249,6 +2310,8 @@ export function computeMargemContribuicaoPorCategoria(margemProdutos: DreProduto
     receitaDR: a.receitaDR,
     margemContribuicaoARPct: a.receitaAR > 0 ? a.margemARWSum / a.receitaAR : 0,
     margemContribuicaoDRPct: a.receitaDR > 0 ? a.margemDRWSum / a.receitaDR : 0,
+    resultadoContribuicaoAR: a.resultadoContribuicaoAR,
+    resultadoContribuicaoDR: a.resultadoContribuicaoDR,
     count: a.count,
   })).sort((a, b) => b.receitaDR - a.receitaDR)
 }
@@ -2259,13 +2322,15 @@ export function computeMargemContribuicaoPorCategoria(margemProdutos: DreProduto
  * margem bruta por produto (`computeMargemProdutos`), que é sempre calculável a
  * partir das transações de compra/venda.
  */
-export function margemLiquidaInsight(dre: DRELinha[]): { arPct: number; drPct: number } | null {
+export function margemLiquidaInsight(dre: DRELinha[]): { arPct: number; drPct: number; lucroLiquidoAR: number; lucroLiquidoDR: number } | null {
   const lucroLiquido = dre.find(d => n(d.categoria).includes('lucroliquido'))
   const receitaLiquida = dre.find(d => n(d.categoria).includes('receitaliquida'))
   if (!lucroLiquido || !receitaLiquida || (receitaLiquida.ar === 0 && receitaLiquida.anoBase === 0)) return null
   return {
     arPct: receitaLiquida.ar > 0 ? (lucroLiquido.ar / receitaLiquida.ar) * 100 : 0,
     drPct: receitaLiquida.anoBase > 0 ? (lucroLiquido.anoBase / receitaLiquida.anoBase) * 100 : 0,
+    lucroLiquidoAR: lucroLiquido.ar,
+    lucroLiquidoDR: lucroLiquido.anoBase,
   }
 }
 
