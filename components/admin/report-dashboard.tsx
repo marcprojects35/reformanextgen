@@ -9,7 +9,7 @@ import {
   Layers, ArrowLeft, ArrowRight,
   Globe,
   Share2, Printer, CheckCircle, Landmark, Send, MessageSquareText,
-  Boxes,
+  Boxes, Calculator,
 } from 'lucide-react'
 import { motion, AnimatePresence, useInView } from 'motion/react'
 import {
@@ -739,8 +739,9 @@ function ArDrBarChart({ data, title, invert = false, forceColor, ano, explain }:
 
 // ─── Compras Table ────────────────────────────────────────────────────────────
 
-function ComprasSection({ compras, ano }: { compras: CompraCategoria[]; ano?: number | null }) {
+function ComprasSection({ compras, ano, comprasPorAno }: { compras: CompraCategoria[]; ano?: number | null; comprasPorAno?: Record<number, CompraCategoria[]> }) {
   const { open } = useDrillDown()
+  const anosOrdenados = useMemo(() => Object.keys(comprasPorAno ?? {}).map(Number).sort((a, b) => a - b), [comprasPorAno])
   const totals: CompraCategoria = {
     categoria: 'Total',
     valorAR: compras.reduce((s, c) => s + c.valorAR, 0),
@@ -769,6 +770,11 @@ function ComprasSection({ compras, ano }: { compras: CompraCategoria[]; ano?: nu
   const tdb = 'px-3 py-3 text-right text-sm font-semibold text-foreground whitespace-nowrap tabular-nums'
 
   function abrirDetalheCompra(c: CompraCategoria) {
+    const anosRows = anosOrdenados.map(a => ({
+      metrica: `Custo DR — ${a}`,
+      ar: undefined,
+      dr: comprasPorAno?.[a]?.find(r => r.categoria === c.categoria)?.custoDR,
+    }))
     open({
       title: c.categoria,
       accentColor: LOSS,
@@ -785,6 +791,7 @@ function ComprasSection({ compras, ano }: { compras: CompraCategoria[]; ano?: nu
         { metrica: '% Custo', ar: pct(c.custoEfetivoARPct), dr: pct(c.custoEfetivoDRPct) },
         { metrica: 'Crédito', ar: c.creditoAR, dr: c.creditoDR },
         { metrica: '% Carga', ar: pct(c.cargaTributariaARPct), dr: undefined },
+        ...anosRows,
       ],
     })
   }
@@ -862,8 +869,9 @@ function ComprasSection({ compras, ano }: { compras: CompraCategoria[]; ano?: nu
 
 // ─── Vendas Table ─────────────────────────────────────────────────────────────
 
-function VendasSection({ vendas, ano }: { vendas: VendaCategoria[]; ano?: number | null }) {
+function VendasSection({ vendas, ano, vendasPorAno }: { vendas: VendaCategoria[]; ano?: number | null; vendasPorAno?: Record<number, VendaCategoria[]> }) {
   const { open } = useDrillDown()
+  const anosOrdenados = useMemo(() => Object.keys(vendasPorAno ?? {}).map(Number).sort((a, b) => a - b), [vendasPorAno])
   const totals: VendaCategoria = {
     categoria: 'Total',
     valorAR: vendas.reduce((s, v) => s + v.valorAR, 0),
@@ -887,6 +895,11 @@ function VendasSection({ vendas, ano }: { vendas: VendaCategoria[]; ano?: number
   const td = 'px-3 py-3 text-right text-sm text-foreground/55 whitespace-nowrap tabular-nums'
 
   function abrirDetalheVenda(v: VendaCategoria) {
+    const anosRows = anosOrdenados.map(a => ({
+      metrica: `Valor DR — ${a}`,
+      ar: undefined,
+      dr: vendasPorAno?.[a]?.find(r => r.categoria === v.categoria)?.valorDR,
+    }))
     open({
       title: v.categoria,
       accentColor: v.valorDR >= v.valorAR ? GAIN : LOSS,
@@ -901,6 +914,7 @@ function VendasSection({ vendas, ano }: { vendas: VendaCategoria[]; ano?: number
         { metrica: 'Débito', ar: v.debitoAR, dr: v.debitoDR },
         { metrica: 'Desonerado', ar: v.valorDesonerado, dr: undefined },
         { metrica: '% Carga', ar: pct(v.cargaTributariaARPct), dr: pct(v.cargaTributariaDRPct) },
+        ...anosRows,
       ],
     })
   }
@@ -1497,6 +1511,10 @@ export function ReportDashboard({
   const [anoSelecionado, setAnoSelecionado] = useState<number | null>(null)
   const [anosDisponiveis, setAnosDisponiveis] = useState<{ ano: number; reportId: number }[]>([])
   const [trocandoAno, setTrocandoAno] = useState(false)
+  // DR ano a ano (2026-2033) por categoria de Compras/Vendas — reunido dos relatórios-irmãos
+  // (ver categoriasPorAno em lib/projecao-real.ts), pro drill-down de "Detalhes por Categoria".
+  const [comprasPorAno, setComprasPorAno] = useState<Record<number, CompraCategoria[]>>({})
+  const [vendasPorAno, setVendasPorAno] = useState<Record<number, VendaCategoria[]>>({})
   // true assim que o ano "depois da reforma" default (2033) foi decidido — antes disso, o
   // relatório em tela é o inicial (normalmente ano-base 2026, AR≈DR), mostrar esses números
   // brevemente como se já fossem definitivos é o "vem vazio" que o usuário via: sem essa guarda,
@@ -1542,6 +1560,8 @@ export function ReportDashboard({
         const anos = (data.anos ?? []) as { ano: number; reportId: number }[]
         setAnosDisponiveis(anos)
         setTextos(data.textos ?? {})
+        setComprasPorAno(data.comprasPorAno ?? {})
+        setVendasPorAno(data.vendasPorAno ?? {})
         if (anoSelecionado !== null) { setAnoResolvido(true); return }
         const alvo = anos.find(a => a.ano === 2033) ?? anos[anos.length - 1]
         if (!alvo) { setAnoResolvido(true); return }
@@ -1625,12 +1645,15 @@ export function ReportDashboard({
     if (report?.fluxo.length) items.push({ id: 'fluxo', label: 'Caixa', icon: <Waves className="h-3.5 w-3.5" /> })
     if (report?.regimes.length) items.push({ id: 'regime', label: 'Regime', icon: <Scale className="h-3.5 w-3.5" /> })
     if (report?.vendasB2C?.length || report?.vendasRegime?.length) items.push({ id: 'mercado', label: 'Mercado', icon: <Globe className="h-3.5 w-3.5" /> })
-    // "Produto" reúne Categoria de Produto + Simulador de Preço + Impacto por Produto +
-    // Resultado por Produto — tudo numa tela só, então o item de nav
-    // aparece se qualquer uma dessas fontes tiver dado.
+    // "Produto" reúne Categoria de Produto + Impacto por Produto + Resultado por
+    // Produto — tudo numa tela só, então o item de nav aparece se qualquer uma
+    // dessas fontes tiver dado. Simulador de Preço tem tela própria (ver abaixo).
     const temMercadologica = (report?.comprasMercadologica?.length ?? 0) + (report?.vendasMercadologica?.length ?? 0) > 0
-    if (temMercadologica || report?.simulador?.length || report?.margemProdutos?.length || report?.dreProduto?.length) {
+    if (temMercadologica || report?.margemProdutos?.length || report?.dreProduto?.length) {
       items.push({ id: 'mercadologica', label: 'Produto', icon: <Boxes className="h-3.5 w-3.5" /> })
+    }
+    if (report?.simulador?.length) {
+      items.push({ id: 'simulador', label: 'Simulador de Preço', icon: <Calculator className="h-3.5 w-3.5" /> })
     }
     return items
   }, [report])
@@ -1669,9 +1692,10 @@ export function ReportDashboard({
     if (report?.regimes.length) ids.push('regime')
     if (report?.vendasB2C?.length || report?.vendasRegime?.length) ids.push('mercado')
     const temMercadologica = (report?.comprasMercadologica?.length ?? 0) + (report?.vendasMercadologica?.length ?? 0) > 0
-    if (temMercadologica || report?.simulador?.length || report?.margemProdutos?.length || report?.dreProduto?.length) {
-      ids.push('mercadologica', 'simulador', 'impacto', 'dreproduto')
+    if (temMercadologica || report?.margemProdutos?.length || report?.dreProduto?.length) {
+      ids.push('mercadologica', 'impacto', 'dreproduto')
     }
+    if (report?.simulador?.length) ids.push('simulador')
     return ids.map((id) => ({ id, label: labels[id] }))
   }, [report])
 
@@ -1751,7 +1775,7 @@ export function ReportDashboard({
           <div className="space-y-10">
             <SectionHeader num="01" title="Compras" subtitle="Variação do custo de compras com a Reforma Tributária — o que muda no seu preço de aquisição." sectionId="compras" explain="Todos os valores comparam o que você já pagou (Antes da Reforma, 2026) com o que pagaria pelas mesmas compras, mas com as regras do ano que você escolher no seletor de ano." />
             <MetricPair labelAR="Custo Total" labelDR="Custo Total" valueAR={totalComprasAR} valueDR={totalComprasDR} delta={comprasData.diff} deltaPct={comprasData.pct} goodWhenNegativeDelta ano={anoSelecionado} explain="Soma de tudo que você comprou, comparando o custo com as regras de hoje (2026) e com as regras do ano selecionado. Custo menor é bom pra você." />
-            <ComprasSection compras={report!.compras} ano={anoSelecionado} />
+            <ComprasSection compras={report!.compras} ano={anoSelecionado} comprasPorAno={comprasPorAno} />
             <ComprasCharts comprasNCM={report!.comprasNCM ?? []} comprasRegime={report!.comprasRegime ?? []} comprasFornecedores={report!.comprasFornecedores ?? []} ano={anoSelecionado} />
             {(report!.comprasMercadologica?.length ?? 0) > 0 && (
               <MercadologicaBlock
@@ -1789,7 +1813,7 @@ export function ReportDashboard({
           <div className="space-y-10">
             <SectionHeader num="04" title="Vendas" subtitle="Variação da receita de vendas — como sua precificação e margens são afetadas." sectionId="vendas" explain="Todos os valores comparam o que você já vendeu (Antes da Reforma, 2026) com o que receberia pelas mesmas vendas, mas com as regras do ano que você escolher no seletor de ano." />
             <MetricPair labelAR="Receita Total" labelDR="Receita Total" valueAR={totalVendasAR} valueDR={totalVendasDR} delta={vendasData.diff} deltaPct={vendasData.pct} goodWhenNegativeDelta={false} ano={anoSelecionado} explain="Soma de tudo que você vendeu, comparando a receita com as regras de hoje (2026) e com as regras do ano selecionado. Receita maior é bom pra você." />
-            <VendasSection vendas={report!.vendas} ano={anoSelecionado} />
+            <VendasSection vendas={report!.vendas} ano={anoSelecionado} vendasPorAno={vendasPorAno} />
             <VendasCharts vendasNCM={report!.vendasNCM ?? []} vendasClientes={report!.vendasClientes ?? []} ano={anoSelecionado} />
             {(report!.vendasMercadologica?.length ?? 0) > 0 && (
               <MercadologicaBlock
@@ -1865,13 +1889,6 @@ export function ReportDashboard({
               ano={anoSelecionado}
             />
 
-            <SectionHeader num="12" title="Simulador de Preço" subtitle="Simule o impacto no markup e no resultado por produto com diferentes cenários de reajuste de preço." sectionId="simulador" explain="Mostra, produto a produto, qual markup você precisaria praticar em cada ano da transição pra manter o mesmo resultado de hoje, sem precisar reajustar preço." />
-            <PriceSimulator
-              simulador={report!.simulador ?? []}
-              margemProdutos={report!.margemProdutos ?? []}
-              dre={report!.dre ?? []}
-            />
-
             <SectionHeader num="13" title="Impacto por Produto" subtitle="Quais produtos são mais beneficiados e quais são mais prejudicados pela reforma, considerando custo e receita." sectionId="impacto" explain="Só entram produtos que aparecem tanto em compras quanto em vendas (pra calcular receita e custo do mesmo item). Impacto líquido = variação de receita menos variação de custo." />
             <ImpactoProduto
               comprasNCM={report!.comprasNCM ?? []}
@@ -1880,6 +1897,17 @@ export function ReportDashboard({
 
             <SectionHeader num="14" title="Resultado por Produto" subtitle="Resultado, margem bruta e projeção 2026–2033 para cada NCM — visão individual de impacto com fase de transição da reforma." sectionId="dreproduto" explain="Se você já importou a planilha real de um ano específico, o gráfico troca o ponto projetado (fórmula) pelo valor real daquele ano — procure a bolinha marcada como 'Real'." />
             <DreProduto dreProduto={report!.dreProduto ?? []} />
+          </div>
+        )
+      case 'simulador':
+        return (
+          <div className="space-y-10">
+            <SectionHeader num="12" title="Simulador de Preço" subtitle="Simule o impacto no markup e no resultado por produto com diferentes cenários de reajuste de preço." sectionId="simulador" explain="Mostra, produto a produto, qual markup você precisaria praticar em cada ano da transição pra manter o mesmo resultado de hoje, sem precisar reajustar preço." />
+            <PriceSimulator
+              simulador={report!.simulador ?? []}
+              margemProdutos={report!.margemProdutos ?? []}
+              dre={report!.dre ?? []}
+            />
           </div>
         )
       default:
