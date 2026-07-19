@@ -835,12 +835,20 @@ export function ProdutosMaisImpactadosCards({ margemProdutos, ano }: { margemPro
 const PRODUTOS_AFETADOS_RANK_COUNT = 8
 const ANO_BASE = 2026
 
-function ProdutoAfetadoRow({ produto, maxAbs, ano, onClick }: { produto: DreProdutoRow; maxAbs: number; ano?: number | null; onClick: () => void }) {
+function ProdutoAfetadoRow({ produto, ano, onClick }: { produto: DreProdutoRow; ano?: number | null; onClick: () => void }) {
   const d = delta(produto)
   const isGain = d >= 0
-  const widthPct = maxAbs > 0 ? Math.min(100, (Math.abs(d) / maxAbs) * 100) : 0
   const caminho = produto.categoriaMercadologica?.caminho ?? 'Não classificado'
   const anoDepois = ano ?? ANO_BASE
+
+  // Cada coluna tem sua própria barra, comparável só dentro da mesma linha — o produto A
+  // pode valer 10x o produto B, então normalizar as duas pelo maior dos dois (|AR| ou |DR|
+  // deste produto) é o que deixa visível "antes vs depois"; usar o maxAbs global (do ranking
+  // inteiro) deixaria quase toda barra minúscula. AR neutro, DR colorido — mesma convenção
+  // dos outros gráficos AR/DR do admin (ex.: NCMBars em compras-charts.tsx).
+  const localMax = Math.max(Math.abs(produto.resultadoAtual), Math.abs(produto.resultadoDR), 1)
+  const arWidthPct = Math.min(100, (Math.abs(produto.resultadoAtual) / localMax) * 100)
+  const drWidthPct = Math.min(100, (Math.abs(produto.resultadoDR) / localMax) * 100)
 
   return (
     <button
@@ -861,18 +869,18 @@ function ProdutoAfetadoRow({ produto, maxAbs, ano, onClick }: { produto: DreProd
         <div>
           <p className="text-[9px] uppercase tracking-wide text-foreground/25">{ANO_BASE} antes da reforma</p>
           <p className="text-[11px] font-tabular font-medium text-foreground/55">{fmtShort(produto.resultadoAtual)}</p>
+          <span className="relative mt-1 block h-1.5 w-full shrink-0 overflow-hidden rounded-full bg-foreground/[0.06]">
+            <span className="absolute inset-y-0 left-0 rounded-full bg-foreground/25" style={{ width: `${arWidthPct}%` }} />
+          </span>
         </div>
         <div>
           <p className="text-[9px] uppercase tracking-wide text-foreground/25">{anoDepois} depois da reforma</p>
           <p className={`text-[11px] font-tabular font-medium ${isGain ? 'text-gain' : 'text-loss'}`}>{fmtShort(produto.resultadoDR)}</p>
+          <span className="relative mt-1 block h-1.5 w-full shrink-0 overflow-hidden rounded-full bg-foreground/[0.06]">
+            <span className={`absolute inset-y-0 left-0 rounded-full ${isGain ? 'bg-gain' : 'bg-loss'}`} style={{ width: `${drWidthPct}%` }} />
+          </span>
         </div>
       </div>
-      <span className="relative h-1.5 w-full shrink-0 overflow-hidden rounded-full bg-foreground/[0.06]">
-        <span
-          className={`absolute inset-y-0 left-0 rounded-full ${isGain ? 'bg-gain' : 'bg-loss'}`}
-          style={{ width: `${widthPct}%` }}
-        />
-      </span>
     </button>
   )
 }
@@ -891,8 +899,6 @@ export function ProdutosMaisAfetadosMercadologica({ margemProdutos, ano }: { mar
   )
 
   if (!beneficiados.length && !prejudicados.length) return null
-
-  const maxAbs = Math.max(...[...beneficiados, ...prejudicados].map(r => Math.abs(r.delta)), 1)
 
   function abrirProduto(p: DreProdutoRow) {
     open(produtoDrillContent(p))
@@ -940,13 +946,13 @@ export function ProdutosMaisAfetadosMercadologica({ margemProdutos, ano }: { mar
       <div className="grid grid-cols-1 gap-x-6 lg:grid-cols-2">
         <div className="space-y-0.5">
           {beneficiados.map(r => (
-            <ProdutoAfetadoRow key={chave(r.row)} produto={r.row} maxAbs={maxAbs} ano={ano} onClick={() => abrirProduto(r.row)} />
+            <ProdutoAfetadoRow key={chave(r.row)} produto={r.row} ano={ano} onClick={() => abrirProduto(r.row)} />
           ))}
           {!beneficiados.length && <p className="py-4 text-center text-xs text-foreground/25">Nenhum produto beneficiado.</p>}
         </div>
         <div className="space-y-0.5">
           {prejudicados.map(r => (
-            <ProdutoAfetadoRow key={chave(r.row)} produto={r.row} maxAbs={maxAbs} ano={ano} onClick={() => abrirProduto(r.row)} />
+            <ProdutoAfetadoRow key={chave(r.row)} produto={r.row} ano={ano} onClick={() => abrirProduto(r.row)} />
           ))}
           {!prejudicados.length && <p className="py-4 text-center text-xs text-foreground/25">Nenhum produto prejudicado.</p>}
         </div>
